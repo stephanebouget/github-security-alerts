@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import {
   provideHttpClient,
   withInterceptorsFromDi,
@@ -15,7 +16,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
 import { HomeModule } from './home/home.module';
-import { DetailModule } from './detail/detail.module';
 
 import { AppComponent } from './app.component';
 
@@ -23,11 +23,11 @@ import { AppComponent } from './app.component';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    CommonModule,
     FormsModule,
     CoreModule,
     SharedModule,
     HomeModule,
-    DetailModule,
     AppRoutingModule,
     TranslateModule.forRoot({
       fallbackLang: 'en',
