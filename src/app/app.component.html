@@ -1,1 +1,96 @@
-<router-outlet></router-outlet>
+<div class="app-container">
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <span class="logo">🔒</span>
+      <span class="title">GitHub Alerts</span>
+    </div>
+    <div class="header-right">
+      <button
+        class="icon-btn"
+        (click)="fetchAlerts()"
+        [disabled]="loading"
+        title="Refresh"
+      >
+        <span [class.spinning]="loading">🔄</span>
+      </button>
+      <button class="icon-btn" (click)="toggleSettings()" title="Settings">
+        ⚙️
+      </button>
+    </div>
+  </div>
+
+  <!-- Settings Panel -->
+  <div class="settings-panel" *ngIf="showSettings">
+    <div class="settings-content">
+      <label>GitHub Token</label>
+      <input
+        type="password"
+        [(ngModel)]="githubToken"
+        placeholder="ghp_xxxxxxxxxxxx"
+        (keyup.enter)="saveToken()"
+      />
+      <p class="hint">
+        Create a token at
+        <a href="https://github.com/settings/tokens" target="_blank"
+          >GitHub Settings</a
+        >
+        with <code>repo:security_events</code> permission
+      </p>
+      <button class="save-btn" (click)="saveToken()">Save Token</button>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div class="error-banner" *ngIf="error && !showSettings">
+    {{ error }}
+  </div>
+
+  <!-- Alerts List -->
+  <div class="alerts-list" *ngIf="alerts && !showSettings">
+    <!-- Summary -->
+    <div
+      class="summary"
+      [class.safe]="alerts.total_alerts === 0"
+      [class.danger]="alerts.total_alerts > 0"
+    >
+      <span class="summary-icon">{{ getAlertIcon() }}</span>
+      <span class="summary-text" *ngIf="alerts.total_alerts === 0"
+        >All repositories are secure</span
+      >
+      <span class="summary-text" *ngIf="alerts.total_alerts > 0"
+        >{{ alerts.total_alerts }} security alert(s) found</span
+      >
+    </div>
+
+    <!-- Repository List -->
+    <div class="repo-list">
+      <div
+        class="repo-item"
+        *ngFor="let repo of alerts.repos"
+        [class.has-alerts]="repo.alerts > 0"
+      >
+        <div class="repo-info">
+          <span class="repo-icon">📦</span>
+          <span class="repo-name">{{ repo.name.split("/")[1] }}</span>
+          <span class="repo-org">{{ repo.name.split("/")[0] }}</span>
+        </div>
+        <div
+          class="repo-badge"
+          [class.safe]="repo.alerts === 0"
+          [class.danger]="repo.alerts > 0"
+        >
+          {{ repo.alerts === 0 ? "✓" : repo.alerts }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span class="update-time" *ngIf="alerts"
+      >Last update: {{ getLastUpdate() }}</span
+    >
+    <span class="version">v1.0.0</span>
+  </div>
+</div>

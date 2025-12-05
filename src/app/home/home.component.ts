@@ -14,6 +14,8 @@ export class HomeComponent implements OnInit {
   error: string = '';
   refreshInterval: any;
 
+  intervalTimeout: number = 60 * 60 * 1000; // 5 minutes
+
   constructor(private tauriService: TauriService) {}
 
   ngOnInit() {
@@ -24,7 +26,7 @@ export class HomeComponent implements OnInit {
       this.fetchAlerts();
       this.refreshInterval = setInterval(() => {
         this.fetchAlerts();
-      }, 5 * 60 * 1000);
+      }, this.intervalTimeout);
     }
   }
 
@@ -37,7 +39,7 @@ export class HomeComponent implements OnInit {
       }
       this.refreshInterval = setInterval(() => {
         this.fetchAlerts();
-      }, 5 * 60 * 1000);
+      }, this.intervalTimeout);
     }
   }
 

@@ -9,10 +9,11 @@ use tauri::{
   tray::{TrayIconBuilder, TrayIconEvent, MouseButton, MouseButtonState},
   menu::{Menu, MenuItem},
   image::Image,
+  PhysicalPosition,
 };
 use std::sync::Mutex;
 
-// État global pour stocker le nombre d'alertes
+// Global state to store the number of alerts
 struct AppState {
   alert_count: Mutex<usize>,
 }
@@ -49,6 +50,9 @@ async fn get_github_security_alerts(
     "KhiopsML/khiops-visualization",
     "KhiopsML/khiops-visualization-desktop",
     "stephanebouget/github-security-alerts",
+    "KhiopsML/kv-electron",
+    "stephanebouget/powo-cli",
+    "KhiopsML/ngx-khiops-histogram"
   ];
 
   let mut total_alerts = 0;
@@ -107,39 +111,39 @@ async fn get_github_security_alerts(
   })
 }
 
-// Génère une icône avec un nombre (badge)
+// Generates an icon with a number (badge)
 fn generate_tray_icon(count: usize) -> Vec<u8> {
   use image::{Rgba, RgbaImage, ImageEncoder};
   
   let size = 32u32;
   let mut img = RgbaImage::new(size, size);
   
-  // Couleur de fond: vert si 0, rouge sinon
+  // Background color: green if 0, red otherwise
   let bg_color = if count == 0 {
-    Rgba([34u8, 197u8, 94u8, 255u8]) // Vert
+    Rgba([34u8, 197u8, 94u8, 255u8]) // Green
   } else {
-    Rgba([239u8, 68u8, 68u8, 255u8]) // Rouge
+    Rgba([239u8, 68u8, 68u8, 255u8]) // Red
   };
   
-  let text_color = Rgba([255u8, 255u8, 255u8, 255u8]); // Blanc
+  let text_color = Rgba([255u8, 255u8, 255u8, 255u8]); // White
   
-  // Remplir le fond avec la couleur
+  // Fill the background with the color
   for y in 0..size {
     for x in 0..size {
       img.put_pixel(x, y, bg_color);
     }
   }
   
-  // Dessiner le chiffre en blanc au centre
+  // Draw the number in white at the center
   if count > 0 {
     let display_count = if count > 99 { 99 } else { count };
     draw_number(&mut img, display_count, text_color);
   } else {
-    // Dessiner un checkmark pour 0 alertes
+    // Draw a checkmark for 0 alerts
     draw_checkmark(&mut img, text_color);
   }
   
-  // Convertir en PNG bytes
+  // Convert to PNG bytes
   let mut png_data = Vec::new();
   let encoder = image::codecs::png::PngEncoder::new(&mut png_data);
   encoder.write_image(
@@ -152,15 +156,15 @@ fn generate_tray_icon(count: usize) -> Vec<u8> {
   png_data
 }
 
-// Dessine un checkmark (✓) sur l'image
+// Draws a checkmark (✓) on the image
 fn draw_checkmark(img: &mut image::RgbaImage, color: image::Rgba<u8>) {
-  // Checkmark simple
+  // Simple checkmark
   let points = [
     (8, 16), (9, 17), (10, 18), (11, 19), (12, 20),
     (13, 19), (14, 18), (15, 17), (16, 16), (17, 15),
     (18, 14), (19, 13), (20, 12), (21, 11), (22, 10),
     (23, 9),
-    // Épaisseur
+    // Thickness
     (8, 17), (9, 18), (10, 19), (11, 20), (12, 21),
     (13, 20), (14, 19), (15, 18), (16, 17), (17, 16),
     (18, 15), (19, 14), (20, 13), (21, 12), (22, 11),
@@ -174,7 +178,7 @@ fn draw_checkmark(img: &mut image::RgbaImage, color: image::Rgba<u8>) {
   }
 }
 
-// Dessine un nombre sur l'image
+// Draws a number on the image
 fn draw_number(img: &mut image::RgbaImage, num: usize, color: image::Rgba<u8>) {
   let digits: Vec<u8> = if num == 0 {
     vec![0]
@@ -200,9 +204,9 @@ fn draw_number(img: &mut image::RgbaImage, num: usize, color: image::Rgba<u8>) {
   }
 }
 
-// Dessine un chiffre individuel (0-9) avec une police bitmap simple
+// Draws an individual digit (0-9) with a simple bitmap font
 fn draw_digit(img: &mut image::RgbaImage, digit: u8, x: u32, y: u32, color: image::Rgba<u8>) {
-  // Police bitmap 8x12 pour chaque chiffre
+  // Bitmap font 8x12 for each digit
   let patterns: [&[u16]; 10] = [
     // 0
     &[
@@ -376,21 +380,21 @@ async fn update_tray_icon(
   app: tauri::AppHandle,
   alertCount: usize,
 ) -> Result<(), String> {
-  // Mettre à jour l'état
+  // Update the state
   if let Some(state) = app.try_state::<AppState>() {
     let mut count = state.alert_count.lock().unwrap();
     *count = alertCount;
   }
   
-  // Générer la nouvelle icône
+  // Generate the new icon
   let icon_data = generate_tray_icon(alertCount);
   
-  // Mettre à jour l'icône du tray
+  // Update the tray icon
   if let Some(tray) = app.tray_by_id("main-tray") {
     let icon = Image::from_bytes(&icon_data).map_err(|e| e.to_string())?;
     tray.set_icon(Some(icon)).map_err(|e| e.to_string())?;
     
-    // Mettre à jour le tooltip
+    // Update the tooltip
     let tooltip = if alertCount == 0 {
       "GitHub Security Alerts - No alerts".to_string()
     } else {
@@ -399,7 +403,7 @@ async fn update_tray_icon(
     tray.set_tooltip(Some(&tooltip)).map_err(|e| e.to_string())?;
   }
   
-  // Mettre à jour le titre de la fenêtre aussi
+  // Update the window title as well
   if let Some(window) = app.get_webview_window("main") {
     let title = if alertCount > 0 {
       format!("GitHub Alerts - {} alert(s)", alertCount)
@@ -418,16 +422,22 @@ fn main() {
       alert_count: Mutex::new(0),
     })
     .setup(|app| {
-      // Créer le menu du tray
+      // Create the tray menu
       let quit = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
       let show = MenuItem::with_id(app, "show", "Show Window", true, None::<&str>)?;
-      let menu = Menu::with_items(app, &[&show, &quit])?;
+      let hide = MenuItem::with_id(app, "hide", "Hide Window", true, None::<&str>)?;
+      let menu = Menu::with_items(app, &[&show, &hide, &quit])?;
       
-      // Générer l'icône initiale (verte, 0 alertes)
+      // Generate the initial icon (green, 0 alerts)
       let icon_data = generate_tray_icon(0);
       let icon = Image::from_bytes(&icon_data)?;
       
-      // Créer l'icône du tray
+      // Hide the main window at startup
+      if let Some(window) = app.get_webview_window("main") {
+        let _ = window.hide();
+      }
+      
+      // Create the tray icon
       let _tray = TrayIconBuilder::with_id("main-tray")
         .icon(icon)
         .menu(&menu)
@@ -439,8 +449,14 @@ fn main() {
             }
             "show" => {
               if let Some(window) = app.get_webview_window("main") {
+                position_window_near_tray(&window);
                 let _ = window.show();
                 let _ = window.set_focus();
+              }
+            }
+            "hide" => {
+              if let Some(window) = app.get_webview_window("main") {
+                let _ = window.hide();
               }
             }
             _ => {}
@@ -450,14 +466,33 @@ fn main() {
           if let TrayIconEvent::Click { button: MouseButton::Left, button_state: MouseButtonState::Up, .. } = event {
             let app = tray.app_handle();
             if let Some(window) = app.get_webview_window("main") {
-              let _ = window.show();
-              let _ = window.set_focus();
+              // Toggle visibility
+              if window.is_visible().unwrap_or(false) {
+                let _ = window.hide();
+              } else {
+                position_window_near_tray(&window);
+                let _ = window.show();
+                let _ = window.set_focus();
+              }
             }
           }
         })
         .build(app)?;
       
       Ok(())
+    })
+    .on_window_event(|window, event| {
+      // Intercept window close to hide it instead of quitting
+      if let tauri::WindowEvent::CloseRequested { api, .. } = event {
+        let _ = window.hide();
+        api.prevent_close();
+      }
+      // Hide the window if it loses focus
+      if let tauri::WindowEvent::Focused(focused) = event {
+        if !focused {
+          let _ = window.hide();
+        }
+      }
     })
     .invoke_handler(tauri::generate_handler![
       hello_world_command,
@@ -466,4 +501,28 @@ fn main() {
     ])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
+}
+
+// Position the window at the bottom right of the screen, near the system tray
+fn position_window_near_tray(window: &tauri::WebviewWindow) {
+  if let Ok(Some(monitor)) = window.primary_monitor() {
+    let monitor_size = monitor.size();
+    let monitor_position = monitor.position();
+    
+    // Window size
+    let window_width = 420i32;
+    let window_height = 500i32;
+    
+    // Margin from the edge (to avoid sticking to the screen edge)
+    let margin = 10i32;
+    
+    // Position at the bottom right
+    // On Windows, the taskbar is usually at the bottom with a height of about 48px
+    let taskbar_height = 48i32;
+    
+    let x = monitor_position.x + monitor_size.width as i32 - window_width - margin;
+    let y = monitor_position.y + monitor_size.height as i32 - window_height - taskbar_height - margin;
+    
+    let _ = window.set_position(PhysicalPosition::new(x, y));
+  }
 }

@@ -1,0 +1,319 @@
+// Dark theme like Gitify
+$bg-primary: #1a1a2e;
+$bg-secondary: #16213e;
+$bg-tertiary: #0f3460;
+$text-primary: #ffffff;
+$text-secondary: #a0a0a0;
+$accent-color: #4a90d9;
+$success-color: #22c55e;
+$danger-color: #ef4444;
+$border-color: #2a2a4a;
+
+:host {
+  display: block;
+  height: 100vh;
+  overflow: hidden;
+  background: $bg-primary;
+  color: $text-primary;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, sans-serif;
+  font-size: 13px;
+  user-select: none;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+// Header
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: $bg-secondary;
+  border-bottom: 1px solid $border-color;
+  -webkit-app-region: drag;
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .logo {
+      font-size: 18px;
+    }
+
+    .title {
+      font-weight: 600;
+      font-size: 14px;
+    }
+  }
+
+  .header-right {
+    display: flex;
+    gap: 4px;
+    -webkit-app-region: no-drag;
+  }
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: $text-secondary;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.2s;
+
+  &:hover {
+    background: $bg-tertiary;
+    color: $text-primary;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .spinning {
+    display: inline-block;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Settings Panel
+.settings-panel {
+  padding: 16px;
+  background: $bg-secondary;
+  border-bottom: 1px solid $border-color;
+
+  .settings-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    label {
+      font-weight: 500;
+      color: $text-secondary;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    input {
+      background: $bg-primary;
+      border: 1px solid $border-color;
+      border-radius: 6px;
+      padding: 10px 12px;
+      color: $text-primary;
+      font-size: 13px;
+
+      &:focus {
+        outline: none;
+        border-color: $accent-color;
+      }
+
+      &::placeholder {
+        color: $text-secondary;
+      }
+    }
+
+    .hint {
+      font-size: 11px;
+      color: $text-secondary;
+      margin: 0;
+      line-height: 1.4;
+
+      a {
+        color: $accent-color;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      code {
+        background: $bg-tertiary;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 10px;
+      }
+    }
+
+    .save-btn {
+      background: $accent-color;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+
+      &:hover {
+        background: darken($accent-color, 10%);
+      }
+    }
+  }
+}
+
+// Error Banner
+.error-banner {
+  background: rgba($danger-color, 0.1);
+  border-left: 3px solid $danger-color;
+  color: $danger-color;
+  padding: 10px 16px;
+  font-size: 12px;
+}
+
+// Alerts List
+.alerts-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $bg-primary;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $border-color;
+    border-radius: 3px;
+  }
+}
+
+// Summary
+.summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  margin: 12px;
+  border-radius: 8px;
+  background: $bg-secondary;
+
+  &.safe {
+    border-left: 3px solid $success-color;
+
+    .summary-icon {
+      color: $success-color;
+    }
+  }
+
+  &.danger {
+    border-left: 3px solid $danger-color;
+
+    .summary-icon {
+      color: $danger-color;
+    }
+  }
+
+  .summary-icon {
+    font-size: 20px;
+  }
+
+  .summary-text {
+    font-weight: 500;
+  }
+}
+
+// Repository List
+.repo-list {
+  padding: 0 12px 12px;
+}
+
+.repo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: $bg-secondary;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  transition: background 0.2s;
+
+  &:hover {
+    background: $bg-tertiary;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .repo-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow: hidden;
+
+    .repo-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .repo-name {
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .repo-org {
+      font-size: 11px;
+      color: $text-secondary;
+      white-space: nowrap;
+    }
+  }
+
+  .repo-badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
+
+    &.safe {
+      background: rgba($success-color, 0.15);
+      color: $success-color;
+    }
+
+    &.danger {
+      background: rgba($danger-color, 0.15);
+      color: $danger-color;
+    }
+  }
+}
+
+// Footer
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  background: $bg-secondary;
+  border-top: 1px solid $border-color;
+  font-size: 11px;
+  color: $text-secondary;
+
+  .version {
+    opacity: 0.6;
+  }
+}
