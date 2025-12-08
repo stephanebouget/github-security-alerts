@@ -57,11 +57,11 @@ pub async fn update_tray_icon(
 
     if let Some(window) = app.get_webview_window("main") {
         let title = if !has_repos {
-            "GitHub Alerts - Configure repositories".to_string()
+            "GitHub Security Alerts - Configure repositories".to_string()
         } else if alert_count > 0 {
-            format!("GitHub Alerts - {} alert(s)", alert_count)
+            format!("GitHub Security Alerts - {} alert(s)", alert_count)
         } else {
-            "GitHub Alerts".to_string()
+            "GitHub Security Alerts".to_string()
         };
         let _ = window.set_title(&title);
     }
