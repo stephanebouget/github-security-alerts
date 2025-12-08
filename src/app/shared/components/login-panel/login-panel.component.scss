@@ -1,0 +1,144 @@
+@use "sass:color";
+
+$bg-primary: #1a1a2e;
+$bg-secondary: #16213e;
+$bg-tertiary: #0f3460;
+$text-primary: #ffffff;
+$text-secondary: #a0a0a0;
+$accent-color: #4a90d9;
+$danger-color: #ef4444;
+$border-color: #2a2a4a;
+
+:host {
+  display: block;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.login-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+
+  .login-content {
+    text-align: center;
+
+    .login-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 0 0 24px;
+      color: $text-secondary;
+      font-size: 13px;
+      max-width: 280px;
+    }
+  }
+
+  .hint {
+    margin-top: 16px;
+    color: $text-secondary;
+    font-size: 12px;
+
+    a {
+      color: $accent-color;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &.error-text {
+      color: $danger-color;
+    }
+  }
+
+  .token-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: $bg-tertiary;
+    color: $text-primary;
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin: 0 auto 16px;
+
+    &:hover {
+      background: color.adjust($bg-tertiary, $lightness: 5%);
+      border-color: $accent-color;
+    }
+  }
+
+  .token-input-group {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+
+    input {
+      flex: 1;
+      background: $bg-tertiary;
+      border: 1px solid $border-color;
+      border-radius: 6px;
+      padding: 10px 12px;
+      color: $text-primary;
+      font-size: 13px;
+      font-family: "Courier New", monospace;
+
+      &:focus {
+        outline: none;
+        border-color: $accent-color;
+      }
+
+      &::placeholder {
+        color: $text-secondary;
+      }
+
+      &:disabled {
+        opacity: 0.6;
+      }
+    }
+  }
+
+  .primary-btn {
+    background: $accent-color;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: color.adjust($accent-color, $lightness: -10%);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  .error-text {
+    color: $danger-color;
+    margin-top: 12px;
+    font-size: 12px;
+  }
+}

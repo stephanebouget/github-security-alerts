@@ -1,0 +1,18 @@
+$bg-secondary: #16213e;
+$text-secondary: #a0a0a0;
+$border-color: #2a2a4a;
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  background: $bg-secondary;
+  border-top: 1px solid $border-color;
+  font-size: 11px;
+  color: $text-secondary;
+
+  .version {
+    opacity: 0.6;
+  }
+}

@@ -1,0 +1,58 @@
+<!-- Error Message -->
+<div class="error-banner" *ngIf="error">
+  {{ error }}
+</div>
+
+<div class="alerts-list">
+  <!-- Loading spinner -->
+  <div class="loading-spinner" *ngIf="alertsLoading">
+    <span class="spinning">🔄</span> Loading alerts...
+  </div>
+
+  <!-- No repos selected -->
+  <div class="empty-state" *ngIf="!alertsLoading && (!alerts || alerts.repos.length === 0)">
+    <div class="empty-icon">📦</div>
+    <p>No repositories selected</p>
+    <button class="primary-btn" (click)="onShowRepos()">
+      Select Repositories
+    </button>
+  </div>
+
+  <!-- Summary -->
+  <div
+    class="summary"
+    *ngIf="alerts && alerts.repos.length > 0"
+    [class.safe]="alerts.total_alerts === 0"
+    [class.danger]="alerts.total_alerts > 0"
+  >
+    <span class="summary-icon">{{ getAlertIcon() }}</span>
+    <span class="summary-text" *ngIf="alerts.total_alerts === 0"
+      >All repositories are secure</span
+    >
+    <span class="summary-text" *ngIf="alerts.total_alerts > 0"
+      >{{ alerts.total_alerts }} security alert(s) found</span
+    >
+  </div>
+
+  <!-- Repository List -->
+  <div class="repo-list" *ngIf="alerts && alerts.repos.length > 0">
+    <div
+      class="repo-item"
+      *ngFor="let repo of alerts.repos"
+      [class.has-alerts]="repo.alerts > 0"
+    >
+      <div class="repo-info">
+        <span class="repo-icon">📦</span>
+        <span class="repo-name">{{ repo.name.split("/")[1] }}</span>
+        <span class="repo-org">{{ repo.name.split("/")[0] }}</span>
+      </div>
+      <div
+        class="repo-badge"
+        [class.safe]="repo.alerts === 0"
+        [class.danger]="repo.alerts > 0"
+      >
+        {{ repo.alerts === 0 ? "✓" : repo.alerts }}
+      </div>
+    </div>
+  </div>
+</div>

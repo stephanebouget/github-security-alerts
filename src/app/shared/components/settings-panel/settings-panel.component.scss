@@ -1,0 +1,64 @@
+@use "sass:color";
+
+$bg-primary: #1a1a2e;
+$bg-secondary: #16213e;
+$text-primary: #ffffff;
+$danger-color: #ef4444;
+$border-color: #2a2a4a;
+
+:host {
+  display: block;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.settings-panel {
+  padding: 16px;
+  background: $bg-secondary;
+  border-bottom: 1px solid $border-color;
+
+  .settings-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: $bg-primary;
+      border-radius: 8px;
+
+      .user-icon {
+        font-size: 24px;
+      }
+
+      .username {
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+
+    .settings-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+}
+
+.danger-btn {
+  background: rgba($danger-color, 0.15);
+  color: $danger-color;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: rgba($danger-color, 0.25);
+  }
+}

@@ -1,0 +1,96 @@
+<div class="repos-panel">
+  <div class="repos-header">
+    <h3>Select Repositories to Monitor</h3>
+  </div>
+
+  <div class="search-box">
+    <input
+      type="text"
+      [ngModel]="searchQuery"
+      (ngModelChange)="onSearchChange($event)"
+      placeholder="🔍 Search repositories..."
+    />
+  </div>
+
+  <div class="repos-count">{{ selectedCount }} repositories selected</div>
+
+  <div class="loading-spinner" *ngIf="ownersLoading">
+    <span class="spinning">🌀</span> Loading...
+  </div>
+
+  <div class="owners-list" *ngIf="!ownersLoading">
+    <div class="owner-accordion" *ngFor="let ownerAcc of owners">
+      <!-- Accordion Header -->
+      <div
+        class="accordion-header"
+        (click)="onToggleOwner(ownerAcc)"
+        [class.expanded]="ownerAcc.expanded"
+      >
+        <span class="accordion-icon">{{
+          ownerAcc.expanded ? "▼" : "▶"
+        }}</span>
+        <span class="owner-icon">{{
+          ownerAcc.owner.is_user ? "👤" : "🏢"
+        }}</span>
+        <span class="owner-name">{{ ownerAcc.owner.name }}</span>
+        <span class="owner-badge" *ngIf="ownerAcc.loaded">
+          {{ getSelectedCountForOwner(ownerAcc) }}/{{ ownerAcc.repos.length }}
+        </span>
+        <span class="owner-badge loading" *ngIf="ownerAcc.loading">
+          <span class="spinning">⏳</span>
+        </span>
+      </div>
+
+      <!-- Accordion Content -->
+      <div class="accordion-content" *ngIf="ownerAcc.expanded">
+        <div
+          class="accordion-actions"
+          *ngIf="ownerAcc.loaded && ownerAcc.repos.length > 0"
+        >
+          <button
+            class="small-btn"
+            (click)="onSelectAll(ownerAcc, $event)"
+          >
+            Select All
+          </button>
+          <button
+            class="small-btn"
+            (click)="onSelectNone(ownerAcc, $event)"
+          >
+            Select None
+          </button>
+        </div>
+
+        <div class="loading-spinner small" *ngIf="ownerAcc.loading">
+          <span class="spinning">🔄</span> Loading repos...
+        </div>
+
+        <div class="repos-list" *ngIf="ownerAcc.loaded">
+          <div
+            class="empty-repos"
+            *ngIf="getFilteredRepos(ownerAcc).length === 0"
+          >
+            No repositories found
+          </div>
+          <div
+            class="repo-select-item"
+            *ngFor="let repo of getFilteredRepos(ownerAcc)"
+            (click)="onToggleRepo(repo, $event)"
+            [class.selected]="repo.selected"
+          >
+            <div class="checkbox">
+              <span *ngIf="repo.selected">✓</span>
+            </div>
+            <div class="repo-details">
+              <span class="repo-name">{{ repo.name }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="primary-btn" (click)="onDone()">
+    ✓ Done - View Alerts
+  </button>
+</div>

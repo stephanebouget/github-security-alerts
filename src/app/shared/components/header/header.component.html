@@ -1,0 +1,32 @@
+<div class="header">
+  <div class="header-left">
+    <span class="logo">🔒</span>
+    <span class="title">GitHub Alerts</span>
+  </div>
+  <div class="header-right" *ngIf="authenticated">
+    <button
+      class="icon-btn"
+      (click)="onRefresh()"
+      [disabled]="alertsLoading"
+      title="Refresh"
+    >
+      <span [class.spinning]="alertsLoading">🔄</span>
+    </button>
+    <button
+      class="icon-btn"
+      [class.active]="currentView === 'repos'"
+      (click)="showRepos()"
+      title="Repositories"
+    >
+      📦
+    </button>
+    <button
+      class="icon-btn"
+      [class.active]="currentView === 'settings'"
+      (click)="showSettings()"
+      title="Settings"
+    >
+      ⚙️
+    </button>
+  </div>
+</div>

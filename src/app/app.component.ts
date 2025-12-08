@@ -30,7 +30,6 @@ export class AppComponent implements OnInit, OnDestroy {
   authenticated = false;
   username: string | null = null;
   authLoading = false;
-  tokenInput = '';
 
   // Owners & Repos state
   owners: OwnerAccordion[] = [];
@@ -73,8 +72,8 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-  async login() {
-    if (!this.tokenInput.trim()) {
+  async login(token: string) {
+    if (!token.trim()) {
       this.error = 'Please enter a GitHub token';
       return;
     }
@@ -83,11 +82,10 @@ export class AppComponent implements OnInit, OnDestroy {
     this.error = '';
 
     try {
-      await this.tauriService.setToken(this.tokenInput.trim());
+      await this.tauriService.setToken(token.trim());
       await this.checkAuthStatus();
 
       if (this.authenticated) {
-        this.tokenInput = '';
         await this.loadOwners();
         this.currentView = 'repos';
       }
@@ -95,6 +93,20 @@ export class AppComponent implements OnInit, OnDestroy {
       this.error = `Authentication failed: ${err}`;
     } finally {
       this.authLoading = false;
+    }
+  }
+
+  onLogin(token: string): void {
+    this.login(token);
+  }
+
+  onViewChange(view: ViewMode): void {
+    if (view === 'repos') {
+      this.showRepos();
+    } else if (view === 'settings') {
+      this.showSettings();
+    } else {
+      this.showAlerts();
     }
   }
 
@@ -275,15 +287,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   showSettings() {
     this.currentView = 'settings';
-  }
-
-  getAlertIcon(): string {
-    if (!this.alerts) return '🔵';
-    return this.alerts.total_alerts === 0 ? '✓' : '⚠';
-  }
-
-  getLastUpdate(): string {
-    return new Date().toLocaleTimeString();
   }
 
   ngOnDestroy() {

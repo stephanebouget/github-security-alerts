@@ -1,0 +1,79 @@
+@use "sass:color";
+
+$bg-secondary: #16213e;
+$bg-tertiary: #0f3460;
+$text-primary: #ffffff;
+$text-secondary: #a0a0a0;
+$accent-color: #4a90d9;
+$border-color: #2a2a4a;
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: $bg-secondary;
+  border-bottom: 1px solid $border-color;
+  -webkit-app-region: drag;
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .logo {
+      font-size: 18px;
+    }
+
+    .title {
+      font-weight: 600;
+      font-size: 14px;
+    }
+  }
+
+  .header-right {
+    display: flex;
+    gap: 4px;
+    -webkit-app-region: no-drag;
+  }
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: $text-secondary;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.2s;
+
+  &:hover {
+    background: $bg-tertiary;
+    color: $text-primary;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.active {
+    background: $bg-tertiary;
+    color: $accent-color;
+  }
+
+  .spinning {
+    display: inline-block;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

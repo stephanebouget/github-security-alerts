@@ -1,0 +1,36 @@
+<div class="login-panel">
+  <div class="login-content">
+    <div class="login-icon">🔐</div>
+    <h2>Welcome to GitHub Security Alerts</h2>
+    <p>Enter your GitHub Personal Access Token to monitor security alerts.</p>
+    <p class="hint">
+      You need a GitHub Personal Access Token with <strong>repo</strong> and
+      <strong>read:org</strong> scopes
+    </p>
+    <button
+      class="token-btn"
+      (click)="onOpenTokenPage()"
+      title="Open GitHub token creation page"
+    >
+      🔑 Create Token on GitHub
+    </button>
+    <div class="token-input-group">
+      <input
+        type="password"
+        [(ngModel)]="tokenInput"
+        placeholder="ghp_xxxxxxxxxxxx"
+        (keyup.enter)="onLogin()"
+        [disabled]="authLoading"
+      />
+      <button
+        class="primary-btn"
+        (click)="onLogin()"
+        [disabled]="authLoading || !tokenInput.trim()"
+      >
+        <span *ngIf="!authLoading">Connect</span>
+        <span *ngIf="authLoading">⏳ Connecting...</span>
+      </button>
+    </div>
+    <p class="error-text" *ngIf="error">{{ error }}</p>
+  </div>
+</div>
