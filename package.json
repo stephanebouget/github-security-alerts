@@ -1,6 +1,6 @@
 {
-  "name": "angular-tauri",
-  "version": "1.3.0",
+  "name": "github-security-alerts",
+  "version": "0.1.0",
   "scripts": {
     "ng": "ng",
     "start": "npm run tauri:serve",
