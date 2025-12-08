@@ -86,3 +86,11 @@ jobs:
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: "Release ${{ github.ref_name }}"
+          releaseBody: "Voir le changelog pour les détails de cette version."
+          releaseDraft: false
+          prerelease: false
+          includeRelease: true
+          includeDebug: false
