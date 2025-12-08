@@ -19,7 +19,9 @@ $border-color: #2a2a4a;
   .header-left {
     display: flex;
     align-items: center;
+    cursor: pointer;
     gap: 8px;
+    -webkit-app-region: no-drag;
 
     .logo {
       font-size: 18px;

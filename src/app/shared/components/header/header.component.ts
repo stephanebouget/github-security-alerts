@@ -20,6 +20,10 @@ export class HeaderComponent {
     this.refresh.emit();
   }
 
+  showAlerts(): void {
+    this.viewChange.emit('alerts');
+  }
+
   showRepos(): void {
     this.viewChange.emit('repos');
   }
