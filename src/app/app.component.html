@@ -21,7 +21,9 @@
   <app-settings-panel
     *ngIf="authenticated && currentView === 'settings'"
     [username]="username"
+    [refreshInterval]="refreshIntervalMinutes"
     (logout)="logout()"
+    (refreshIntervalChange)="onRefreshIntervalChange($event)"
   ></app-settings-panel>
 
   <!-- Repos Selection View -->

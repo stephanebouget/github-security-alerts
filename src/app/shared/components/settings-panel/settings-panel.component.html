@@ -4,8 +4,27 @@
       <i class="ti ti-user user-icon"></i>
       <span class="username">{{ username }}</span>
     </div>
+
+    <div class="settings-group">
+      <label class="settings-label">
+        <span class="label-text">Auto-refresh interval</span>
+        <select
+          class="refresh-select"
+          [value]="refreshInterval"
+          (change)="onRefreshIntervalChange($event)"
+        >
+          <option value="30">30 minutes</option>
+          <option value="60">1 hour</option>
+          <option value="120">2 hours</option>
+          <option value="240">4 hours</option>
+        </select>
+      </label>
+    </div>
+
     <div class="settings-actions">
-      <button class="danger-btn" (click)="onLogout()"><i class="ti ti-logout"></i> Sign Out</button>
+      <button class="danger-btn" (click)="onLogout()">
+        <i class="ti ti-logout"></i> Sign Out
+      </button>
     </div>
   </div>
 </div>

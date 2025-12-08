@@ -41,7 +41,6 @@ fn main() {
             alert_count: Mutex::new(0),
             last_shown: Mutex::new(None),
             config: Mutex::new(config),
-            dev_tools_open: Mutex::new(false),
         })
         .setup(|app| {
             let quit = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;

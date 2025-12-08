@@ -44,6 +44,7 @@ export class AppComponent implements OnInit, OnDestroy {
   currentView: ViewMode = 'alerts';
   error = '';
   refreshInterval: any;
+  refreshIntervalMinutes: number = 60; // Default to 1 hour
 
   constructor(
     private tauriService: TauriService,
@@ -51,6 +52,18 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {
     translate.setFallbackLang('en');
     console.log('APP_CONFIG', APP_CONFIG);
+    this.loadRefreshIntervalFromStorage();
+  }
+
+  private loadRefreshIntervalFromStorage(): void {
+    const stored = localStorage.getItem('refreshInterval');
+    if (stored) {
+      this.refreshIntervalMinutes = parseInt(stored, 10);
+    }
+  }
+
+  private saveRefreshIntervalToStorage(): void {
+    localStorage.setItem('refreshInterval', this.refreshIntervalMinutes.toString());
   }
 
   async ngOnInit() {
@@ -241,9 +254,22 @@ export class AppComponent implements OnInit, OnDestroy {
 
   startAutoRefresh() {
     this.stopAutoRefresh();
+    
+    // If interval is 0, don't start auto-refresh
+    if (this.refreshIntervalMinutes === 0) {
+      return;
+    }
+    
+    const intervalMs = this.refreshIntervalMinutes * 60 * 1000;
     this.refreshInterval = setInterval(() => {
       this.fetchAlerts();
-    }, 5 * 60 * 1000);
+    }, intervalMs);
+  }
+
+  onRefreshIntervalChange(minutes: number): void {
+    this.refreshIntervalMinutes = minutes;
+    this.saveRefreshIntervalToStorage();
+    this.startAutoRefresh();
   }
 
   stopAutoRefresh() {

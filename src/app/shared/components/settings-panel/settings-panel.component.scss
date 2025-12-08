@@ -46,6 +46,54 @@ $border-color: #2a2a4a;
       flex-direction: column;
       gap: 8px;
     }
+
+    .settings-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 12px;
+      background: $bg-primary;
+      border-radius: 8px;
+
+      .settings-label {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+
+        .label-text {
+          color: #ffffff;
+        }
+
+        .refresh-select {
+          padding: 8px 10px;
+          background: $bg-secondary;
+          border: 1px solid $border-color;
+          border-radius: 4px;
+          color: #ffffff;
+          font-size: 13px;
+          cursor: pointer;
+          transition: all 0.2s;
+
+          &:hover {
+            border-color: #4a90d9;
+          }
+
+          &:focus {
+            outline: none;
+            border-color: #4a90d9;
+            box-shadow: 0 0 0 2px rgba(74, 144, 217, 0.2);
+          }
+
+          option {
+            background: $bg-secondary;
+            color: #ffffff;
+          }
+        }
+      }
+    }
   }
 }
 
