@@ -6,12 +6,12 @@
 <div class="alerts-list">
   <!-- Loading spinner -->
   <div class="loading-spinner" *ngIf="alertsLoading">
-    <span class="spinning">🔄</span> Loading alerts...
+    <i class="ti ti-refresh spinning"></i> Loading alerts...
   </div>
 
   <!-- No repos selected -->
   <div class="empty-state" *ngIf="!alertsLoading && (!alerts || alerts.repos.length === 0)">
-    <div class="empty-icon">📦</div>
+    <i class="ti ti-package empty-icon"></i>
     <p>No repositories selected</p>
     <button class="primary-btn" (click)="onShowRepos()">
       Select Repositories
@@ -25,7 +25,7 @@
     [class.safe]="alerts.total_alerts === 0"
     [class.danger]="alerts.total_alerts > 0"
   >
-    <span class="summary-icon">{{ getAlertIcon() }}</span>
+    <i [class]="'summary-icon ' + getAlertIcon()"></i>
     <span class="summary-text" *ngIf="alerts.total_alerts === 0"
       >All repositories are secure</span
     >
@@ -42,7 +42,7 @@
       [class.has-alerts]="repo.alerts > 0"
     >
       <div class="repo-info">
-        <span class="repo-icon">📦</span>
+        <i class="ti ti-package repo-icon"></i>
         <span class="repo-name">{{ repo.name.split("/")[1] }}</span>
         <span class="repo-org">{{ repo.name.split("/")[0] }}</span>
       </div>
@@ -51,7 +51,8 @@
         [class.safe]="repo.alerts === 0"
         [class.danger]="repo.alerts > 0"
       >
-        {{ repo.alerts === 0 ? "✓" : repo.alerts }}
+        <i *ngIf="repo.alerts === 0" class="ti ti-check"></i>
+        <span *ngIf="repo.alerts > 0">{{ repo.alerts }}</span>
       </div>
     </div>
   </div>

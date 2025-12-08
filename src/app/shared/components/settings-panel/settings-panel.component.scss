@@ -31,7 +31,8 @@ $border-color: #2a2a4a;
       border-radius: 8px;
 
       .user-icon {
-        font-size: 24px;
+        font-size: 28px;
+        color: #4a90d9;
       }
 
       .username {
@@ -57,6 +58,14 @@ $border-color: #2a2a4a;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  i {
+    font-size: 18px;
+  }
 
   &:hover {
     background: rgba($danger-color, 0.25);

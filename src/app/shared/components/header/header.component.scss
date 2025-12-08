@@ -22,9 +22,15 @@ $border-color: #2a2a4a;
     cursor: pointer;
     gap: 8px;
     -webkit-app-region: no-drag;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 0.8;
+    }
 
     .logo {
-      font-size: 18px;
+      font-size: 22px;
+      color: #4a90d9;
     }
 
     .title {
@@ -47,8 +53,11 @@ $border-color: #2a2a4a;
   cursor: pointer;
   padding: 6px 8px;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 18px;
   transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     background: $bg-tertiary;
@@ -63,6 +72,10 @@ $border-color: #2a2a4a;
   &.active {
     background: $bg-tertiary;
     color: $accent-color;
+  }
+
+  i {
+    font-size: 20px;
   }
 
   .spinning {

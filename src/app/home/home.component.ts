@@ -43,8 +43,8 @@ export class HomeComponent implements OnInit {
   }
 
   getAlertIcon(): string {
-    if (!this.alerts) return '🔵';
-    return this.alerts.total_alerts === 0 ? '🟢' : '🔴';
+    if (!this.alerts) return 'ti ti-circle-filled';
+    return this.alerts.total_alerts === 0 ? 'ti ti-circle-check-filled' : 'ti ti-alert-circle-filled';
   }
 
   ngOnDestroy() {

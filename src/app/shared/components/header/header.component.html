@@ -1,6 +1,6 @@
 <div class="header">
   <div class="header-left" (click)="showAlerts()" style="cursor: pointer;">
-    <span class="logo">🔒</span>
+    <i class="ti ti-lock logo"></i>
     <span class="title">GitHub Alerts</span>
   </div>
   <div class="header-right" *ngIf="authenticated">
@@ -10,7 +10,7 @@
       [disabled]="alertsLoading"
       title="Refresh"
     >
-      <span [class.spinning]="alertsLoading">🔄</span>
+      <i class="ti ti-refresh" [class.spinning]="alertsLoading"></i>
     </button>
     <button
       class="icon-btn"
@@ -18,7 +18,7 @@
       (click)="showRepos()"
       title="Repositories"
     >
-      📦
+      <i class="ti ti-package"></i>
     </button>
     <button
       class="icon-btn"
@@ -26,7 +26,7 @@
       (click)="showSettings()"
       title="Settings"
     >
-      ⚙️
+      <i class="ti ti-settings"></i>
     </button>
   </div>
 </div>

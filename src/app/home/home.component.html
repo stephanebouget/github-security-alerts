@@ -3,15 +3,16 @@
 
   <div class="actions-section">
     <button (click)="fetchAlerts()" [disabled]="loading" class="btn-refresh">
-      {{ loading ? "Loading..." : "🌀 Refresh" }}
+      <i *ngIf="loading" class="ti ti-loader spinning"></i>
+      <span *ngIf="!loading"><i class="ti ti-refresh"></i> Refresh</span>
     </button>
   </div>
 
-  <div *ngIf="error" class="error-message">❌ {{ error }}</div>
+  <div *ngIf="error" class="error-message"><i class="ti ti-x"></i> {{ error }}</div>
 
   <div *ngIf="alerts" class="alerts-section">
     <div class="summary">
-      <span class="icon">{{ getAlertIcon() }}</span>
+      <i [class]="'icon ' + getAlertIcon()"></i>
       <h2>Total Alerts: {{ alerts.total_alerts }}</h2>
     </div>
 
@@ -19,7 +20,9 @@
       <div *ngFor="let repo of alerts.repos" class="repo-item">
         <span class="repo-name">{{ repo.name }}</span>
         <span class="alert-badge" [ngClass]="{ 'has-alerts': repo.alerts > 0 }">
-          {{ repo.alerts === 0 ? "✓ Safe" : repo.alerts + " alert(s)" }}
+          <i *ngIf="repo.alerts === 0" class="ti ti-check"></i>
+          <span *ngIf="repo.alerts === 0">Safe</span>
+          <span *ngIf="repo.alerts > 0">{{ repo.alerts }} alert(s)</span>
         </span>
       </div>
     </div>

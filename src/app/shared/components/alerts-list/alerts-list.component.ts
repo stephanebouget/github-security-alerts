@@ -15,8 +15,8 @@ export class AlertsListComponent {
   @Output() showRepos = new EventEmitter<void>();
 
   getAlertIcon(): string {
-    if (!this.alerts) return '🔵';
-    return this.alerts.total_alerts === 0 ? '✓' : '⚠';
+    if (!this.alerts) return 'ti ti-circle-filled';
+    return this.alerts.total_alerts === 0 ? 'ti ti-check' : 'ti ti-alert-triangle';
   }
 
   onShowRepos(): void {

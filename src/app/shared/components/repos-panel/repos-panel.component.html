@@ -8,14 +8,14 @@
       type="text"
       [ngModel]="searchQuery"
       (ngModelChange)="onSearchChange($event)"
-      placeholder="🔍 Search repositories..."
+      placeholder="Search repositories..."
     />
   </div>
 
   <div class="repos-count">{{ selectedCount }} repositories selected</div>
 
   <div class="loading-spinner" *ngIf="ownersLoading">
-    <span class="spinning">🌀</span> Loading...
+    <i class="ti ti-loader spinning"></i> Loading...
   </div>
 
   <div class="owners-list" *ngIf="!ownersLoading">
@@ -26,18 +26,14 @@
         (click)="onToggleOwner(ownerAcc)"
         [class.expanded]="ownerAcc.expanded"
       >
-        <span class="accordion-icon">{{
-          ownerAcc.expanded ? "▼" : "▶"
-        }}</span>
-        <span class="owner-icon">{{
-          ownerAcc.owner.is_user ? "👤" : "🏢"
-        }}</span>
+        <span class="accordion-icon">{{ ownerAcc.expanded ? "▼" : "▶" }}</span>
+        <i [class]="'owner-icon ti ' + (ownerAcc.owner.is_user ? 'ti-user' : 'ti-building')"></i>
         <span class="owner-name">{{ ownerAcc.owner.name }}</span>
         <span class="owner-badge" *ngIf="ownerAcc.loaded">
           {{ getSelectedCountForOwner(ownerAcc) }}/{{ ownerAcc.repos.length }}
         </span>
         <span class="owner-badge loading" *ngIf="ownerAcc.loading">
-          <span class="spinning">⏳</span>
+          <i class="ti ti-loader spinning"></i>
         </span>
       </div>
 
@@ -62,7 +58,7 @@
         </div>
 
         <div class="loading-spinner small" *ngIf="ownerAcc.loading">
-          <span class="spinning">🔄</span> Loading repos...
+          <i class="ti ti-refresh spinning"></i> Loading repos...
         </div>
 
         <div class="repos-list" *ngIf="ownerAcc.loaded">
@@ -79,7 +75,7 @@
             [class.selected]="repo.selected"
           >
             <div class="checkbox">
-              <span *ngIf="repo.selected">✓</span>
+              <i *ngIf="repo.selected" class="ti ti-check"></i>
             </div>
             <div class="repo-details">
               <span class="repo-name">{{ repo.name }}</span>
@@ -91,6 +87,6 @@
   </div>
 
   <button class="primary-btn" (click)="onDone()">
-    ✓ Done - View Alerts
+    <i class="ti ti-check"></i> Done - View Alerts
   </button>
 </div>

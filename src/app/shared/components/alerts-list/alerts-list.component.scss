@@ -52,7 +52,11 @@ $border-color: #2a2a4a;
     justify-content: center;
     gap: 8px;
     margin-top: 10px;
-    color: $text-secondary;
+    color: $accent-color;
+
+    i {
+      font-size: 24px;
+    }
 
     .spinning {
       display: inline-block;
@@ -87,7 +91,7 @@ $border-color: #2a2a4a;
   }
 
   .summary-icon {
-    font-size: 20px;
+    font-size: 28px;
   }
 
   .summary-text {
@@ -124,8 +128,9 @@ $border-color: #2a2a4a;
     overflow: hidden;
 
     .repo-icon {
-      font-size: 16px;
+      font-size: 20px;
       flex-shrink: 0;
+      color: #4a90d9;
     }
 
     .repo-name {
@@ -148,6 +153,13 @@ $border-color: #2a2a4a;
     font-size: 12px;
     font-weight: 600;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    i {
+      font-size: 14px;
+    }
 
     &.safe {
       background: rgba($success-color, 0.15);
@@ -172,8 +184,9 @@ $border-color: #2a2a4a;
   color: $text-secondary;
 
   .empty-icon {
-    font-size: 48px;
-    opacity: 0.5;
+    font-size: 56px;
+    opacity: 0.7;
+    color: #4a90d9;
   }
 
   p {
