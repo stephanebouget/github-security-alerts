@@ -1,4 +1,4 @@
-use tauri::{PhysicalPosition, Manager};
+use tauri::{PhysicalPosition, Manager, PhysicalSize};
 use std::time::Instant;
 use crate::state::AppState;
 
@@ -11,15 +11,16 @@ pub fn position_window_near_tray(window: &tauri::WebviewWindow) {
         let monitor_size = monitor.size();
         let monitor_position = monitor.position();
 
-        let window_width = 420i32;
-        let window_height = 500i32;
+        let window_width = 420u32;
+        let window_height = 600u32;
         let margin = 10i32;
         let taskbar_height = 48i32;
 
-        let x = monitor_position.x + monitor_size.width as i32 - window_width - margin;
-        let y = monitor_position.y + monitor_size.height as i32 - window_height - taskbar_height - margin;
+        let x = monitor_position.x + monitor_size.width as i32 - window_width as i32 - margin;
+        let y = monitor_position.y + monitor_size.height as i32 - window_height as i32 - taskbar_height - margin;
 
         let _ = window.set_position(PhysicalPosition::new(x, y));
+        let _ = window.set_size(PhysicalSize::new(window_width, window_height));
     }
 }
 
