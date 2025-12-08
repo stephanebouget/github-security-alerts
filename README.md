@@ -2,7 +2,7 @@
 
 A modern desktop application that monitors security vulnerabilities across your GitHub repositories in real-time. Built with Angular and Rust/Tauri for a lightweight, performant experience.
 
-![GitHub Alerts - Monitor your repositories](./src/assets/icons/github-alerts-icon.png)
+<img width="829" height="414" alt="image" src="https://github.com/user-attachments/assets/4895c872-0ef7-42ca-a373-89240bf9d9cd" />
 
 ## 📋 Features
 
