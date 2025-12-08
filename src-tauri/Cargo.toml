@@ -1,11 +1,11 @@
 [package]
-name = "app"
+name = "GithubSecurityAlerts"
 version = "0.1.0"
-description = "A Tauri App"
+description = "Github Security Alerts"
 authors = ["you"]
 license = ""
 repository = ""
-default-run = "app"
+default-run = "GithubSecurityAlerts"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
