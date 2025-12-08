@@ -1,0 +1,1138 @@
+@use "sass:color";
+
+// Dark theme like Gitify
+$bg-primary: #1a1a2e;
+$bg-secondary: #16213e;
+$bg-tertiary: #0f3460;
+$text-primary: #ffffff;
+$text-secondary: #a0a0a0;
+$accent-color: #4a90d9;
+$success-color: #22c55e;
+$danger-color: #ef4444;
+$border-color: #2a2a4a;
+
+:host {
+  display: block;
+  height: 100vh;
+  overflow: hidden;
+  background: $bg-primary;
+  color: $text-primary;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, sans-serif;
+  font-size: 13px;
+  user-select: none;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+// Header
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: $bg-secondary;
+  border-bottom: 1px solid $border-color;
+  -webkit-app-region: drag;
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .logo {
+      font-size: 18px;
+    }
+
+    .title {
+      font-weight: 600;
+      font-size: 14px;
+    }
+  }
+
+  .header-right {
+    display: flex;
+    gap: 4px;
+    -webkit-app-region: no-drag;
+  }
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: $text-secondary;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.2s;
+
+  &:hover {
+    background: $bg-tertiary;
+    color: $text-primary;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .spinning {
+    display: inline-block;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Settings Panel
+.settings-panel {
+  padding: 16px;
+  background: $bg-secondary;
+  border-bottom: 1px solid $border-color;
+
+  .settings-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    label {
+      font-weight: 500;
+      color: $text-secondary;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    input {
+      background: $bg-primary;
+      border: 1px solid $border-color;
+      border-radius: 6px;
+      padding: 10px 12px;
+      color: $text-primary;
+      font-size: 13px;
+
+      &:focus {
+        outline: none;
+        border-color: $accent-color;
+      }
+
+      &::placeholder {
+        color: $text-secondary;
+      }
+    }
+
+    .hint {
+      font-size: 11px;
+      color: $text-secondary;
+      margin: 0;
+      line-height: 1.4;
+
+      a {
+        color: $accent-color;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      code {
+        background: $bg-tertiary;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 10px;
+      }
+    }
+
+    .save-btn {
+      background: $accent-color;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+
+      &:hover {
+        background: color.adjust($accent-color, $lightness: -10%);
+      }
+    }
+  }
+}
+
+// Error Banner
+.error-banner {
+  background: rgba($danger-color, 0.1);
+  border-left: 3px solid $danger-color;
+  color: $danger-color;
+  padding: 10px 16px;
+  font-size: 12px;
+}
+
+// Alerts List
+.alerts-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $bg-primary;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $border-color;
+    border-radius: 3px;
+  }
+}
+
+// Summary
+.summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  margin: 12px;
+  border-radius: 8px;
+  background: $bg-secondary;
+
+  &.safe {
+    border-left: 3px solid $success-color;
+
+    .summary-icon {
+      color: $success-color;
+    }
+  }
+
+  &.danger {
+    border-left: 3px solid $danger-color;
+
+    .summary-icon {
+      color: $danger-color;
+    }
+  }
+
+  .summary-icon {
+    font-size: 20px;
+  }
+
+  .summary-text {
+    font-weight: 500;
+  }
+}
+
+// Repository List
+.repo-list {
+  padding: 0 12px 12px;
+}
+
+.repo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: $bg-secondary;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  transition: background 0.2s;
+
+  &:hover {
+    background: $bg-tertiary;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .repo-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow: hidden;
+
+    .repo-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .repo-name {
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .repo-org {
+      font-size: 11px;
+      color: $text-secondary;
+      white-space: nowrap;
+    }
+  }
+
+  .repo-badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
+
+    &.safe {
+      background: rgba($success-color, 0.15);
+      color: $success-color;
+    }
+
+    &.danger {
+      background: rgba($danger-color, 0.15);
+      color: $danger-color;
+    }
+  }
+}
+
+// Footer
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  background: $bg-secondary;
+  border-top: 1px solid $border-color;
+  font-size: 11px;
+  color: $text-secondary;
+
+  .version {
+    opacity: 0.6;
+  }
+}
+
+// Login Screen
+.login-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  text-align: center;
+
+  .login-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0 0 24px;
+    color: $text-secondary;
+    font-size: 13px;
+  }
+
+  .login-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: $accent-color;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: color.adjust($accent-color, $lightness: -10%);
+    }
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// Authenticating Screen
+.auth-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  text-align: center;
+
+  h2 {
+    margin: 0 0 16px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0 0 8px;
+    color: $text-secondary;
+    font-size: 13px;
+  }
+
+  .device-code {
+    background: $bg-secondary;
+    border: 2px dashed $border-color;
+    border-radius: 8px;
+    padding: 16px 32px;
+    margin: 16px 0;
+
+    .code {
+      font-family: monospace;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: $accent-color;
+    }
+  }
+
+  a {
+    color: $accent-color;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .spinner {
+    margin-top: 24px;
+    font-size: 20px;
+    animation: spin 1s linear infinite;
+  }
+
+  .cancel-btn {
+    margin-top: 16px;
+    background: transparent;
+    border: 1px solid $border-color;
+    color: $text-secondary;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background: $bg-secondary;
+      color: $text-primary;
+    }
+  }
+}
+
+// User Info
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .user-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .user-name {
+    font-size: 12px;
+    color: $text-secondary;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+// Repo Selector Panel
+.repo-selector {
+  max-height: 300px;
+  overflow-y: auto;
+  background: $bg-secondary;
+  border-bottom: 1px solid $border-color;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $bg-secondary;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $border-color;
+    border-radius: 3px;
+  }
+
+  .selector-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid $border-color;
+    position: sticky;
+    top: 0;
+    background: $bg-secondary;
+    z-index: 1;
+
+    h3 {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .save-btn {
+      background: $accent-color;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+
+      &:hover {
+        background: color.adjust($accent-color, $lightness: -10%);
+      }
+    }
+  }
+
+  .repo-checkbox-list {
+    padding: 8px 0;
+  }
+
+  .repo-checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: $bg-tertiary;
+    }
+
+    input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: $accent-color;
+      cursor: pointer;
+    }
+
+    .checkbox-label {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+
+      .repo-full-name {
+        font-size: 13px;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .repo-description {
+        font-size: 11px;
+        color: $text-secondary;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .private-badge {
+      font-size: 10px;
+      background: $bg-tertiary;
+      color: $text-secondary;
+      padding: 2px 6px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+  }
+
+  .no-repos {
+    padding: 24px 16px;
+    text-align: center;
+    color: $text-secondary;
+    font-size: 13px;
+  }
+}
+
+// Loading State
+.loading-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  color: $text-secondary;
+
+  .spinner {
+    font-size: 24px;
+    animation: spin 1s linear infinite;
+  }
+}
+
+// Login Panel
+.login-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+
+  .login-content {
+    text-align: center;
+
+    .login-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 0 0 24px;
+      color: $text-secondary;
+      font-size: 13px;
+      max-width: 280px;
+    }
+  }
+
+  .github-login-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: $accent-color;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin: 0 auto;
+
+    &:hover {
+      background: color.adjust($accent-color, $lightness: -10%);
+    }
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  }
+
+  .hint {
+    margin-top: 16px;
+    color: $text-secondary;
+    font-size: 12px;
+
+    a {
+      color: $accent-color;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &.error-text {
+      color: $danger-color;
+    }
+  }
+
+  .token-input-group {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+
+    input {
+      flex: 1;
+      background: $bg-tertiary;
+      border: 1px solid $border-color;
+      border-radius: 6px;
+      padding: 10px 12px;
+      color: $text-primary;
+      font-size: 13px;
+      font-family: "Courier New", monospace;
+
+      &:focus {
+        outline: none;
+        border-color: $accent-color;
+      }
+
+      &::placeholder {
+        color: $text-secondary;
+      }
+
+      &:disabled {
+        opacity: 0.6;
+      }
+    }
+  }
+
+  .error-text {
+    color: $danger-color;
+    margin-top: 12px;
+    font-size: 12px;
+  }
+
+  // Device Code Display
+  .device-code-display {
+    background: $bg-tertiary;
+    border: 2px dashed $accent-color;
+    border-radius: 12px;
+    padding: 16px 32px;
+    margin: 16px 0;
+
+    .user-code {
+      font-family: "Courier New", monospace;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      color: $accent-color;
+    }
+  }
+
+  .instructions {
+    margin: 8px 0 !important;
+    color: $text-secondary;
+  }
+
+  .verification-link {
+    color: $accent-color;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .waiting-text {
+    margin-top: 20px !important;
+    color: $text-secondary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .cancel-btn {
+    margin-top: 16px;
+    background: transparent;
+    border: 1px solid $border-color;
+    color: $text-secondary;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background: $bg-tertiary;
+      color: $text-primary;
+    }
+  }
+}
+
+// Repos Panel
+.repos-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  .repos-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: $bg-secondary;
+    border-bottom: 1px solid $border-color;
+
+    h3 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .repos-actions {
+      display: flex;
+      gap: 8px;
+    }
+  }
+
+  .search-box {
+    padding: 8px 16px;
+    background: $bg-secondary;
+    border-bottom: 1px solid $border-color;
+
+    input {
+      width: 100%;
+      background: $bg-primary;
+      border: 1px solid $border-color;
+      border-radius: 6px;
+      padding: 8px 12px;
+      color: $text-primary;
+      font-size: 13px;
+      box-sizing: border-box;
+
+      &:focus {
+        outline: none;
+        border-color: $accent-color;
+      }
+
+      &::placeholder {
+        color: $text-secondary;
+      }
+    }
+  }
+
+  .repos-count {
+    padding: 8px 16px;
+    font-size: 12px;
+    color: $text-secondary;
+    background: $bg-secondary;
+    border-bottom: 1px solid $border-color;
+  }
+
+  .owners-list {
+    flex: 1;
+    overflow-y: auto;
+    
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: $bg-primary;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $border-color;
+      border-radius: 3px;
+    }
+  }
+
+  .owner-accordion {
+    border-bottom: 1px solid $border-color;
+
+    .accordion-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: $bg-secondary;
+      cursor: pointer;
+      transition: background 0.2s;
+      user-select: none;
+
+      &:hover {
+        background: $bg-tertiary;
+      }
+
+      &.expanded {
+        border-bottom: 1px solid $border-color;
+      }
+
+      .accordion-icon {
+        font-size: 10px;
+        color: $text-secondary;
+        width: 12px;
+      }
+
+      .owner-icon {
+        font-size: 14px;
+      }
+
+      .owner-name {
+        flex: 1;
+        font-weight: 500;
+        font-size: 13px;
+      }
+
+      .owner-badge {
+        background: $bg-tertiary;
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-size: 11px;
+        color: $text-secondary;
+
+        &.loading {
+          background: transparent;
+        }
+      }
+    }
+
+    .accordion-content {
+      background: $bg-primary;
+
+      .accordion-actions {
+        display: flex;
+        gap: 8px;
+        padding: 8px 16px;
+        border-bottom: 1px solid $border-color;
+      }
+
+      .empty-repos {
+        padding: 16px;
+        text-align: center;
+        color: $text-secondary;
+        font-size: 12px;
+      }
+
+      .loading-spinner.small {
+        padding: 16px;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .repos-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 0;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: $bg-primary;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $border-color;
+      border-radius: 3px;
+    }
+  }
+
+  .repo-select-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: $bg-tertiary;
+    }
+
+    &.selected {
+      .checkbox {
+        background: $accent-color;
+        border-color: $accent-color;
+      }
+    }
+
+    .checkbox {
+      width: 18px;
+      height: 18px;
+      border: 2px solid $border-color;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: white;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+
+    .repo-details {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+
+      .repo-name {
+        font-size: 13px;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .repo-owner {
+        font-size: 11px;
+        color: $text-secondary;
+      }
+    }
+  }
+
+  .loading-spinner {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: $text-secondary;
+
+    .spinning {
+      display: inline-block;
+      animation: spin 1s linear infinite;
+    }
+  }
+
+  .primary-btn {
+    margin: 12px 16px;
+    background: $accent-color;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: color.adjust($accent-color, $lightness: -10%);
+    }
+  }
+}
+
+// Small button
+.small-btn {
+  background: $bg-tertiary;
+  color: $text-secondary;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: color.adjust($bg-tertiary, $lightness: 10%);
+    color: $text-primary;
+  }
+}
+
+// Empty state
+.empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+  color: $text-secondary;
+
+  .empty-icon {
+    font-size: 48px;
+    opacity: 0.5;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+  }
+
+  .primary-btn {
+    background: $accent-color;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: color.adjust($accent-color, $lightness: -10%);
+    }
+  }
+}
+
+// Icon button active state
+.icon-btn.active {
+  background: $bg-tertiary;
+  color: $accent-color;
+}
+
+// Danger button
+.danger-btn {
+  background: rgba($danger-color, 0.15);
+  color: $danger-color;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: rgba($danger-color, 0.25);
+  }
+}
+
+// Settings Panel Content
+.settings-panel .settings-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: $bg-primary;
+    border-radius: 8px;
+
+    .user-icon {
+      font-size: 24px;
+    }
+
+    .username {
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+
+  .settings-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}

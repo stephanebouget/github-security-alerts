@@ -1,0 +1,31 @@
+<div class="alerts-container">
+  <h1>GitHub Security Alerts Monitor</h1>
+
+  <div class="actions-section">
+    <button (click)="fetchAlerts()" [disabled]="loading" class="btn-refresh">
+      {{ loading ? "Loading..." : "🔄 Refresh" }}
+    </button>
+  </div>
+
+  <div *ngIf="error" class="error-message">❌ {{ error }}</div>
+
+  <div *ngIf="alerts" class="alerts-section">
+    <div class="summary">
+      <span class="icon">{{ getAlertIcon() }}</span>
+      <h2>Total Alerts: {{ alerts.total_alerts }}</h2>
+    </div>
+
+    <div class="repos-list">
+      <div *ngFor="let repo of alerts.repos" class="repo-item">
+        <span class="repo-name">{{ repo.name }}</span>
+        <span class="alert-badge" [ngClass]="{ 'has-alerts': repo.alerts > 0 }">
+          {{ repo.alerts === 0 ? "✓ Safe" : repo.alerts + " alert(s)" }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!alerts && !loading && !error" class="empty-state">
+    <p>No alerts data yet. Click refresh to fetch alerts.</p>
+  </div>
+</div>
