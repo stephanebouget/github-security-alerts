@@ -41,6 +41,7 @@ fn main() {
             alert_count: Mutex::new(0),
             last_shown: Mutex::new(None),
             config: Mutex::new(config),
+            dev_tools_open: Mutex::new(false),
         })
         .setup(|app| {
             let quit = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
@@ -48,7 +49,17 @@ fn main() {
             let hide = MenuItem::with_id(app, "hide", "Hide Window", true, None::<&str>)?;
             let menu = Menu::with_items(app, &[&show, &hide, &quit])?;
 
-            let icon_data = generate_tray_icon(None);
+            // Check if repos are configured
+            let has_repos = {
+                if let Some(state) = app.try_state::<AppState>() {
+                    let config = state.config.lock().unwrap();
+                    !config.selected_repos.is_empty()
+                } else {
+                    false
+                }
+            };
+
+            let icon_data = generate_tray_icon(None, has_repos);
             let icon = Image::from_bytes(&icon_data)?;
 
             // Check if user is authenticated
