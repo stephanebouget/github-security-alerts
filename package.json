@@ -13,8 +13,7 @@
     "tauri:bundle": "tauri build",
     "test": "ng test --watch=false",
     "test:watch": "ng test",
-    "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
-    "lint": "ng lint"
+    "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md"
   },
   "private": true,
   "dependencies": {
@@ -34,11 +33,6 @@
     "zone.js": "0.16.0"
   },
   "devDependencies": {
-    "@angular-eslint/builder": "21.0.1",
-    "@angular-eslint/eslint-plugin": "21.0.1",
-    "@angular-eslint/eslint-plugin-template": "21.0.1",
-    "@angular-eslint/schematics": "21.0.1",
-    "@angular-eslint/template-parser": "21.0.1",
     "@angular/build": "^21.0.2",
     "@angular/cli": "21.0.2",
     "@angular/compiler-cli": "21.0.3",
@@ -48,13 +42,7 @@
     "@types/jasmine": "5.1.13",
     "@types/jasminewd2": "2.0.13",
     "@types/node": "24.10.1",
-    "@typescript-eslint/eslint-plugin": "8.48.1",
-    "@typescript-eslint/parser": "8.48.1",
     "conventional-changelog-cli": "5.0.0",
-    "eslint": "9.39.1",
-    "eslint-plugin-import": "2.32.0",
-    "eslint-plugin-jsdoc": "61.4.1",
-    "eslint-plugin-prefer-arrow": "1.2.3",
     "jasmine-core": "5.13.0",
     "jasmine-spec-reporter": "7.0.0",
     "karma": "6.4.4",

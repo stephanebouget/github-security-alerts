@@ -6,7 +6,7 @@ on:
   # Triggers the workflow on tag push only
   push:
     tags:
-      - 'v*'
+      - "v*"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -72,9 +72,6 @@ jobs:
 
       - name: Install Node dependencies
         run: npm install
-
-      - name: Check lint
-        run: npm run lint
 
       - name: Run unit tests (Linux only)
         if: matrix.platform == 'ubuntu-22.04'

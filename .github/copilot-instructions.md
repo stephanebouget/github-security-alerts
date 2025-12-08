@@ -36,7 +36,7 @@ Ex: docs: add installation procedure
 
 style:
 
-Changes that do not impact the code (formatting, indentation, eslint, prettier).
+Changes that do not impact the code (formatting, indentation, prettier).
 Ex: style: fix formatting
 
 test:

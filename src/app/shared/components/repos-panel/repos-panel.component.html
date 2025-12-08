@@ -27,7 +27,12 @@
         [class.expanded]="ownerAcc.expanded"
       >
         <span class="accordion-icon">{{ ownerAcc.expanded ? "▼" : "▶" }}</span>
-        <i [class]="'owner-icon ti ' + (ownerAcc.owner.is_user ? 'ti-user' : 'ti-building')"></i>
+        <i
+          [class]="
+            'owner-icon ti ' +
+            (ownerAcc.owner.is_user ? 'ti-user' : 'ti-building')
+          "
+        ></i>
         <span class="owner-name">{{ ownerAcc.owner.name }}</span>
         <span class="owner-badge" *ngIf="ownerAcc.loaded">
           {{ getSelectedCountForOwner(ownerAcc) }}/{{ ownerAcc.repos.length }}
@@ -43,16 +48,10 @@
           class="accordion-actions"
           *ngIf="ownerAcc.loaded && ownerAcc.repos.length > 0"
         >
-          <button
-            class="small-btn"
-            (click)="onSelectAll(ownerAcc, $event)"
-          >
+          <button class="small-btn" (click)="onSelectAll(ownerAcc, $event)">
             Select All
           </button>
-          <button
-            class="small-btn"
-            (click)="onSelectNone(ownerAcc, $event)"
-          >
+          <button class="small-btn" (click)="onSelectNone(ownerAcc, $event)">
             Select None
           </button>
         </div>
