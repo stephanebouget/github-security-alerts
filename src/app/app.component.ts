@@ -112,6 +112,14 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  openCreateTokenPage() {
+    const tokenUrl = 'https://github.com/settings/tokens/new?description=Github-Security-Alerts&scopes=read%3Auser%2Cnotifications%2Crepo%2Cread%3Aorg';
+    this.tauriService.openExternalLink(tokenUrl).catch(err => {
+      console.error('Failed to open URL:', err);
+      this.error = 'Failed to open GitHub token page';
+    });
+  }
+
   async loadOwners() {
     this.ownersLoading = true;
     this.error = '';

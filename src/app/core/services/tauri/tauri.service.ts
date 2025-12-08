@@ -76,4 +76,19 @@ export class TauriService {
   async updateTrayIcon(alertCount: number): Promise<void> {
     return invoke('update_tray_icon', { alertCount });
   }
+
+  async openExternalLink(url: string): Promise<void> {
+    if (this.isTauri) {
+      const { open } = await import('@tauri-apps/plugin-shell');
+
+      try {
+        await open(url);
+      } catch (error) {
+        console.error('Erreur Tauri:', error);
+        window.open(url, '_blank');
+      }
+    } else {
+      window.open(url, '_blank');
+    }
+  }
 }

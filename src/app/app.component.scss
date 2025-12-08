@@ -187,6 +187,8 @@ $border-color: #2a2a4a;
   flex: 1;
   overflow-y: auto;
   padding: 0;
+  display: flex;
+  flex-direction: column;
 
   &::-webkit-scrollbar {
     width: 6px;
@@ -199,6 +201,20 @@ $border-color: #2a2a4a;
   &::-webkit-scrollbar-thumb {
     background: $border-color;
     border-radius: 3px;
+  }
+
+  .loading-spinner {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: $text-secondary;
+
+    .spinning {
+      display: inline-block;
+      animation: spin 1s linear infinite;
+    }
   }
 }
 

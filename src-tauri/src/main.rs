@@ -530,6 +530,7 @@ fn main() {
   let config = load_config();
   
   tauri::Builder::default()
+    .plugin(tauri_plugin_shell::init())
     .manage(AppState {
       alert_count: Mutex::new(0),
       last_shown: Mutex::new(None),
