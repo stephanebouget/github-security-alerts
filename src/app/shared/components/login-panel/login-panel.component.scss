@@ -27,8 +27,9 @@ $border-color: #2a2a4a;
     text-align: center;
 
     .login-icon {
-      font-size: 48px;
+      font-size: 56px;
       margin-bottom: 16px;
+      color: #4a90d9;
     }
 
     h2 {
@@ -80,6 +81,11 @@ $border-color: #2a2a4a;
     transition: all 0.2s;
     margin: 0 auto 16px;
 
+    i {
+      font-size: 16px;
+      color: #4a90d9;
+    }
+
     &:hover {
       background: color.adjust($bg-tertiary, $lightness: 5%);
       border-color: $accent-color;
@@ -125,6 +131,14 @@ $border-color: #2a2a4a;
     font-weight: 500;
     cursor: pointer;
     transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    i {
+      font-size: 16px;
+    }
 
     &:hover {
       background: color.adjust($accent-color, $lightness: -10%);
