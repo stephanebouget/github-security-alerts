@@ -25,6 +25,7 @@ open = "5"
 tiny_http = "0.12"
 url = "2"
 dirs = "5"
+tauri-plugin-single-instance = "2.0"
 
 [features]
 # by default Tauri runs in production mode

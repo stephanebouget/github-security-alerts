@@ -26,17 +26,19 @@ use state::AppState;
 use tray::generate_tray_icon;
 use window::{position_window_near_tray, handle_window_focus_lost, handle_window_show};
 
-
-
-// ============================================================================
-// Main Application
-// ============================================================================
-
 fn main() {
     let config = load_config();
 
     tauri::Builder::default()
         .plugin(tauri_plugin_shell::init())
+        .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
+            if let Some(window) = app.get_webview_window("main") {
+                position_window_near_tray(&window);
+                let _ = window.show();
+                let _ = window.set_focus();
+                let _ = window.unminimize();
+            }
+        }))
         .manage(AppState {
             alert_count: Mutex::new(0),
             last_shown: Mutex::new(None),
@@ -97,6 +99,7 @@ fn main() {
                                 position_window_near_tray(&window);
                                 let _ = window.show();
                                 let _ = window.set_focus();
+                                let _ = window.unminimize();
                             }
                         }
                         "hide" => {
@@ -122,6 +125,7 @@ fn main() {
                                 position_window_near_tray(&window);
                                 let _ = window.show();
                                 let _ = window.set_focus();
+                                let _ = window.unminimize();
                             }
                         }
                     }
