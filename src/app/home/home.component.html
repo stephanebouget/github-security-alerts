@@ -1,27 +1,10 @@
 <div class="alerts-container">
   <h1>GitHub Security Alerts Monitor</h1>
 
-  <div class="token-input-section">
-    <div class="input-group">
-      <input
-        type="password"
-        [(ngModel)]="githubToken"
-        placeholder="Enter your GitHub Personal Access Token"
-        (keyup.enter)="saveToken()"
-        class="token-input"
-      />
-      <button (click)="saveToken()" class="btn-save">Save & Fetch</button>
-      <button (click)="fetchAlerts()" [disabled]="loading" class="btn-refresh">
-        {{ loading ? "Loading..." : "Refresh" }}
-      </button>
-    </div>
-    <p class="info-text">
-      Get a token from
-      <a href="https://github.com/settings/tokens" target="_blank"
-        >GitHub Settings</a
-      >
-      with 'repo:security_events' permission
-    </p>
+  <div class="actions-section">
+    <button (click)="fetchAlerts()" [disabled]="loading" class="btn-refresh">
+      {{ loading ? "Loading..." : "🔄 Refresh" }}
+    </button>
   </div>
 
   <div *ngIf="error" class="error-message">❌ {{ error }}</div>
@@ -40,5 +23,9 @@
         </span>
       </div>
     </div>
+  </div>
+
+  <div *ngIf="!alerts && !loading && !error" class="empty-state">
+    <p>No alerts data yet. Click refresh to fetch alerts.</p>
   </div>
 </div>

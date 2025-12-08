@@ -8,54 +8,29 @@ import { AlertsResponse, TauriService } from '../core/services';
   standalone: false,
 })
 export class HomeComponent implements OnInit {
-  githubToken: string = '';
   alerts: AlertsResponse | null = null;
   loading: boolean = false;
   error: string = '';
   refreshInterval: any;
 
-  intervalTimeout: number = 60 * 60 * 1000; // 5 minutes
+  intervalTimeout: number = 60 * 60 * 1000; // 1 hour
 
   constructor(private tauriService: TauriService) {}
 
   ngOnInit() {
-    // Load the GitHub token from localStorage
-    const savedToken = localStorage.getItem('github_token');
-    if (savedToken) {
-      this.githubToken = savedToken;
+    // Start fetching alerts - the backend handles authentication
+    this.fetchAlerts();
+    this.refreshInterval = setInterval(() => {
       this.fetchAlerts();
-      this.refreshInterval = setInterval(() => {
-        this.fetchAlerts();
-      }, this.intervalTimeout);
-    }
-  }
-
-  saveToken() {
-    if (this.githubToken.trim()) {
-      localStorage.setItem('github_token', this.githubToken);
-      this.fetchAlerts();
-      if (this.refreshInterval) {
-        clearInterval(this.refreshInterval);
-      }
-      this.refreshInterval = setInterval(() => {
-        this.fetchAlerts();
-      }, this.intervalTimeout);
-    }
+    }, this.intervalTimeout);
   }
 
   async fetchAlerts() {
-    if (!this.githubToken.trim()) {
-      this.error = 'Please enter a GitHub token';
-      return;
-    }
-
     this.loading = true;
     this.error = '';
 
     try {
-      const response = await this.tauriService.getGitHubSecurityAlerts(
-        this.githubToken
-      );
+      const response = await this.tauriService.getGitHubSecurityAlerts();
       this.alerts = response;
 
       await this.tauriService.updateTrayIcon(response.total_alerts);

@@ -5,52 +5,206 @@
       <span class="logo">🔒</span>
       <span class="title">GitHub Alerts</span>
     </div>
-    <div class="header-right">
+    <div class="header-right" *ngIf="authenticated">
       <button
         class="icon-btn"
         (click)="fetchAlerts()"
-        [disabled]="loading"
+        [disabled]="alertsLoading"
         title="Refresh"
       >
-        <span [class.spinning]="loading">🔄</span>
+        <span [class.spinning]="alertsLoading">🔄</span>
       </button>
-      <button class="icon-btn" (click)="toggleSettings()" title="Settings">
+      <button
+        class="icon-btn"
+        [class.active]="currentView === 'repos'"
+        (click)="showRepos()"
+        title="Repositories"
+      >
+        📦
+      </button>
+      <button
+        class="icon-btn"
+        [class.active]="currentView === 'settings'"
+        (click)="showSettings()"
+        title="Settings"
+      >
         ⚙️
       </button>
     </div>
   </div>
 
-  <!-- Settings Panel -->
-  <div class="settings-panel" *ngIf="showSettings">
-    <div class="settings-content">
-      <label>GitHub Token</label>
-      <input
-        type="password"
-        [(ngModel)]="githubToken"
-        placeholder="ghp_xxxxxxxxxxxx"
-        (keyup.enter)="saveToken()"
-      />
+  <!-- Not Authenticated -->
+  <div class="login-panel" *ngIf="!authenticated">
+    <div class="login-content">
+      <div class="login-icon">🔐</div>
+      <h2>Welcome to GitHub Security Alerts</h2>
+      <p>Enter your GitHub Personal Access Token to monitor security alerts.</p>
       <p class="hint">
-        Create a token at
-        <a href="https://github.com/settings/tokens" target="_blank"
-          >GitHub Settings</a
+        <a
+          href="https://github.com/settings/tokens/new?scopes=repo,read:org"
+          target="_blank"
         >
-        with <code>repo:security_events</code> permission
+          Create a token with <strong>repo</strong> and
+          <strong>read:org</strong> scopes
+        </a>
       </p>
-      <button class="save-btn" (click)="saveToken()">Save Token</button>
+      <div class="token-input-group">
+        <input
+          type="password"
+          [(ngModel)]="tokenInput"
+          placeholder="ghp_xxxxxxxxxxxx"
+          (keyup.enter)="login()"
+          [disabled]="authLoading"
+        />
+        <button
+          class="primary-btn"
+          (click)="login()"
+          [disabled]="authLoading || !tokenInput.trim()"
+        >
+          <span *ngIf="!authLoading">Connect</span>
+          <span *ngIf="authLoading">⏳ Connecting...</span>
+        </button>
+      </div>
+      <p class="error-text" *ngIf="error">{{ error }}</p>
     </div>
   </div>
 
+  <!-- Settings View -->
+  <div
+    class="settings-panel"
+    *ngIf="authenticated && currentView === 'settings'"
+  >
+    <div class="settings-content">
+      <div class="user-info">
+        <span class="user-icon">👤</span>
+        <span class="username">{{ username }}</span>
+      </div>
+      <div class="settings-actions">
+        <button class="danger-btn" (click)="logout()">🚪 Sign Out</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Repos Selection View -->
+  <div class="repos-panel" *ngIf="authenticated && currentView === 'repos'">
+    <div class="repos-header">
+      <h3>Select Repositories to Monitor</h3>
+    </div>
+
+    <div class="search-box">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        placeholder="🔍 Search repositories..."
+      />
+    </div>
+
+    <div class="repos-count">{{ selectedCount }} repositories selected</div>
+
+    <div class="loading-spinner" *ngIf="ownersLoading">
+      <span class="spinning">🔄</span> Loading...
+    </div>
+
+    <div class="owners-list" *ngIf="!ownersLoading">
+      <div class="owner-accordion" *ngFor="let ownerAcc of owners">
+        <!-- Accordion Header -->
+        <div
+          class="accordion-header"
+          (click)="toggleOwner(ownerAcc)"
+          [class.expanded]="ownerAcc.expanded"
+        >
+          <span class="accordion-icon">{{
+            ownerAcc.expanded ? "▼" : "▶"
+          }}</span>
+          <span class="owner-icon">{{
+            ownerAcc.owner.is_user ? "👤" : "🏢"
+          }}</span>
+          <span class="owner-name">{{ ownerAcc.owner.name }}</span>
+          <span class="owner-badge" *ngIf="ownerAcc.loaded">
+            {{ getSelectedCountForOwner(ownerAcc) }}/{{ ownerAcc.repos.length }}
+          </span>
+          <span class="owner-badge loading" *ngIf="ownerAcc.loading">
+            <span class="spinning">⏳</span>
+          </span>
+        </div>
+
+        <!-- Accordion Content -->
+        <div class="accordion-content" *ngIf="ownerAcc.expanded">
+          <div
+            class="accordion-actions"
+            *ngIf="ownerAcc.loaded && ownerAcc.repos.length > 0"
+          >
+            <button
+              class="small-btn"
+              (click)="selectAllForOwner(ownerAcc); $event.stopPropagation()"
+            >
+              Select All
+            </button>
+            <button
+              class="small-btn"
+              (click)="selectNoneForOwner(ownerAcc); $event.stopPropagation()"
+            >
+              Select None
+            </button>
+          </div>
+
+          <div class="loading-spinner small" *ngIf="ownerAcc.loading">
+            <span class="spinning">🔄</span> Loading repos...
+          </div>
+
+          <div class="repos-list" *ngIf="ownerAcc.loaded">
+            <div
+              class="empty-repos"
+              *ngIf="getFilteredRepos(ownerAcc).length === 0"
+            >
+              No repositories found
+            </div>
+            <div
+              class="repo-select-item"
+              *ngFor="let repo of getFilteredRepos(ownerAcc)"
+              (click)="toggleRepo(repo); $event.stopPropagation()"
+              [class.selected]="repo.selected"
+            >
+              <div class="checkbox">
+                <span *ngIf="repo.selected">✓</span>
+              </div>
+              <div class="repo-details">
+                <span class="repo-name">{{ repo.name }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="primary-btn" (click)="showAlerts()">
+      ✓ Done - View Alerts
+    </button>
+  </div>
+
   <!-- Error Message -->
-  <div class="error-banner" *ngIf="error && !showSettings">
+  <div
+    class="error-banner"
+    *ngIf="error && authenticated && currentView === 'alerts'"
+  >
     {{ error }}
   </div>
 
-  <!-- Alerts List -->
-  <div class="alerts-list" *ngIf="alerts && !showSettings">
+  <!-- Alerts List View -->
+  <div class="alerts-list" *ngIf="authenticated && currentView === 'alerts'">
+    <!-- No repos selected -->
+    <div class="empty-state" *ngIf="!alerts || alerts.repos.length === 0">
+      <div class="empty-icon">📦</div>
+      <p>No repositories selected</p>
+      <button class="primary-btn" (click)="showRepos()">
+        Select Repositories
+      </button>
+    </div>
+
     <!-- Summary -->
     <div
       class="summary"
+      *ngIf="alerts && alerts.repos.length > 0"
       [class.safe]="alerts.total_alerts === 0"
       [class.danger]="alerts.total_alerts > 0"
     >
@@ -64,7 +218,7 @@
     </div>
 
     <!-- Repository List -->
-    <div class="repo-list">
+    <div class="repo-list" *ngIf="alerts && alerts.repos.length > 0">
       <div
         class="repo-item"
         *ngFor="let repo of alerts.repos"
@@ -88,7 +242,7 @@
 
   <!-- Footer -->
   <div class="footer">
-    <span class="update-time" *ngIf="alerts"
+    <span class="update-time" *ngIf="alerts && authenticated"
       >Last update: {{ getLastUpdate() }}</span
     >
     <span class="version">v1.0.0</span>
