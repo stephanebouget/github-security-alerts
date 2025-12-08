@@ -40,6 +40,7 @@
       class="repo-item"
       *ngFor="let repo of alerts.repos"
       [class.has-alerts]="repo.alerts > 0"
+      (click)="openRepoOnGitHub(repo.name)"
     >
       <div class="repo-info">
         <i class="ti ti-package repo-icon"></i>

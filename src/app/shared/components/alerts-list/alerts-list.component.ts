@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AlertsResponse } from '../../../core/services';
+import { AlertsResponse, TauriService } from '../../../core/services';
 
 @Component({
   selector: 'app-alerts-list',
@@ -14,6 +14,8 @@ export class AlertsListComponent {
 
   @Output() showRepos = new EventEmitter<void>();
 
+  constructor(private tauriService: TauriService) {}
+
   getAlertIcon(): string {
     if (!this.alerts) return 'ti ti-circle-filled';
     return this.alerts.total_alerts === 0 ? 'ti ti-check' : 'ti ti-alert-triangle';
@@ -21,5 +23,10 @@ export class AlertsListComponent {
 
   onShowRepos(): void {
     this.showRepos.emit();
+  }
+
+  openRepoOnGitHub(repoFullName: string): void {
+    const url = `https://github.com/${repoFullName}/security/dependabot`;
+    this.tauriService.openExternalLink(url);
   }
 }
