@@ -52,12 +52,9 @@ fn main() {
 
             // Check if repos are configured
             let has_repos = {
-                if let Some(state) = app.try_state::<AppState>() {
-                    let config = state.config.lock().unwrap();
-                    !config.selected_repos.is_empty()
-                } else {
-                    false
-                }
+                let state = app.state::<AppState>();
+                let config = state.config.lock().unwrap();
+                !config.selected_repos.is_empty()
             };
 
             let icon_data = generate_tray_icon(None, has_repos);
@@ -65,12 +62,11 @@ fn main() {
 
             // Check if user is authenticated
             let is_authenticated = {
-                if let Some(state) = app.try_state::<AppState>() {
-                    let config = state.config.lock().unwrap();
-                    config.access_token.is_some()
-                } else {
-                    false
-                }
+                let state = app.state::<AppState>();
+                let config = state.config.lock().unwrap();
+                config.access_token.as_ref()
+                    .map(|t| !t.trim().is_empty())
+                    .unwrap_or(false)
             };
 
             // Show window if not authenticated, hide if already logged in
@@ -79,11 +75,13 @@ fn main() {
                     let _ = window.hide();
                 } else {
                     // First time - show window for login
+                    handle_window_show(app.handle());
                     position_window_near_tray(&window);
                     let _ = window.show();
                     let _ = window.set_focus();
                 }
             }
+
 
             let _tray = TrayIconBuilder::with_id("main-tray")
                 .icon(icon)
