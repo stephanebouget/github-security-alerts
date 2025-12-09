@@ -92,7 +92,7 @@ jobs:
         with:
           tagName: ${{ github.ref_name }}
           releaseName: "Release ${{ github.ref_name }}"
-          releaseBody: "Voir le changelog pour les détails de cette version."
+          releaseBody: "New release"
           releaseDraft: false
           prerelease: false
           includeRelease: true

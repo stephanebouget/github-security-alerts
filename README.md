@@ -6,6 +6,11 @@ A modern desktop application that monitors security vulnerabilities across your 
 
 <img width="829" height="102" alt="image" src="https://github.com/user-attachments/assets/69e1730a-720b-4647-9025-6c776309b75e" />
 
+## 🔒 Installation Security Notice
+
+When installing this application, you may encounter security warnings from your operating system.
+Why this happens: **This application is not code-signed** with a commercial certificate, which is a costly process for open-source projects.
+
 ## 📋 Features
 
 ### Core Functionality
