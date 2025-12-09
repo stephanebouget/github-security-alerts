@@ -85,7 +85,23 @@ jobs:
       # ----------------------------
       #        BUILD TAURI
       # ----------------------------
-      - name: Build Tauri app
+      - name: Build Tauri app (macOS Universal)
+        if: matrix.platform == 'macos-latest'
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: "Release ${{ github.ref_name }}"
+          releaseBody: "New release"
+          releaseDraft: false
+          prerelease: false
+          includeRelease: true
+          includeDebug: false
+          args: --target universal-apple-darwin
+
+      - name: Build Tauri app (non-macOS)
+        if: matrix.platform != 'macos-latest'
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
