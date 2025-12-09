@@ -39,12 +39,24 @@ fn main() {
                 let _ = window.unminimize();
             }
         }))
+        .plugin(tauri_plugin_autostart::init(
+            tauri_plugin_autostart::MacosLauncher::LaunchAgent,
+            Some(vec!["--hidden"]),
+        ))
         .manage(AppState {
             alert_count: Mutex::new(0),
             last_shown: Mutex::new(None),
             config: Mutex::new(config),
         })
         .setup(|app| {
+            // Enable autostart on first run
+            use tauri_plugin_autostart::ManagerExt;
+            let autostart_manager = app.autolaunch();
+            if !autostart_manager.is_enabled().unwrap_or(false) {
+                let _ = autostart_manager.enable();
+                println!("Autostart enabled");
+            }
+
             let quit = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
             let show = MenuItem::with_id(app, "show", "Show Window", true, None::<&str>)?;
             let hide = MenuItem::with_id(app, "hide", "Hide Window", true, None::<&str>)?;
