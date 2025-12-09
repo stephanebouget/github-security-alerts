@@ -1,4 +1,4 @@
-use tauri::{PhysicalPosition, Manager, PhysicalSize};
+use tauri::{PhysicalPosition, Manager, LogicalSize};
 use std::time::Instant;
 use crate::state::AppState;
 
@@ -10,30 +10,32 @@ pub fn position_window_near_tray(window: &tauri::WebviewWindow) {
     if let Ok(Some(monitor)) = window.primary_monitor() {
         let monitor_size = monitor.size();
         let monitor_position = monitor.position();
+        let scale_factor = window.scale_factor().unwrap_or(1.0);
 
-        let window_width = 420u32;
-        let window_height = 600u32;
+        // Logical size (will be scaled by DPI automatically by Tauri)
+        let window_width = 420.0;
+        let window_height = 600.0;
         let margin = 10i32;
 
         #[cfg(target_os = "macos")]
         {
             // On macOS, position window at top-right corner
-            let x = monitor_position.x + monitor_size.width as i32 - window_width as i32 - margin;
+            let x = monitor_position.x + monitor_size.width as i32 - (window_width * scale_factor) as i32 - margin;
             let y = monitor_position.y + margin;
 
             let _ = window.set_position(PhysicalPosition::new(x, y));
-            let _ = window.set_size(PhysicalSize::new(window_width, window_height));
+            let _ = window.set_size(LogicalSize::new(window_width, window_height));
         }
 
         #[cfg(not(target_os = "macos"))]
         {
             // On Windows and Linux, position window at bottom-right corner
             let taskbar_height = 48i32;
-            let x = monitor_position.x + monitor_size.width as i32 - window_width as i32 - margin;
-            let y = monitor_position.y + monitor_size.height as i32 - window_height as i32 - taskbar_height - margin;
+            let x = monitor_position.x + monitor_size.width as i32 - (window_width * scale_factor) as i32 - margin;
+            let y = monitor_position.y + monitor_size.height as i32 - (window_height * scale_factor) as i32 - taskbar_height - margin;
 
             let _ = window.set_position(PhysicalPosition::new(x, y));
-            let _ = window.set_size(PhysicalSize::new(window_width, window_height));
+            let _ = window.set_size(LogicalSize::new(window_width, window_height));
         }
     }
 }

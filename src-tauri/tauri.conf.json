@@ -16,7 +16,7 @@
         "title": "GitHub Alerts",
         "label": "main",
         "width": 420,
-        "height": 500,
+        "height": 600,
         "resizable": false,
         "fullscreen": false,
         "decorations": false,
