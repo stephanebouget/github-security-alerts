@@ -15,7 +15,7 @@
   <div class="repos-count">{{ selectedCount }} repositories selected</div>
 
   <div class="loading-spinner" *ngIf="ownersLoading">
-    <i class="ti ti-loader spinning"></i> Loading...
+    <i class="ti ti-loader spinning"></i>
   </div>
 
   <div class="owners-list" *ngIf="!ownersLoading">
@@ -57,7 +57,7 @@
         </div>
 
         <div class="loading-spinner small" *ngIf="ownerAcc.loading">
-          <i class="ti ti-refresh spinning"></i> Loading repos...
+          <i class="ti ti-loader spinning"></i>
         </div>
 
         <div class="repos-list" *ngIf="ownerAcc.loaded">
