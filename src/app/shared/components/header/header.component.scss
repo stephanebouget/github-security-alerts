@@ -1,19 +1,13 @@
 @use "sass:color";
-
-$bg-secondary: #16213e;
-$bg-tertiary: #0f3460;
-$text-primary: #ffffff;
-$text-secondary: #a0a0a0;
-$accent-color: #4a90d9;
-$border-color: #2a2a4a;
+@use "../../../../styles/colors" as colors;
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
-  background: $bg-secondary;
-  border-bottom: 1px solid $border-color;
+  background: colors.$bg-secondary;
+  border-bottom: 1px solid colors.$border-color;
   -webkit-app-region: drag;
 
   .header-left {
@@ -30,7 +24,7 @@ $border-color: #2a2a4a;
 
     .logo {
       font-size: 22px;
-      color: #4a90d9;
+      color: colors.$accent-color;
     }
 
     .title {
@@ -49,7 +43,7 @@ $border-color: #2a2a4a;
 .icon-btn {
   background: transparent;
   border: none;
-  color: $text-secondary;
+  color: colors.$text-secondary;
   cursor: pointer;
   padding: 6px 8px;
   border-radius: 4px;
@@ -60,8 +54,8 @@ $border-color: #2a2a4a;
   justify-content: center;
 
   &:hover {
-    background: $bg-tertiary;
-    color: $text-primary;
+    background: colors.$bg-tertiary;
+    color: colors.$text-primary;
   }
 
   &:disabled {
@@ -70,8 +64,8 @@ $border-color: #2a2a4a;
   }
 
   &.active {
-    background: $bg-tertiary;
-    color: $accent-color;
+    background: colors.$bg-tertiary;
+    color: colors.$accent-color;
   }
 
   i {

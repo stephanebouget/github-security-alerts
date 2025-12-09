@@ -1,16 +1,14 @@
-$bg-secondary: #16213e;
-$text-secondary: #a0a0a0;
-$border-color: #2a2a4a;
+@use "../../../../styles/colors" as colors;
 
 .footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 8px 16px;
-  background: $bg-secondary;
-  border-top: 1px solid $border-color;
+  background: colors.$bg-secondary;
+  border-top: 1px solid colors.$border-color;
   font-size: 11px;
-  color: $text-secondary;
+  color: colors.$text-secondary;
 
   .version {
     opacity: 0.6;

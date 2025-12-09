@@ -1,13 +1,5 @@
 @use "sass:color";
-
-$bg-primary: #1a1a2e;
-$bg-secondary: #16213e;
-$bg-tertiary: #0f3460;
-$text-primary: #ffffff;
-$text-secondary: #a0a0a0;
-$accent-color: #4a90d9;
-$danger-color: #ef4444;
-$border-color: #2a2a4a;
+@use "../../../../styles/colors" as colors;
 
 :host {
   display: block;
@@ -29,7 +21,7 @@ $border-color: #2a2a4a;
     .login-icon {
       font-size: 56px;
       margin-bottom: 16px;
-      color: #4a90d9;
+      color: colors.$accent-color;
     }
 
     h2 {
@@ -40,7 +32,7 @@ $border-color: #2a2a4a;
 
     p {
       margin: 0 0 24px;
-      color: $text-secondary;
+      color: colors.$text-secondary;
       font-size: 13px;
       max-width: 280px;
     }
@@ -48,11 +40,11 @@ $border-color: #2a2a4a;
 
   .hint {
     margin-top: 16px;
-    color: $text-secondary;
+    color: colors.$text-secondary;
     font-size: 12px;
 
     a {
-      color: $accent-color;
+      color: colors.$accent-color;
       text-decoration: none;
 
       &:hover {
@@ -61,7 +53,7 @@ $border-color: #2a2a4a;
     }
 
     &.error-text {
-      color: $danger-color;
+      color: colors.$danger-color;
     }
   }
 
@@ -70,9 +62,9 @@ $border-color: #2a2a4a;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    background: $bg-tertiary;
-    color: $text-primary;
-    border: 1px solid $border-color;
+    background: colors.$bg-tertiary;
+    color: colors.$text-primary;
+    border: 1px solid colors.$border-color;
     border-radius: 8px;
     padding: 10px 20px;
     font-size: 13px;
@@ -83,12 +75,12 @@ $border-color: #2a2a4a;
 
     i {
       font-size: 16px;
-      color: #4a90d9;
+      color: colors.$accent-color;
     }
 
     &:hover {
-      background: color.adjust($bg-tertiary, $lightness: 5%);
-      border-color: $accent-color;
+      background: color.adjust(colors.$bg-tertiary, $lightness: 5%);
+      border-color: colors.$accent-color;
     }
   }
 
@@ -99,21 +91,21 @@ $border-color: #2a2a4a;
 
     input {
       flex: 1;
-      background: $bg-tertiary;
-      border: 1px solid $border-color;
+      background: colors.$bg-tertiary;
+      border: 1px solid colors.$border-color;
       border-radius: 6px;
       padding: 10px 12px;
-      color: $text-primary;
+      color: colors.$text-primary;
       font-size: 13px;
       font-family: "Courier New", monospace;
 
       &:focus {
         outline: none;
-        border-color: $accent-color;
+        border-color: colors.$accent-color;
       }
 
       &::placeholder {
-        color: $text-secondary;
+        color: colors.$text-secondary;
       }
 
       &:disabled {
@@ -123,7 +115,7 @@ $border-color: #2a2a4a;
   }
 
   .primary-btn {
-    background: $accent-color;
+    background: colors.$accent-color;
     color: white;
     border: none;
     border-radius: 6px;
@@ -141,7 +133,7 @@ $border-color: #2a2a4a;
     }
 
     &:hover {
-      background: color.adjust($accent-color, $lightness: -10%);
+      background: color.adjust(colors.$accent-color, $lightness: -10%);
     }
 
     &:disabled {
@@ -151,7 +143,7 @@ $border-color: #2a2a4a;
   }
 
   .error-text {
-    color: $danger-color;
+    color: colors.$danger-color;
     margin-top: 12px;
     font-size: 12px;
   }

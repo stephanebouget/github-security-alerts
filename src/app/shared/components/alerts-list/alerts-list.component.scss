@@ -1,14 +1,5 @@
 @use "sass:color";
-
-$bg-primary: #1a1a2e;
-$bg-secondary: #16213e;
-$bg-tertiary: #0f3460;
-$text-primary: #ffffff;
-$text-secondary: #a0a0a0;
-$accent-color: #4a90d9;
-$success-color: #22c55e;
-$danger-color: #ef4444;
-$border-color: #2a2a4a;
+@use "../../../../styles/colors" as colors;
 
 :host {
   display: block;
@@ -17,9 +8,9 @@ $border-color: #2a2a4a;
 }
 
 .error-banner {
-  background: rgba($danger-color, 0.1);
-  border-left: 3px solid $danger-color;
-  color: $danger-color;
+  background: rgba(colors.$danger-color, 0.1);
+  border-left: 3px solid colors.$danger-color;
+  color: colors.$danger-color;
   padding: 10px 16px;
   font-size: 12px;
 }
@@ -37,11 +28,11 @@ $border-color: #2a2a4a;
   }
 
   &::-webkit-scrollbar-track {
-    background: $bg-primary;
+    background: colors.$bg-primary;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: $border-color;
+    background: colors.$border-color;
     border-radius: 3px;
   }
 
@@ -52,7 +43,7 @@ $border-color: #2a2a4a;
     justify-content: center;
     gap: 8px;
     margin-top: 10px;
-    color: $accent-color;
+    color: colors.$accent-color;
 
     i {
       font-size: 24px;
@@ -72,21 +63,21 @@ $border-color: #2a2a4a;
   padding: 16px;
   margin: 12px;
   border-radius: 8px;
-  background: $bg-secondary;
+  background: colors.$bg-secondary;
 
   &.safe {
-    border-left: 3px solid $success-color;
+    border-left: 3px solid colors.$success-color;
 
     .summary-icon {
-      color: $success-color;
+      color: colors.$success-color;
     }
   }
 
   &.danger {
-    border-left: 3px solid $danger-color;
+    border-left: 3px solid colors.$danger-color;
 
     .summary-icon {
-      color: $danger-color;
+      color: colors.$danger-color;
     }
   }
 
@@ -108,14 +99,14 @@ $border-color: #2a2a4a;
   justify-content: space-between;
   align-items: center;
   padding: 12px;
-  background: $bg-secondary;
+  background: colors.$bg-secondary;
   border-radius: 6px;
   margin-bottom: 8px;
   transition: background 0.2s;
   cursor: pointer;
 
   &:hover {
-    background: $bg-tertiary;
+    background: colors.$bg-tertiary;
   }
 
   &:last-child {
@@ -131,7 +122,7 @@ $border-color: #2a2a4a;
     .repo-icon {
       font-size: 20px;
       flex-shrink: 0;
-      color: #4a90d9;
+      color: colors.$accent-color;
     }
 
     .repo-name {
@@ -143,7 +134,7 @@ $border-color: #2a2a4a;
 
     .repo-org {
       font-size: 11px;
-      color: $text-secondary;
+      color: colors.$text-secondary;
       white-space: nowrap;
     }
   }
@@ -163,13 +154,13 @@ $border-color: #2a2a4a;
     }
 
     &.safe {
-      background: rgba($success-color, 0.15);
-      color: $success-color;
+      background: rgba(colors.$success-color, 0.15);
+      color: colors.$success-color;
     }
 
     &.danger {
-      background: rgba($danger-color, 0.15);
-      color: $danger-color;
+      background: rgba(colors.$danger-color, 0.15);
+      color: colors.$danger-color;
     }
   }
 }
@@ -182,12 +173,12 @@ $border-color: #2a2a4a;
   justify-content: center;
   gap: 12px;
   padding: 24px;
-  color: $text-secondary;
+  color: colors.$text-secondary;
 
   .empty-icon {
     font-size: 56px;
     opacity: 0.7;
-    color: #4a90d9;
+    color: colors.$accent-color;
   }
 
   p {
@@ -196,7 +187,7 @@ $border-color: #2a2a4a;
   }
 
   .primary-btn {
-    background: $accent-color;
+    background: colors.$accent-color;
     color: white;
     border: none;
     border-radius: 6px;
@@ -206,7 +197,7 @@ $border-color: #2a2a4a;
     transition: background 0.2s;
 
     &:hover {
-      background: color.adjust($accent-color, $lightness: -10%);
+      background: color.adjust(colors.$accent-color, $lightness: -10%);
     }
   }
 }
