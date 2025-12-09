@@ -109,7 +109,7 @@ jobs:
             # Try alternative path
             APP_PATH=$(find . -path "*/target/*/release/bundle/macos/*.app" -type d | head -1)
           fi
-          
+
           if [ -n "$APP_PATH" ]; then
             echo "Self-signing app at: $APP_PATH"
             codesign --deep --force --verify --verbose --sign - "$APP_PATH"
