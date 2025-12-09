@@ -14,13 +14,27 @@ pub fn position_window_near_tray(window: &tauri::WebviewWindow) {
         let window_width = 420u32;
         let window_height = 600u32;
         let margin = 10i32;
-        let taskbar_height = 48i32;
 
-        let x = monitor_position.x + monitor_size.width as i32 - window_width as i32 - margin;
-        let y = monitor_position.y + monitor_size.height as i32 - window_height as i32 - taskbar_height - margin;
+        #[cfg(target_os = "macos")]
+        {
+            // On macOS, position window at top-right corner
+            let x = monitor_position.x + monitor_size.width as i32 - window_width as i32 - margin;
+            let y = monitor_position.y + margin;
 
-        let _ = window.set_position(PhysicalPosition::new(x, y));
-        let _ = window.set_size(PhysicalSize::new(window_width, window_height));
+            let _ = window.set_position(PhysicalPosition::new(x, y));
+            let _ = window.set_size(PhysicalSize::new(window_width, window_height));
+        }
+
+        #[cfg(not(target_os = "macos"))]
+        {
+            // On Windows and Linux, position window at bottom-right corner
+            let taskbar_height = 48i32;
+            let x = monitor_position.x + monitor_size.width as i32 - window_width as i32 - margin;
+            let y = monitor_position.y + monitor_size.height as i32 - window_height as i32 - taskbar_height - margin;
+
+            let _ = window.set_position(PhysicalPosition::new(x, y));
+            let _ = window.set_size(PhysicalSize::new(window_width, window_height));
+        }
     }
 }
 
