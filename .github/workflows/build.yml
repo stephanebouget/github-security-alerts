@@ -103,14 +103,20 @@ jobs:
       - name: Self-sign macOS app
         if: matrix.platform == 'macos-latest'
         run: |
-          # Find the app bundle
-          APP_PATH=$(find . -name "GithubSecurityAlerts.app" -type d | head -1)
+          # Find the app bundle in the release directory
+          APP_PATH=$(find src-tauri/target/*/release/bundle/macos -name "*.app" -type d | head -1)
+          if [ -z "$APP_PATH" ]; then
+            # Try alternative path
+            APP_PATH=$(find . -path "*/target/*/release/bundle/macos/*.app" -type d | head -1)
+          fi
+          
           if [ -n "$APP_PATH" ]; then
             echo "Self-signing app at: $APP_PATH"
             codesign --deep --force --verify --verbose --sign - "$APP_PATH"
             echo "App signed successfully"
           else
-            echo "App bundle not found"
+            echo "App bundle not found, listing directories:"
+            find src-tauri/target -type d -name "bundle" 2>/dev/null | head -5
           fi
 
       - name: Build Tauri app (non-macOS)
