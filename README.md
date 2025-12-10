@@ -9,6 +9,7 @@ A modern desktop application that monitors security vulnerabilities across your 
 ## 🔒 Installation Security Notice
 
 When installing this application, you may encounter security warnings from your operating system.
+
 Why this happens: **This application is not code-signed** with a commercial certificate, which is a costly process for open-source projects.
 
 ## 📋 Features
