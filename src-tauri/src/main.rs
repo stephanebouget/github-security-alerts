@@ -60,7 +60,8 @@ fn main() {
             let quit = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
             let show = MenuItem::with_id(app, "show", "Show Window", true, None::<&str>)?;
             let hide = MenuItem::with_id(app, "hide", "Hide Window", true, None::<&str>)?;
-            let menu = Menu::with_items(app, &[&show, &hide, &quit])?;
+            let restart = MenuItem::with_id(app, "restart", "Restart", true, None::<&str>)?;
+            let menu = Menu::with_items(app, &[&show, &hide, &restart, &quit])?;
 
             // Check if repos are configured
             let has_repos = {
@@ -115,6 +116,11 @@ fn main() {
                         "hide" => {
                             if let Some(window) = app.get_webview_window("main") {
                                 let _ = window.hide();
+                            }
+                        }
+                        "restart" => {
+                            if let Some(window) = app.get_webview_window("main") {
+                                let _ = window.eval("window.location.reload()");
                             }
                         }
                         _ => {}
