@@ -37,28 +37,34 @@ For this application to function properly, GitHub Advanced Security features mus
 
 1. **Authenticate**
 
-<img width="416" height="596" alt="image" src="https://github.com/user-attachments/assets/8c54de72-d39b-430f-a49d-9af2383e135d" />
+<div align="center">
+   <img width="416" height="596" alt="image" src="https://github.com/user-attachments/assets/8c54de72-d39b-430f-a49d-9af2383e135d" />
+</div>
 
-   - Paste your GitHub personal access token in the login form
-   - The app validates the token and saves it securely
+- Paste your GitHub personal access token in the login form
+- The app validates the token and saves it securely
 
 2. **Select Repositories**
 
-<img width="416" height="596" alt="image" src="https://github.com/user-attachments/assets/bb011e76-d2e9-4db1-9aff-cbd508fbfe10" />
+<div align="center">
+   <img width="416" height="596" alt="image" src="https://github.com/user-attachments/assets/bb011e76-d2e9-4db1-9aff-cbd508fbfe10" />
+</div>
 
-   - Click the "📦 Repositories" button in the header
-   - Expand owners (users/organizations) to see their repositories
-   - Select repositories you want to monitor
-   - Click "✓ Done - View Alerts"
+- Click the "📦 Repositories" button in the header
+- Expand owners (users/organizations) to see their repositories
+- Select repositories you want to monitor
+- Click "✓ Done - View Alerts"
 
 3. **View Alerts**
 
-<img width="416" height="596" alt="image" src="https://github.com/user-attachments/assets/f5948b16-08e5-4e4c-8131-3ce77da7f79b" />
+<div align="center">
+   <img width="416" height="596" alt="image" src="https://github.com/user-attachments/assets/f5948b16-08e5-4e4c-8131-3ce77da7f79b" />
+</div>
 
-   - The main "Alerts" view shows a summary of total security alerts
-   - Each repository displays its alert count
-   - Click any repository to open it on GitHub in your browser
-   - Checkmark (✓) indicates no alerts, numbers show active alerts
+- The main "Alerts" view shows a summary of total security alerts
+- Each repository displays its alert count
+- Click any repository to open it on GitHub in your browser
+- Checkmark (✓) indicates no alerts, numbers show active alerts
 
 ## 📝 License
 
