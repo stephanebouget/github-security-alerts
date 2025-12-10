@@ -2,7 +2,7 @@
 
 A modern desktop application that monitors security vulnerabilities across your GitHub repositories in real-time. Built with Angular and Rust/Tauri for a lightweight, performant experience.
 
-<img width="829" height="414" alt="image" src="https://github.com/user-attachments/assets/4895c872-0ef7-42ca-a373-89240bf9d9cd" />
+<img width="829" height="414" alt="image" src="https://github.com/user-attachments/assets/9e17b4a1-154e-46c8-a2b8-9abe6f33d9c1" />
 
 <img width="829" height="102" alt="image" src="https://github.com/user-attachments/assets/69e1730a-720b-4647-9025-6c776309b75e" />
 
