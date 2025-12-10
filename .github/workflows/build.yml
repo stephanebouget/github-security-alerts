@@ -98,6 +98,8 @@ jobs:
           prerelease: false
           includeRelease: true
           includeDebug: false
+          includeUpdaterJson: false
+          updaterJsonPreferNsis: false
           args: --target universal-apple-darwin
 
       - name: Self-sign macOS app
@@ -132,3 +134,5 @@ jobs:
           prerelease: false
           includeRelease: true
           includeDebug: false
+          includeUpdaterJson: false
+          updaterJsonPreferNsis: false
