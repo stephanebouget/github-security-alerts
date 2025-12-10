@@ -36,6 +36,9 @@ export class AppComponent implements OnInit, OnDestroy {
   ownersLoading = false;
   searchQuery = '';
 
+  // Track selected repos in memory to avoid losing them when accordions aren't loaded
+  private selectedReposFullNames: Set<string> = new Set();
+
   // Alerts state
   alerts: AlertsResponse | null = null;
   alertsLoading = false;
@@ -130,6 +133,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.username = null;
       this.owners = [];
       this.alerts = null;
+      this.selectedReposFullNames.clear();
       this.stopAutoRefresh();
       await this.tauriService.updateTrayIcon(0);
     } catch (err) {
@@ -157,6 +161,10 @@ export class AppComponent implements OnInit, OnDestroy {
         loaded: false,
         repos: [],
       }));
+
+      // Load previously selected repos from storage
+      const selectedRepos = await this.tauriService.getSelectedRepos();
+      this.selectedReposFullNames = new Set(selectedRepos);
 
       // Auto-load repos for the first owner (user's personal repos)
       if (this.owners.length > 0) {
@@ -187,6 +195,10 @@ export class AppComponent implements OnInit, OnDestroy {
           ownerAccordion.owner.name,
           ownerAccordion.owner.is_user
         );
+        // Restore selection state from memory
+        repos.forEach((repo) => {
+          repo.selected = this.selectedReposFullNames.has(repo.full_name);
+        });
         ownerAccordion.repos = repos;
         ownerAccordion.loaded = true;
       } catch (err) {
@@ -199,14 +211,21 @@ export class AppComponent implements OnInit, OnDestroy {
 
   async toggleRepo(repo: RepoInfo) {
     repo.selected = !repo.selected;
+    
+    // Update in-memory tracking
+    if (repo.selected) {
+      this.selectedReposFullNames.add(repo.full_name);
+    } else {
+      this.selectedReposFullNames.delete(repo.full_name);
+    }
+    
     await this.saveSelectedRepos();
   }
 
   async saveSelectedRepos() {
-    const allRepos = this.owners.flatMap((o) => o.repos);
-    const selectedRepos = allRepos
-      .filter((r: RepoInfo) => r.selected)
-      .map((r: RepoInfo) => r.full_name);
+    // Use the in-memory set of selected repos, which includes repos from 
+    // accordions that haven't been loaded yet
+    const selectedRepos = Array.from(this.selectedReposFullNames);
 
     try {
       await this.tauriService.setSelectedRepos(selectedRepos);
@@ -216,12 +235,18 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   async selectAllForOwner(ownerAccordion: OwnerAccordion) {
-    ownerAccordion.repos.forEach((r) => (r.selected = true));
+    ownerAccordion.repos.forEach((r) => {
+      r.selected = true;
+      this.selectedReposFullNames.add(r.full_name);
+    });
     await this.saveSelectedRepos();
   }
 
   async selectNoneForOwner(ownerAccordion: OwnerAccordion) {
-    ownerAccordion.repos.forEach((r) => (r.selected = false));
+    ownerAccordion.repos.forEach((r) => {
+      r.selected = false;
+      this.selectedReposFullNames.delete(r.full_name);
+    });
     await this.saveSelectedRepos();
   }
 
@@ -242,10 +267,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   get selectedCount(): number {
-    return this.owners.reduce(
-      (sum, o) => sum + o.repos.filter((r) => r.selected).length,
-      0
-    );
+    // Use the in-memory set to get accurate count, even for repos not yet loaded
+    return this.selectedReposFullNames.size;
   }
 
   getSelectedCountForOwner(ownerAccordion: OwnerAccordion): number {
