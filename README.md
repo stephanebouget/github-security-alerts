@@ -22,6 +22,14 @@ Why this happens: **This application is not code-signed** with a commercial cert
 - **System Tray Integration**: Minimize to system tray with icon status indicators
 - **Auto-refresh**: Automatic alert updates every hour (configurable)
 
+## 📥 Download
+
+Get the latest version of GitHub Security Alerts:
+
+- **[Download Latest Release](https://github.com/stephanebouget/github-security-alerts/releases/latest)**
+
+Available for Windows, macOS, and Linux.
+
 ## ⚠️ Prerequisites
 
 **GitHub Advanced Security Features**
