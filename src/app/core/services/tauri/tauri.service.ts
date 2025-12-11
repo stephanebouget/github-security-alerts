@@ -47,6 +47,10 @@ export class TauriService {
     return invoke<AuthStatus>('get_auth_status');
   }
 
+  async getToken(): Promise<string | null> {
+    return invoke<string | null>('get_token');
+  }
+
   async logout(): Promise<void> {
     return invoke('logout');
   }

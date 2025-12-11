@@ -11,6 +11,7 @@ import {
   ReposPanelComponent,
   AlertsListComponent,
   FooterComponent,
+  RateLimitStatusComponent,
 } from './components/';
 import { WebviewDirective } from './directives/';
 import { FormsModule } from '@angular/forms';
@@ -25,6 +26,7 @@ import { FormsModule } from '@angular/forms';
     ReposPanelComponent,
     AlertsListComponent,
     FooterComponent,
+    RateLimitStatusComponent,
   ],
   imports: [CommonModule, TranslateModule, FormsModule],
   exports: [
@@ -37,6 +39,7 @@ import { FormsModule } from '@angular/forms';
     ReposPanelComponent,
     AlertsListComponent,
     FooterComponent,
+    RateLimitStatusComponent,
   ]
 })
 export class SharedModule {}

@@ -83,6 +83,13 @@ pub async fn get_auth_status(app: tauri::AppHandle) -> Result<AuthStatus, String
 }
 
 #[tauri::command]
+pub async fn get_token(app: tauri::AppHandle) -> Result<Option<String>, String> {
+    let state = app.try_state::<AppState>().ok_or("No state")?;
+    let config = state.config.lock().unwrap();
+    Ok(config.access_token.clone())
+}
+
+#[tauri::command]
 pub async fn logout(app: tauri::AppHandle) -> Result<(), String> {
     if let Some(state) = app.try_state::<AppState>() {
         let mut config = state.config.lock().unwrap();

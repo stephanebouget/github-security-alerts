@@ -1,0 +1,160 @@
+@use "sass:color";
+@use "../../../../styles/colors" as colors;
+
+.rate-limit-status {
+  .status-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 0 0 12px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: colors.$text-primary;
+
+    i {
+      font-size: 16px;
+      color: colors.$accent-color;
+    }
+
+    .refresh-btn {
+      background: transparent;
+      border: 1px solid colors.$border-color;
+      border-radius: 4px;
+      padding: 4px 6px;
+      color: colors.$text-secondary;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover:not(:disabled) {
+        border-color: colors.$accent-color;
+        color: colors.$accent-color;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      i {
+        font-size: 14px;
+        
+        &.spinning {
+          animation: spin 1s linear infinite;
+        }
+      }
+    }
+  }
+
+  .status-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .status-card {
+    padding: 12px;
+    background: colors.$bg-primary;
+    border: 1px solid colors.$border-color;
+    border-radius: 8px;
+    transition: all 0.2s;
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+
+      .api-type {
+        font-size: 13px;
+        font-weight: 500;
+        color: colors.$text-primary;
+      }
+    }
+
+    .usage-bar {
+      width: 100%;
+      height: 6px;
+      background: colors.$bg-secondary;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 8px;
+
+      .usage-fill {
+        height: 100%;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+
+        &.status-normal {
+          background: colors.$success-color;
+        }
+
+        &.status-warning {
+          background: #f59e0b;
+        }
+
+        &.status-danger {
+          background: colors.$danger-color;
+        }
+      }
+    }
+
+    .usage-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+
+      .remaining {
+        color: colors.$text-primary;
+        font-weight: 500;
+      }
+
+      .reset-time {
+        color: colors.$text-secondary;
+      }
+    }
+  }
+}
+
+.rate-limit-loading,
+.rate-limit-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 13px;
+
+  i {
+    font-size: 16px;
+  }
+}
+
+.rate-limit-loading {
+  background: colors.$bg-primary;
+  color: colors.$text-secondary;
+
+  i.spinning {
+    animation: spin 1s linear infinite;
+  }
+}
+
+.rate-limit-error {
+  background: rgba(colors.$danger-color, 0.1);
+  color: colors.$danger-color;
+  border: 1px solid rgba(colors.$danger-color, 0.2);
+
+  i {
+    color: colors.$danger-color;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

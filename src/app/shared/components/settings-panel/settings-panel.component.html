@@ -13,12 +13,19 @@
           [value]="refreshInterval"
           (change)="onRefreshIntervalChange($event)"
         >
+          <option value="1">1 minutes</option>
+          <option value="5">5 minutes</option>
           <option value="30">30 minutes</option>
           <option value="60">1 hour</option>
           <option value="120">2 hours</option>
           <option value="240">4 hours</option>
         </select>
       </label>
+    </div>
+
+    <!-- API Rate Limits -->
+    <div class="settings-group">
+      <app-rate-limit-status></app-rate-limit-status>
     </div>
 
     <div class="settings-actions">

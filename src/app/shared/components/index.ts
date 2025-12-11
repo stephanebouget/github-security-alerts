@@ -5,3 +5,4 @@ export * from './settings-panel/settings-panel.component';
 export * from './repos-panel/repos-panel.component';
 export * from './alerts-list/alerts-list.component';
 export * from './footer/footer.component';
+export * from './rate-limit-status/rate-limit-status.component';

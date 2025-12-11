@@ -164,6 +164,7 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             auth::set_token,
             auth::get_auth_status,
+            auth::get_token,
             auth::logout,
             repos::get_owners,
             repos::get_repos_for_owner,

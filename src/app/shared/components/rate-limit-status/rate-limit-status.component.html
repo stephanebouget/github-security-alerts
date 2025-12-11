@@ -1,0 +1,57 @@
+<div class="rate-limit-status" *ngIf="rateLimits">
+  <h3 class="status-title">
+    <i class="ti ti-api"></i>
+    Github API Status
+    <button class="refresh-btn" (click)="refresh()" [disabled]="isLoading">
+      <i class="ti" [ngClass]="isLoading ? 'ti-loader spinning' : 'ti-refresh'"></i>
+    </button>
+  </h3>
+
+  <div class="status-grid">
+    <!-- REST API -->
+    <div class="status-card" *ngIf="rateLimits.core">
+      <div class="card-header">
+        <span class="api-type">REST API</span>
+      </div>
+      <div class="usage-bar">
+        <div 
+          class="usage-fill" 
+          [style.width.%]="getUsagePercentage(rateLimits.core.remaining, rateLimits.core.limit)"
+          [ngClass]="'status-' + getStatusColor(getUsagePercentage(rateLimits.core.remaining, rateLimits.core.limit))">
+        </div>
+      </div>
+      <div class="usage-info">
+        <span class="remaining">{{ rateLimits.core.remaining }}/{{ rateLimits.core.limit }}</span>
+        <span class="reset-time">Reset in {{ formatResetTime(rateLimits.core.resetAt) }}</span>
+      </div>
+    </div>
+
+    <!-- GraphQL API -->
+    <div class="status-card" *ngIf="rateLimits.graphql">
+      <div class="card-header">
+        <span class="api-type">GraphQL API</span>
+      </div>
+      <div class="usage-bar">
+        <div 
+          class="usage-fill" 
+          [style.width.%]="getUsagePercentage(rateLimits.graphql.remaining, rateLimits.graphql.limit)"
+          [ngClass]="'status-' + getStatusColor(getUsagePercentage(rateLimits.graphql.remaining, rateLimits.graphql.limit))">
+        </div>
+      </div>
+      <div class="usage-info">
+        <span class="remaining">{{ rateLimits.graphql.remaining }}/{{ rateLimits.graphql.limit }}</span>
+        <span class="reset-time">Reset in {{ formatResetTime(rateLimits.graphql.resetAt) }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="rate-limit-loading" *ngIf="isLoading && !rateLimits">
+  <i class="ti ti-loader spinning"></i>
+  <span>Loading API status...</span>
+</div>
+
+<div class="rate-limit-error" *ngIf="error">
+  <i class="ti ti-alert-circle"></i>
+  <span>{{ error }}</span>
+</div>
