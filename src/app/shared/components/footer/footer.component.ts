@@ -14,4 +14,11 @@ export class FooterComponent {
   getLastUpdate(): string {
     return new Date().toLocaleTimeString();
   }
+
+  openGitHub(): void {
+    window.open(
+      'https://github.com/stephanebouget/github-security-alerts',
+      '_blank'
+    );
+  }
 }

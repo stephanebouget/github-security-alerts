@@ -2,5 +2,11 @@
   <span class="update-time" *ngIf="alerts && authenticated"
     >Last update: {{ getLastUpdate() }}</span
   >
-  <span class="version">v1.0.0</span>
+  <span
+    class="version"
+    (click)="openGitHub()"
+    role="button"
+    title="Open GitHub repository"
+    >v1.0.0</span
+  >
 </div>
