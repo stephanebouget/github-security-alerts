@@ -33,7 +33,8 @@ Available for Windows, macOS, and Linux.
 ## ⚠️ Prerequisites
 
 **GitHub Advanced Security Features**
-For this application to function properly, GitHub Advanced Security features must be enabled on the repositories you want to monitor:
+
+To ensure this application works correctly, you must enable GitHub Advanced Security features on the repositories you want to monitor.:
 
 - Dependabot alerts must be activated
 - Security advisories should be enabled
