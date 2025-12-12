@@ -5,25 +5,26 @@
   display: block;
   height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .settings-panel {
   padding: 16px;
   background: colors.$bg-secondary;
-  border-bottom: 1px solid colors.$border-color;
 
   .settings-content {
     display: flex;
     flex-direction: column;
     gap: 16px;
 
-      .user-info {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 12px;
-        background: colors.$bg-primary;
-        border-radius: 8px;      .user-icon {
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: colors.$bg-primary;
+      border-radius: 8px;
+      .user-icon {
         font-size: 22px;
         color: #4a90d9;
       }
@@ -95,6 +96,56 @@
       }
     }
   }
+
+  :host ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  :host ::-webkit-scrollbar-track {
+    background: colors.$bg-primary;
+  }
+
+  :host ::-webkit-scrollbar-thumb {
+    background: colors.$border-color;
+    border-radius: 3px;
+  }
+}
+
+.system-btn {
+  background: rgba(#4a90d9, 0.15);
+  color: #4a90d9;
+  border: 1px solid rgba(#4a90d9, 0.3);
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-weight: 500;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+
+  i {
+    font-size: 16px;
+  }
+
+  &:hover {
+    background: rgba(#4a90d9, 0.25);
+    border-color: rgba(#4a90d9, 0.5);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+.button-description {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 4px;
+  font-weight: normal;
 }
 
 .danger-btn {

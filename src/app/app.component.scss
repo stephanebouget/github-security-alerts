@@ -26,13 +26,30 @@ app-header {
 }
 
 app-login-panel,
-app-settings-panel,
 app-repos-panel,
 app-alerts-list {
   flex: 1;
-  overflow: hidden;
+  overflow-y: auto;
+}
+
+app-settings-panel {
+  flex: 1;
+  overflow-y: auto;
 }
 
 app-footer {
   flex-shrink: 0;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: colors.$bg-primary;
+}
+
+::-webkit-scrollbar-thumb {
+  background: colors.$border-color;
+  border-radius: 3px;
 }

@@ -95,4 +95,18 @@ export class TauriService {
       window.open(url, '_blank');
     }
   }
+
+  // Platform Detection
+  isWindows(): boolean {
+    // Simple platform detection that works both in Tauri and browser
+    return (
+      navigator.platform.toLowerCase().includes('win') ||
+      navigator.userAgent.toLowerCase().includes('windows')
+    );
+  }
+
+  // System Settings
+  async openTaskbarSettings(): Promise<void> {
+    return invoke('open_taskbar_settings');
+  }
 }

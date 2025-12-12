@@ -23,6 +23,20 @@
       </label>
     </div>
 
+    <!-- Windows-only Taskbar Settings -->
+    <div class="settings-group" *ngIf="isWindows">
+      <div class="settings-label">
+        <span class="label-text">System Settings</span>
+        <div class="button-description">
+          Manage tray icon visibility in Windows taskbar settings
+        </div>
+      </div>
+      <button class="system-btn" (click)="openTaskbarSettings()">
+        <i class="ti ti-settings"></i>
+        Open Taskbar Settings
+      </button>
+    </div>
+
     <!-- API Rate Limits -->
     <div class="settings-group">
       <app-rate-limit-status></app-rate-limit-status>

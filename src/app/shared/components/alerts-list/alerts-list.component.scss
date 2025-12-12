@@ -4,7 +4,20 @@
 :host {
   display: block;
   height: 100%;
-  overflow: hidden;
+  overflow-y: auto;
+}
+
+:host ::-webkit-scrollbar {
+  width: 6px;
+}
+
+:host ::-webkit-scrollbar-track {
+  background: colors.$bg-primary;
+}
+
+:host ::-webkit-scrollbar-thumb {
+  background: colors.$border-color;
+  border-radius: 3px;
 }
 
 .error-banner {
@@ -22,19 +35,6 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: colors.$bg-primary;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: colors.$border-color;
-    border-radius: 3px;
-  }
 
   .loading-spinner {
     flex: 1;

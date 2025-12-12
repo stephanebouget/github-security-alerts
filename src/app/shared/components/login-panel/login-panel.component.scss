@@ -7,6 +7,19 @@
   overflow-y: auto;
 }
 
+:host ::-webkit-scrollbar {
+  width: 6px;
+}
+
+:host ::-webkit-scrollbar-track {
+  background: colors.$bg-primary;
+}
+
+:host ::-webkit-scrollbar-thumb {
+  background: colors.$border-color;
+  border-radius: 3px;
+}
+
 .login-panel {
   flex: 1;
   display: flex;

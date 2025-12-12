@@ -4,7 +4,20 @@
 :host {
   display: block;
   height: 100%;
-  overflow: hidden;
+  overflow-y: auto;
+}
+
+:host ::-webkit-scrollbar {
+  width: 6px;
+}
+
+:host ::-webkit-scrollbar-track {
+  background: colors.$bg-primary;
+}
+
+:host ::-webkit-scrollbar-thumb {
+  background: colors.$border-color;
+  border-radius: 3px;
 }
 
 .repos-panel {
@@ -71,19 +84,6 @@
   .owners-list {
     flex: 1;
     overflow-y: auto;
-
-    &::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: colors.$bg-primary;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: colors.$border-color;
-      border-radius: 3px;
-    }
   }
 
   .owner-accordion {
@@ -165,19 +165,6 @@
     flex: 1;
     overflow-y: auto;
     padding: 8px 0;
-
-    &::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: colors.$bg-primary;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: colors.$border-color;
-      border-radius: 3px;
-    }
   }
 
   .repo-select-item {

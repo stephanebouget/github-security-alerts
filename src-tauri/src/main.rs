@@ -20,6 +20,7 @@ mod repos;
 mod alerts;
 mod tray;
 mod window;
+mod system;
 
 use config::load_config;
 use state::AppState;
@@ -171,7 +172,8 @@ fn main() {
             repos::set_selected_repos,
             repos::get_selected_repos,
             alerts::get_github_security_alerts,
-            tray::update_tray_icon
+            tray::update_tray_icon,
+            system::open_taskbar_settings
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
