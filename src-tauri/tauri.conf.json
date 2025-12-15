@@ -3,10 +3,10 @@
   "version": "1.1.0",
   "identifier": "com.github.security.alerts",
   "build": {
-    "frontendDist": "../dist",
+    "frontendDist": "../dist/browser",
     "devUrl": "http://localhost:4200",
     "beforeDevCommand": "npm run web:serve",
-    "beforeBuildCommand": "npm run web:build"
+    "beforeBuildCommand": "npm run web:prod"
   },
   "app": {
     "withGlobalTauri": true,
