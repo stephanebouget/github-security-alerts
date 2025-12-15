@@ -43,34 +43,42 @@
         <span class="label-text">Application Updates</span>
         <div class="button-description">
           Current version: {{ currentVersion }}
-          <span class="update-status" *ngIf="updateAvailable" style="color: #22c55e; margin-left: 8px;">
+          <span
+            class="update-status"
+            *ngIf="updateAvailable"
+            style="color: #22c55e; margin-left: 8px"
+          >
             Update available!
           </span>
         </div>
       </div>
       <div class="update-controls">
-        <button 
-          class="system-btn" 
+        <button
+          class="system-btn"
           (click)="checkForUpdates()"
           [disabled]="isCheckingForUpdates"
-          style="margin-right: 8px;"
+          style="margin-right: 8px"
         >
           <i class="ti ti-refresh" [class.spinning]="isCheckingForUpdates"></i>
-          {{ isCheckingForUpdates ? 'Checking...' : 'Check for Updates' }}
+          {{ isCheckingForUpdates ? "Checking..." : "Check for Updates" }}
         </button>
-        <button 
-          class="system-btn update-btn" 
+        <button
+          class="system-btn update-btn"
           (click)="installUpdate()"
           [disabled]="!updateAvailable || isInstallingUpdate"
           *ngIf="updateAvailable"
-          style="background-color: #22c55e; color: white;"
+          style="background-color: #22c55e; color: white"
         >
           <i class="ti ti-download" [class.spinning]="isInstallingUpdate"></i>
-          {{ isInstallingUpdate ? 'Installing...' : 'Install Update' }}
+          {{ isInstallingUpdate ? "Installing..." : "Install Update" }}
         </button>
       </div>
-      <div class="button-description" style="margin-top: 8px; font-size: 12px; color: #64748b;">
-        Updates are checked automatically every hour and installed silently
+      <div
+        class="button-description"
+        style="margin-top: 8px; font-size: 12px; color: #64748b"
+      >
+        Updates are checked automatically. When available, an icon appears in
+        the header.
       </div>
     </div>
 

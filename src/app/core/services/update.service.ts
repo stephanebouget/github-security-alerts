@@ -8,11 +8,16 @@ export interface UpdateInfo {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UpdateService {
   private updateCheckInterval?: number;
   private readonly CHECK_INTERVAL = 1000 * 60 * 60; // Check every hour
+  private _updateAvailable = false;
+
+  get updateAvailable(): boolean {
+    return this._updateAvailable;
+  }
 
   constructor() {}
 
@@ -24,7 +29,7 @@ export class UpdateService {
     if (!this.isTauri) {
       return 'dev-mode';
     }
-    
+
     try {
       return await invoke<string>('get_current_version');
     } catch (error) {
@@ -42,9 +47,11 @@ export class UpdateService {
     try {
       const updateAvailable = await invoke<boolean>('check_for_updates');
       console.log('Update check result:', updateAvailable);
+      this._updateAvailable = updateAvailable;
       return updateAvailable;
     } catch (error) {
       console.error('Failed to check for updates:', error);
+      this._updateAvailable = false;
       return false;
     }
   }
@@ -96,17 +103,9 @@ export class UpdateService {
     try {
       console.log('Performing silent update check...');
       const updateAvailable = await this.checkForUpdates();
-      
+
       if (updateAvailable) {
-        console.log('Silent update available, installing automatically...');
-        
-        // Wait a bit to ensure the app is in a stable state
-        await new Promise(resolve => setTimeout(resolve, 5000));
-        
-        // Install the update silently
-        await this.installUpdate();
-        
-        console.log('Silent update installation initiated');
+        console.log('Update available - showing notification in UI');
       } else {
         console.log('No updates available');
       }
@@ -122,7 +121,7 @@ export class UpdateService {
     return {
       updateAvailable,
       currentVersion,
-      newVersion: updateAvailable ? 'Available' : undefined
+      newVersion: updateAvailable ? 'Available' : undefined,
     };
   }
 }

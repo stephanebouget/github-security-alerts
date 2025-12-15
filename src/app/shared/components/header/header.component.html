@@ -13,6 +13,15 @@
       <i class="ti ti-refresh" [class.spinning]="alertsLoading"></i>
     </button>
     <button
+      class="icon-btn update-btn"
+      (click)="onUpdateClick()"
+      *ngIf="updateAvailable"
+      title="Update Available - Click to Install"
+      style="color: #22c55e; animation: pulse 2s infinite"
+    >
+      <i class="ti ti-download" [class.spinning]="isUpdating"></i>
+    </button>
+    <button
       class="icon-btn"
       [class.active]="currentView === 'repos'"
       (click)="showRepos()"
