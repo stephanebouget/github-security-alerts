@@ -7,13 +7,38 @@
       You need a GitHub Personal Access Token with <strong>repo</strong> and
       <strong>read:org</strong> scopes
     </p>
-    <button
-      class="token-btn"
-      (click)="onOpenTokenPage()"
-      title="Open GitHub token creation page"
-    >
-      <i class="ti ti-key"></i> Create Token on GitHub
-    </button>
+    <div class="auth-options">
+      <button
+        class="oauth-btn primary"
+        (click)="onStartOAuth()"
+        [disabled]="oauthLoading || authLoading"
+        title="Sign in with GitHub OAuth"
+      >
+        <span *ngIf="!oauthLoading"
+          ><i class="ti ti-brand-github"></i> Sign in with GitHub</span
+        >
+        <span *ngIf="oauthLoading"
+          ><i class="ti ti-loader spinning"></i> Connecting...</span
+        >
+      </button>
+
+      <div class="divider">
+        <span>or</span>
+      </div>
+
+      <button
+        class="token-btn secondary"
+        (click)="onOpenTokenPage()"
+        title="Open GitHub token creation page"
+        [disabled]="oauthLoading || authLoading"
+      >
+        <i class="ti ti-key"></i> Create Personal Access Token
+      </button>
+      <p class="token-description">
+        Grants access to your personal repositories and organization
+        repositories
+      </p>
+    </div>
     <div class="token-input-group">
       <input
         type="password"
@@ -28,7 +53,9 @@
         [disabled]="authLoading || !tokenInput.trim()"
       >
         <span *ngIf="!authLoading">Connect</span>
-        <span *ngIf="authLoading"><i class="ti ti-loader spinning"></i> Connecting...</span>
+        <span *ngIf="authLoading"
+          ><i class="ti ti-loader spinning"></i> Connecting...</span
+        >
       </button>
     </div>
     <p class="error-text" *ngIf="error">{{ error }}</p>

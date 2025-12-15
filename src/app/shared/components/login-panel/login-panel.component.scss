@@ -70,31 +70,92 @@
     }
   }
 
+  .auth-options {
+    width: 100%;
+    max-width: 280px;
+    margin-bottom: 16px;
+  }
+
+  .oauth-btn,
   .token-btn {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    background: colors.$bg-tertiary;
-    color: colors.$text-primary;
-    border: 1px solid colors.$border-color;
     border-radius: 8px;
-    padding: 10px 20px;
-    font-size: 13px;
+    padding: 12px 20px;
+    font-size: 14px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
-    margin: 0 auto 16px;
+    width: 100%;
+    margin-bottom: 12px;
 
     i {
       font-size: 16px;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  .oauth-btn.primary {
+    background: #24292f;
+    color: white;
+    border: 1px solid #24292f;
+
+    i {
+      color: white;
+    }
+
+    &:hover:not(:disabled) {
+      background: #1c2128;
+      border-color: #1c2128;
+    }
+  }
+
+  .token-btn.secondary {
+    background: colors.$bg-tertiary;
+    color: colors.$text-primary;
+    border: 1px solid colors.$border-color;
+
+    i {
       color: colors.$accent-color;
     }
 
-    &:hover {
+    &:hover:not(:disabled) {
       background: color.adjust(colors.$bg-tertiary, $lightness: 5%);
       border-color: colors.$accent-color;
     }
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    margin: 16px 0;
+
+    &::before,
+    &::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: colors.$border-color;
+    }
+
+    span {
+      padding: 0 12px;
+      color: colors.$text-secondary;
+      font-size: 12px;
+    }
+  }
+
+  .token-description {
+    margin: 8px 0 0 0;
+    color: colors.$text-secondary;
+    font-size: 12px;
+    text-align: center;
   }
 
   .token-input-group {

@@ -50,3 +50,4 @@ package-lock.json
 src-tauri/target
 src-tauri/WixTools
 src-tauri/gen
+.env

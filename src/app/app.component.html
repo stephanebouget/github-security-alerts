@@ -12,9 +12,11 @@
   <app-login-panel
     *ngIf="!authenticated"
     [authLoading]="authLoading"
+    [oauthLoading]="oauthLoading"
     [error]="error"
     (login)="onLogin($event)"
     (openTokenPage)="openCreateTokenPage()"
+    (startOAuth)="onStartOAuth()"
   ></app-login-panel>
 
   <!-- Settings View -->

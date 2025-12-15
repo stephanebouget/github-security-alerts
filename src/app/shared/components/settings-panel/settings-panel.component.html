@@ -1,8 +1,13 @@
 <div class="settings-panel">
   <div class="settings-content">
     <div class="user-info">
-      <i class="ti ti-user user-icon"></i>
-      <span class="username">{{ username }}</span>
+      <div class="user-content">
+        <i class="ti ti-user user-icon"></i>
+        <span class="username">{{ username }}</span>
+      </div>
+      <button class="sign-out-mini" (click)="onLogout()">
+        <i class="ti ti-logout"></i>
+      </button>
     </div>
 
     <div class="settings-group">
@@ -57,7 +62,6 @@
           class="system-btn"
           (click)="checkForUpdates()"
           [disabled]="isCheckingForUpdates"
-          style="margin-right: 8px"
         >
           <i class="ti ti-refresh" [class.spinning]="isCheckingForUpdates"></i>
           {{ isCheckingForUpdates ? "Checking..." : "Check for Updates" }}
@@ -77,8 +81,7 @@
         class="button-description"
         style="margin-top: 8px; font-size: 12px; color: #64748b"
       >
-        Updates are checked automatically. When available, an icon appears in
-        the header.
+        Updates are checked automatically
       </div>
     </div>
 
@@ -88,9 +91,6 @@
     </div>
 
     <div class="settings-actions">
-      <button class="danger-btn" (click)="onLogout()">
-        <i class="ti ti-logout"></i> Sign Out
-      </button>
     </div>
   </div>
 </div>

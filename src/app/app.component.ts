@@ -31,6 +31,7 @@ export class AppComponent implements OnInit, OnDestroy {
   authenticated = false;
   username: string | null = null;
   authLoading = false;
+  oauthLoading = false;
 
   // Owners & Repos state
   owners: OwnerAccordion[] = [];
@@ -119,6 +120,39 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onLogin(token: string): void {
     this.login(token);
+  }
+
+  async onStartOAuth(): Promise<void> {
+    if (!this.tauriService.isTauri) {
+      this.error = 'OAuth is only available in the desktop app';
+      return;
+    }
+
+    this.oauthLoading = true;
+    this.error = '';
+
+    try {
+      // Get the OAuth URL and open it
+      const oauthUrl = await this.tauriService.startOAuthFlow();
+      await this.tauriService.openExternalLink(oauthUrl);
+
+      // Start listening for the callback
+      const accessToken = await this.tauriService.completeOAuthFlow();
+
+      // Verify auth status
+      await this.checkAuthStatus();
+
+      if (this.authenticated) {
+        await this.loadOwners();
+        this.currentView = 'repos';
+      }
+
+    } catch (err) {
+      console.error('OAuth error:', err);
+      this.error = `OAuth authentication failed: ${err}`;
+    } finally {
+      this.oauthLoading = false;
+    }
   }
 
   onViewChange(view: ViewMode): void {

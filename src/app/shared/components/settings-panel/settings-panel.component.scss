@@ -20,10 +20,18 @@
     .user-info {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 12px;
       padding: 12px;
       background: colors.$bg-primary;
       border-radius: 8px;
+
+      .user-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
       .user-icon {
         font-size: 22px;
         color: #4a90d9;
@@ -32,6 +40,23 @@
       .username {
         font-size: 14px;
         font-weight: 500;
+      }
+
+      .sign-out-mini {
+        background: #ef4444;
+        border: none;
+        color: white;
+        cursor: pointer;
+        font-size: 14px;
+        padding: 6px 8px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        transition: background-color 0.2s;
+
+        &:hover {
+          background: #dc2626;
+        }
       }
     }
 
