@@ -76,6 +76,12 @@ To ensure this application works correctly, you must enable GitHub Advanced Secu
 - Click any repository to open it on GitHub in your browser
 - Checkmark (✓) indicates no alerts, numbers show active alerts
 
+## ✨ Additional Features
+
+- **OTA Updates**: Automatic over-the-air updates with signature verification for security
+- **API Rate Limits Usage**: Real-time monitoring of GitHub API rate limits and usage statistics
+- **Auto-refresh Interval Customizable**: Configure refresh intervals from 1 minute to 4 hours based on your needs
+
 ## 📝 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
