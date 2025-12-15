@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { TauriService } from '../../../core/services';
+import { TauriService, UpdateService } from '../../../core/services';
 
 @Component({
   selector: 'app-settings-panel',
@@ -15,11 +15,19 @@ export class SettingsPanelComponent implements OnInit {
   @Output() refreshIntervalChange = new EventEmitter<number>();
 
   isWindows = false;
+  currentVersion = '';
+  updateAvailable = false;
+  isCheckingForUpdates = false;
+  isInstallingUpdate = false;
 
-  constructor(private tauriService: TauriService) {}
+  constructor(
+    private tauriService: TauriService,
+    public updateService: UpdateService
+  ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.isWindows = this.tauriService.isWindows();
+    await this.loadUpdateInfo();
   }
 
   onLogout(): void {
@@ -39,6 +47,42 @@ export class SettingsPanelComponent implements OnInit {
       } catch (error) {
         console.error('Failed to open taskbar settings:', error);
       }
+    }
+  }
+
+  async loadUpdateInfo(): Promise<void> {
+    try {
+      this.currentVersion = await this.updateService.getCurrentVersion();
+      this.updateAvailable = await this.updateService.checkForUpdates();
+    } catch (error) {
+      console.error('Failed to load update info:', error);
+    }
+  }
+
+  async checkForUpdates(): Promise<void> {
+    this.isCheckingForUpdates = true;
+    try {
+      this.updateAvailable = await this.updateService.checkForUpdates();
+      if (!this.updateAvailable) {
+        // Show a toast or notification that no updates are available
+        console.log('No updates available');
+      }
+    } catch (error) {
+      console.error('Failed to check for updates:', error);
+    } finally {
+      this.isCheckingForUpdates = false;
+    }
+  }
+
+  async installUpdate(): Promise<void> {
+    this.isInstallingUpdate = true;
+    try {
+      await this.updateService.installUpdate();
+      console.log('Update installation started');
+    } catch (error) {
+      console.error('Failed to install update:', error);
+    } finally {
+      this.isInstallingUpdate = false;
     }
   }
 }
