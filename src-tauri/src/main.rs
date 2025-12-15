@@ -152,9 +152,6 @@ fn main() {
                 })
                 .build(app)?;
 
-            // Start background update checker
-            updater::start_background_update_checker(app.handle().clone());
-
             Ok(())
         })
         .on_window_event(|window, event| {

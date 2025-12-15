@@ -35,9 +35,6 @@ if [ -f "src-tauri/tauri.conf.json" ]; then
     sed -i "s/\"version\": \"$CURRENT_VERSION\"/\"version\": \"$NEW_VERSION\"/g" src-tauri/tauri.conf.json
 fi
 
-# 4. src-tauri/tauri.conf.json.example  
-sed -i "s/\"version\": \"$CURRENT_VERSION\"/\"version\": \"$NEW_VERSION\"/g" src-tauri/tauri.conf.json.example
-
 # 5. Footer component
 sed -i "s/>v$CURRENT_VERSION</>v$NEW_VERSION</g" src/app/shared/components/footer/footer.component.html
 
