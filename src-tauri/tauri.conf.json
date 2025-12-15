@@ -1,36 +1,52 @@
 {
+  "$schema": "https://schema.tauri.app/config/2.0.0",
+  "productName": "GitHub Security Alerts",
+  "version": "1.1.0",
+  "identifier": "com.githubsecurityalerts.app",
   "build": {
-    "beforeDevCommand": "npm run dev",
-    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist",
     "devUrl": "http://localhost:4200",
-    "frontendDist": "../dist"
-  },
-  "package": {
-    "productName": "GitHub Security Alerts",
-    "version": "1.1.0"
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build"
   },
   "app": {
-    "identifier": "com.githubsecurityalerts.app",
+    "withGlobalTauri": true,
     "windows": [
       {
         "title": "GitHub Security Alerts",
+        "label": "main",
         "width": 400,
         "height": 600,
         "resizable": true,
         "skipTaskbar": true,
         "visible": false
       }
-    ]
+    ],
+    "security": {
+      "csp": null
+    }
   },
   "bundle": {
     "active": true,
-    "targets": "all"
-  },
-  "updater": {
-    "active": true,
-    "endpoints": [
-      "https://github.com/stephanebouget/github-security-alerts/releases/latest/download/latest.json"
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png", 
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
     ],
-    "dialog": false
+    "category": "DeveloperTool",
+    "shortDescription": "GitHub Security Alerts Monitor",
+    "longDescription": "Monitor security alerts across your GitHub repositories"
+  },
+  "plugins": {
+    "updater": {
+      "active": true,
+      "endpoints": [
+        "https://github.com/stephanebouget/github-security-alerts/releases/latest/download/latest.json"
+      ],
+      "dialog": false
+    }
   }
 }
