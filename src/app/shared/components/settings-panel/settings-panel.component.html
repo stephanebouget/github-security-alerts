@@ -1,8 +1,13 @@
 <div class="settings-panel">
   <div class="settings-content">
     <div class="user-info">
-      <i class="ti ti-user user-icon"></i>
-      <span class="username">{{ username }}</span>
+      <div class="user-content">
+        <i class="ti ti-user user-icon"></i>
+        <span class="username">{{ username }}</span>
+      </div>
+      <button class="sign-out-mini" (click)="onLogout()">
+        <i class="ti ti-logout"></i>
+      </button>
     </div>
 
     <div class="settings-group">
@@ -86,9 +91,6 @@
     </div>
 
     <div class="settings-actions">
-      <button class="danger-btn" (click)="onLogout()">
-        <i class="ti ti-logout"></i> Sign Out
-      </button>
     </div>
   </div>
 </div>
