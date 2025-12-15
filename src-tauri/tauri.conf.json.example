@@ -29,7 +29,7 @@
   "updater": {
     "active": true,
     "endpoints": [
-      "https://github.com/stephanebouget/github-security-alerts/releases/latest/download/latest.json"
+      "https://github.com/YOUR_USERNAME/github-security-alerts/releases/latest/download/latest.json"
     ],
     "dialog": false
   }

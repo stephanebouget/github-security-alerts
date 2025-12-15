@@ -16,6 +16,8 @@ tauri-build = { version = "2.0.1", features = [] }
 [dependencies]
 tauri = { version = "2.1.1", features = ["tray-icon", "image-png"] }
 tauri-plugin-shell = "2.0.1"
+tauri-plugin-updater = "2.0"
+tauri-plugin-notification = "2.0"
 serde = { version = "1.0.215", features = ["derive"] }
 serde_json = "1.0.132"
 reqwest = { version = "0.11", features = ["json"] }

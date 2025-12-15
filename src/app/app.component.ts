@@ -7,6 +7,7 @@ import {
   AuthStatus,
   RepoInfo,
   OwnerInfo,
+  UpdateService,
 } from './core/services';
 
 type ViewMode = 'alerts' | 'repos' | 'settings';
@@ -51,6 +52,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private tauriService: TauriService,
+    private updateService: UpdateService,
     private translate: TranslateService
   ) {
     translate.setFallbackLang('en');
@@ -71,6 +73,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     await this.checkAuthStatus();
+    
+    // Start automatic update checking
+    this.updateService.startAutomaticUpdateCheck();
   }
 
   async checkAuthStatus() {
@@ -340,5 +345,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.stopAutoRefresh();
+    this.updateService.stopAutomaticUpdateCheck();
   }
 }

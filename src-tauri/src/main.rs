@@ -21,6 +21,7 @@ mod alerts;
 mod tray;
 mod window;
 mod system;
+mod updater;
 
 use config::load_config;
 use state::AppState;
@@ -32,6 +33,8 @@ fn main() {
 
     tauri::Builder::default()
         .plugin(tauri_plugin_shell::init())
+        .plugin(tauri_plugin_notification::init())
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
             if let Some(window) = app.get_webview_window("main") {
                 position_window_near_tray(&window);
@@ -149,6 +152,9 @@ fn main() {
                 })
                 .build(app)?;
 
+            // Start background update checker
+            updater::start_background_update_checker(app.handle().clone());
+
             Ok(())
         })
         .on_window_event(|window, event| {
@@ -173,7 +179,10 @@ fn main() {
             repos::get_selected_repos,
             alerts::get_github_security_alerts,
             tray::update_tray_icon,
-            system::open_taskbar_settings
+            system::open_taskbar_settings,
+            updater::check_for_updates,
+            updater::install_update,
+            updater::get_current_version
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
