@@ -1,12 +1,12 @@
 {
   "productName": "GitHub Security Alerts",
   "version": "1.1.0",
-  "identifier": "com.githubsecurityalerts.app",
+  "identifier": "com.githubsecurityalerts.desktop",
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:4200",
-    "beforeDevCommand": "npm run dev",
-    "beforeBuildCommand": "npm run build"
+    "beforeDevCommand": "npm run web:serve",
+    "beforeBuildCommand": "npm run web:build"
   },
   "app": {
     "withGlobalTauri": true,
