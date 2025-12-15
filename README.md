@@ -37,6 +37,7 @@ Available for Windows, macOS, and Linux.
 To ensure this application works correctly, you must enable GitHub Advanced Security features on the repositories you want to monitor.:
 
 - Dependabot alerts must be activated
+  <img width="767" height="88" alt="image" src="https://github.com/user-attachments/assets/5517e326-cedc-47c9-99b9-e532b0c25959" />
 - Security advisories should be enabled
 - For private repositories, you may need a GitHub Enterprise or GitHub Advanced Security license
 
