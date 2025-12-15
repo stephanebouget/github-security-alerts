@@ -109,4 +109,17 @@ export class TauriService {
   async openTaskbarSettings(): Promise<void> {
     return invoke('open_taskbar_settings');
   }
+
+  async flashTrayIcon(): Promise<void> {
+    return invoke('flash_tray_icon');
+  }
+
+  // OAuth Authentication
+  async startOAuthFlow(): Promise<string> {
+    return invoke<string>('start_oauth_flow');
+  }
+
+  async completeOAuthFlow(): Promise<string> {
+    return invoke<string>('complete_oauth_flow');
+  }
 }

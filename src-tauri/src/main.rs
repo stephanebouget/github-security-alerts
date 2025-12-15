@@ -29,6 +29,11 @@ use tray::generate_tray_icon;
 use window::{position_window_near_tray, handle_window_focus_lost, handle_window_show};
 
 fn main() {
+    // Load environment variables from .env file
+    if dotenv::dotenv().is_err() {
+        let _ = dotenv::from_filename("../.env");
+    }
+    
     let config = load_config();
 
     tauri::Builder::default()
@@ -170,6 +175,8 @@ fn main() {
             auth::get_auth_status,
             auth::get_token,
             auth::logout,
+            auth::start_oauth_flow,
+            auth::complete_oauth_flow,
             repos::get_owners,
             repos::get_repos_for_owner,
             repos::set_selected_repos,

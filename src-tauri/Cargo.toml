@@ -12,6 +12,7 @@ edition = "2021"
 
 [build-dependencies]
 tauri-build = { version = "2.0.1", features = [] }
+dotenv = "0.15"
 
 [dependencies]
 tauri = { version = "2.1.1", features = ["tray-icon", "image-png"] }
@@ -27,8 +28,10 @@ open = "5"
 tiny_http = "0.12"
 url = "2"
 dirs = "5"
+dotenv = "0.15"
 tauri-plugin-single-instance = "2.0"
 tauri-plugin-autostart = "2.0"
+urlencoding = "2.1"
 
 [features]
 # by default Tauri runs in production mode

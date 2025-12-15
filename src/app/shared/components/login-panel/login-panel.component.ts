@@ -8,10 +8,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class LoginPanelComponent {
   @Input() authLoading = false;
+  @Input() oauthLoading = false;
   @Input() error = '';
 
   @Output() login = new EventEmitter<string>();
   @Output() openTokenPage = new EventEmitter<void>();
+  @Output() startOAuth = new EventEmitter<void>();
 
   tokenInput = '';
 
@@ -21,5 +23,9 @@ export class LoginPanelComponent {
 
   onOpenTokenPage(): void {
     this.openTokenPage.emit();
+  }
+
+  onStartOAuth(): void {
+    this.startOAuth.emit();
   }
 }
