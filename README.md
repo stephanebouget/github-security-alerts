@@ -79,8 +79,17 @@ To ensure this application works correctly, you must enable GitHub Advanced Secu
 ## ✨ Additional Features
 
 - **OTA Updates**: Automatic over-the-air updates with signature verification for security
+
+  <img width="397" height="225" alt="image" src="https://github.com/user-attachments/assets/3a9e60af-c479-48fc-8ddd-c7c311d567ac" />
+
 - **API Rate Limits Usage**: Real-time monitoring of GitHub API rate limits and usage statistics
+
+  <img width="394" height="252" alt="image" src="https://github.com/user-attachments/assets/8359f933-5517-411e-b549-d50ef4a42318" />
+
 - **Auto-refresh Interval Customizable**: Configure refresh intervals from 1 minute to 4 hours based on your needs
+
+  <img width="404" height="97" alt="image" src="https://github.com/user-attachments/assets/9ce75e85-e589-4013-addf-355acc09bd10" />
+
 
 ## 📝 License
 
