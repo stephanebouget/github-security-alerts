@@ -3,25 +3,41 @@ use tauri_plugin_updater::UpdaterExt;
 
 #[tauri::command]
 pub async fn check_for_updates(app_handle: AppHandle) -> Result<bool, String> {
+    println!("[UPDATE] Starting update check...");
+    
     match app_handle.updater() {
         Ok(updater) => {
+            println!("[UPDATE] Updater initialized successfully");
             match updater.check().await {
                 Ok(Some(update)) => {
-                    println!("[UPDATE] Available: {}", update.version);
+                    println!("[UPDATE] Update available: v{}", update.version);
+                    println!("[UPDATE] Notes: {:?}", update.body);
+                    println!("[UPDATE] Date: {:?}", update.date);
                     Ok(true)
                 }
                 Ok(None) => {
-                    println!("[UPDATE] No update available");
+                    println!("[UPDATE] No update available (running latest version)");
                     Ok(false)
                 }
                 Err(e) => {
-                    eprintln!("[UPDATE ERROR] Check failed: {}", e);
+                    eprintln!("[UPDATE ERROR] Check failed with error:");
+                    eprintln!("[UPDATE ERROR] Message: {}", e);
+                    
+                    let error_str = e.to_string();
+                    if error_str.contains("Could not fetch") {
+                        eprintln!("[UPDATE ERROR] Network issue: Check if latest.json exists in GitHub release");
+                    } else if error_str.contains("Invalid") || error_str.contains("JSON") {
+                        eprintln!("[UPDATE ERROR] Invalid JSON format in latest.json");
+                    } else if error_str.contains("signature") {
+                        eprintln!("[UPDATE ERROR] Signature verification failed");
+                    }
+                    
                     Err(e.to_string())
                 }
             }
         }
         Err(e) => {
-            eprintln!("[UPDATE ERROR] Updater not configured: {}", e);
+            eprintln!("[UPDATE ERROR] Updater initialization failed: {}", e);
             Err(format!("Updater not available: {}", e))
         }
     }
