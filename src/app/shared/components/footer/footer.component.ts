@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AlertsResponse } from '../../../core/services';
+import { AlertsResponse, TauriService } from '../../../core/services';
 
 @Component({
   selector: 'app-footer',
@@ -11,14 +11,14 @@ export class FooterComponent {
   @Input() alerts: AlertsResponse | null = null;
   @Input() authenticated = false;
 
+  constructor(private tauriService: TauriService) {}
+
   getLastUpdate(): string {
     return new Date().toLocaleTimeString();
   }
 
   openGitHub(): void {
-    window.open(
-      'https://github.com/stephanebouget/github-security-alerts',
-      '_blank'
-    );
+    const url = `https://github.com/stephanebouget/github-security-alerts`;
+    this.tauriService.openExternalLink(url);
   }
 }
