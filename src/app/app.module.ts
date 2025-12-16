@@ -15,8 +15,6 @@ import { AppRoutingModule } from './app-routing.module';
 // NG Translate
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
-import { HomeModule } from './home/home.module';
-
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -27,7 +25,6 @@ import { AppComponent } from './app.component';
     FormsModule,
     CoreModule,
     SharedModule,
-    HomeModule,
     AppRoutingModule,
     TranslateModule.forRoot({
       fallbackLang: 'en',
