@@ -103,7 +103,7 @@ jobs:
           releaseDraft: false
           prerelease: false
           includeRelease: true
-          includeDebug: true
+          includeDebug: false
           includeUpdaterJson: true
           updaterJsonPreferNsis: true
           args: --target universal-apple-darwin
@@ -143,6 +143,6 @@ jobs:
           releaseDraft: false
           prerelease: false
           includeRelease: true
-          includeDebug: true
+          includeDebug: false
           includeUpdaterJson: true
           updaterJsonPreferNsis: true
