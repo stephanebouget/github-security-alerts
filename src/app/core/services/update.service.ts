@@ -12,8 +12,8 @@ export interface UpdateInfo {
 })
 export class UpdateService {
   private updateCheckInterval?: number;
-  private readonly CHECK_INTERVAL = 1000 * 60 * 60; // Check every hour
   private _updateAvailable = false;
+  private _refreshIntervalMinutes = 60; // Default to 1 hour
 
   get updateAvailable(): boolean {
     return this._updateAvailable;
@@ -71,10 +71,14 @@ export class UpdateService {
     }
   }
 
-  startAutomaticUpdateCheck(): void {
+  startAutomaticUpdateCheck(refreshIntervalMinutes?: number): void {
     if (!this.isTauri) {
       console.log('Automatic updates not supported in dev mode');
       return;
+    }
+
+    if (refreshIntervalMinutes !== undefined) {
+      this._refreshIntervalMinutes = refreshIntervalMinutes;
     }
 
     // Clear existing interval if any
@@ -83,12 +87,13 @@ export class UpdateService {
     // Check immediately
     this.performSilentUpdateCheck();
 
-    // Set up periodic checks
+    // Set up periodic checks using the configurable interval
+    const intervalMs = this._refreshIntervalMinutes * 60 * 1000;
     this.updateCheckInterval = window.setInterval(() => {
       this.performSilentUpdateCheck();
-    }, this.CHECK_INTERVAL);
+    }, intervalMs);
 
-    console.log('Automatic update checking started');
+    console.log(`Automatic update checking started (every ${this._refreshIntervalMinutes} minutes)`);
   }
 
   stopAutomaticUpdateCheck(): void {
@@ -96,6 +101,14 @@ export class UpdateService {
       clearInterval(this.updateCheckInterval);
       this.updateCheckInterval = undefined;
       console.log('Automatic update checking stopped');
+    }
+  }
+
+  updateRefreshInterval(refreshIntervalMinutes: number): void {
+    this._refreshIntervalMinutes = refreshIntervalMinutes;
+    // Restart with new interval
+    if (this.updateCheckInterval) {
+      this.startAutomaticUpdateCheck();
     }
   }
 

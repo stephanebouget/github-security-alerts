@@ -75,8 +75,8 @@ export class AppComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     await this.checkAuthStatus();
     
-    // Start automatic update checking
-    this.updateService.startAutomaticUpdateCheck();
+    // Start automatic update checking with the same interval as alerts refresh
+    this.updateService.startAutomaticUpdateCheck(this.refreshIntervalMinutes);
   }
 
   async checkAuthStatus() {
@@ -332,6 +332,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.refreshIntervalMinutes = minutes;
     this.saveRefreshIntervalToStorage();
     this.startAutoRefresh();
+    
+    // Also update the update service interval
+    this.updateService.updateRefreshInterval(minutes);
   }
 
   stopAutoRefresh() {
