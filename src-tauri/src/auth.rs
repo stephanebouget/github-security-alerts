@@ -18,26 +18,26 @@ const OAUTH_SCOPE: &str = "repo read:user read:org";
 
 fn get_client_id() -> String {
     // Try environment variable first (from build time)
-    if let Some(id) = option_env!("GITHUB_CLIENT_ID") {
+    if let Some(id) = option_env!("CLIENT_ID") {
         if id != DEFAULT_CLIENT_ID {
             return id.to_string();
         }
     }
     
     // Try runtime environment variable
-    std::env::var("GITHUB_CLIENT_ID").unwrap_or_else(|_| DEFAULT_CLIENT_ID.to_string())
+    std::env::var("CLIENT_ID").unwrap_or_else(|_| DEFAULT_CLIENT_ID.to_string())
 }
 
 fn get_client_secret() -> String {
     // Try environment variable first (from build time)
-    if let Some(secret) = option_env!("GITHUB_CLIENT_SECRET") {
+    if let Some(secret) = option_env!("CLIENT_SECRET") {
         if secret != DEFAULT_CLIENT_SECRET {
             return secret.to_string();
         }
     }
     
     // Try runtime environment variable
-    std::env::var("GITHUB_CLIENT_SECRET").unwrap_or_else(|_| DEFAULT_CLIENT_SECRET.to_string())
+    std::env::var("CLIENT_SECRET").unwrap_or_else(|_| DEFAULT_CLIENT_SECRET.to_string())
 }
 
 #[derive(Serialize, Deserialize)]
