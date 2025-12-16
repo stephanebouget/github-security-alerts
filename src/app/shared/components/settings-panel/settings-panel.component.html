@@ -73,7 +73,7 @@
           *ngIf="updateAvailable"
           style="background-color: #22c55e; color: white"
         >
-          <i class="ti ti-download" [class.spinning]="isInstallingUpdate"></i>
+          <i class="ti ti-download"></i>
           {{ isInstallingUpdate ? "Installing..." : "Install Update" }}
         </button>
       </div>
@@ -90,7 +90,6 @@
       <app-rate-limit-status></app-rate-limit-status>
     </div>
 
-    <div class="settings-actions">
-    </div>
+    <div class="settings-actions"></div>
   </div>
 </div>
