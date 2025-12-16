@@ -38,9 +38,6 @@ fi
 # 5. Footer component
 sed -i "s/>v$CURRENT_VERSION</>v$NEW_VERSION</g" src/app/shared/components/footer/footer.component.html
 
-# 6. setup.sh
-sed -i "s/git tag v$CURRENT_VERSION/git tag v$NEW_VERSION/g" setup.sh
-
 # 7. Update Cargo.lock
 echo "🔧 Updating Cargo.lock..."
 cd src-tauri
