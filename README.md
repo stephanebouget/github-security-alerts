@@ -51,7 +51,8 @@ To ensure this application works correctly, you must enable GitHub Advanced Secu
   <img width="415" height="596" alt="image" src="https://github.com/user-attachments/assets/445a80c3-c773-4fe4-a083-0aece707aab0" />
 </div>
 
-- Paste your GitHub personal access token in the login form
+- **Personal repositories only**: Sign in with GitHub is sufficient
+- **Organizations included**: Create a GitHub Personal Access Token (PAT) for full access
 - The app validates the token and saves it securely
 
 2. **Select Repositories**
@@ -89,7 +90,6 @@ To ensure this application works correctly, you must enable GitHub Advanced Secu
 - **Auto-refresh Interval Customizable**: Configure refresh intervals from 1 minute to 4 hours based on your needs
 
   <img width="404" height="97" alt="image" src="https://github.com/user-attachments/assets/9ce75e85-e589-4013-addf-355acc09bd10" />
-
 
 ## 📝 License
 
