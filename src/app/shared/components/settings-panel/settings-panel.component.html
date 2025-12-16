@@ -48,13 +48,21 @@
         <span class="label-text">Application Updates</span>
         <div class="button-description">
           Current version: {{ currentVersion }}
-          <span
+          <a
             class="update-status"
             *ngIf="updateAvailable"
-            style="color: #22c55e; margin-left: 8px"
+            href="https://github.com/stephanebouget/github-security-alerts/releases"
+            target="_blank"
+            rel="noopener noreferrer"
+            style="
+              color: #22c55e;
+              margin-left: 8px;
+              cursor: pointer;
+              text-decoration: underline;
+            "
           >
             Update available!
-          </span>
+          </a>
         </div>
       </div>
       <div class="update-controls">
