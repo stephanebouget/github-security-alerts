@@ -26,10 +26,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 24px;
+  padding: 14px;
 
   .login-content {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     .login-icon {
       font-size: 56px;
@@ -38,16 +40,23 @@
     }
 
     h2 {
-      margin: 0 0 8px;
-      font-size: 18px;
+      max-width: 320px;
+      text-align: center;
+      margin: 0;
+      font-size: 16px;
       font-weight: 600;
+      margin-top: 10px;
     }
 
     p {
-      margin: 0 0 24px;
+      margin: 0 0 10px;
       color: colors.$text-secondary;
       font-size: 13px;
       max-width: 280px;
+      text-align: center;
+    }
+    p:last-child {
+      margin: 0;
     }
   }
 
@@ -72,12 +81,72 @@
 
   .auth-options {
     width: 100%;
-    max-width: 280px;
+    max-width: 320px;
+    margin-top: 20px;
     margin-bottom: 16px;
+  }
+
+  .auth-box {
+    background: colors.$bg-secondary;
+    border: 1px solid colors.$border-color;
+    border-radius: 8px;
+    padding: 16px;
+    transition: all 0.2s;
+
+    &:hover {
+      // border-color: colors.$accent-color;
+      background: color.adjust(colors.$bg-secondary, $lightness: 3%);
+    }
+  }
+
+  .auth-option {
+    margin-bottom: 0;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .auth-description {
+    justify-content: center;
+    margin: 8px 0 0 0;
+    color: colors.$text-secondary;
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.4;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2px;
+
+    i {
+      color: colors.$accent-color;
+      margin-right: 4px;
+      font-size: 14px;
+    }
+
+    strong {
+      color: colors.$text-primary;
+      font-weight: 600;
+    }
+  }
+
+  .token-hint {
+    margin: 6px 0 0 0;
+    color: colors.$text-secondary;
+    font-size: 11px;
+    text-align: center;
+    opacity: 0.8;
+
+    strong {
+      color: colors.$accent-color;
+      font-weight: 600;
+    }
   }
 
   .oauth-btn,
   .token-btn {
+    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -102,32 +171,15 @@
   }
 
   .oauth-btn.primary {
-    background: #24292f;
-    color: white;
-    border: 1px solid #24292f;
+    background: colors.$text-primary;
+    color: colors.$bg-primary;
 
     i {
-      color: white;
+      color: colors.$bg-primary;
     }
 
     &:hover:not(:disabled) {
-      background: #1c2128;
-      border-color: #1c2128;
-    }
-  }
-
-  .token-btn.secondary {
-    background: colors.$bg-tertiary;
-    color: colors.$text-primary;
-    border: 1px solid colors.$border-color;
-
-    i {
-      color: colors.$accent-color;
-    }
-
-    &:hover:not(:disabled) {
-      background: color.adjust(colors.$bg-tertiary, $lightness: 5%);
-      border-color: colors.$accent-color;
+      background: color.adjust(colors.$accent-color, $lightness: 10%);
     }
   }
 
@@ -151,13 +203,6 @@
     }
   }
 
-  .token-description {
-    margin: 8px 0 0 0;
-    color: colors.$text-secondary;
-    font-size: 12px;
-    text-align: center;
-  }
-
   .token-input-group {
     display: flex;
     gap: 8px;
@@ -172,7 +217,7 @@
       color: colors.$text-primary;
       font-size: 13px;
       font-family: "Courier New", monospace;
-
+      width: 204px;
       &:focus {
         outline: none;
         border-color: colors.$accent-color;

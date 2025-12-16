@@ -1,43 +1,58 @@
 <div class="login-panel">
   <div class="login-content">
-    <i class="login-icon ti ti-shield-lock"></i>
-    <h2>Welcome to GitHub Security Alerts</h2>
-    <p>Enter your GitHub Personal Access Token to monitor security alerts.</p>
-    <p class="hint">
-      You need a GitHub Personal Access Token with <strong>repo</strong> and
-      <strong>read:org</strong> scopes
-    </p>
+    <!-- <i class="login-icon ti ti-shield-lock"></i>
+    <h2>Welcome to GitHub Security Alerts</h2> -->
+    <h2>Choose your authentication method<br />to monitor security alerts.</h2>
+
     <div class="auth-options">
-      <button
-        class="oauth-btn primary"
-        (click)="onStartOAuth()"
-        [disabled]="oauthLoading || authLoading"
-        title="Sign in with GitHub OAuth"
-      >
-        <span *ngIf="!oauthLoading"
-          ><i class="ti ti-brand-github"></i> Sign in with GitHub</span
-        >
-        <span *ngIf="oauthLoading"
-          ><i class="ti ti-loader spinning"></i> Connecting...</span
-        >
-      </button>
+      <div class="auth-box">
+        <div class="auth-option">
+          <button
+            class="oauth-btn primary"
+            (click)="onStartOAuth()"
+            [disabled]="oauthLoading || authLoading"
+            title="Sign in with GitHub OAuth"
+          >
+            <span *ngIf="!oauthLoading"
+              ><i class="ti ti-brand-github"></i> Sign in with GitHub</span
+            >
+            <span *ngIf="oauthLoading"
+              ><i class="ti ti-loader spinning"></i> Connecting...</span
+            >
+          </button>
+          <p class="auth-description">
+            <i class="ti ti-user"></i>
+            <strong>For personal repositories only</strong>
+          </p>
+          <p>Quick and secure OAuth authentication</p>
+        </div>
+      </div>
 
       <div class="divider">
         <span>or</span>
       </div>
 
-      <button
-        class="token-btn secondary"
-        (click)="onOpenTokenPage()"
-        title="Open GitHub token creation page"
-        [disabled]="oauthLoading || authLoading"
-      >
-        <i class="ti ti-key"></i> Create Personal Access Token
-      </button>
-      <p class="token-description">
-        Grants access to your personal repositories and organization
-        repositories
-      </p>
+      <div class="auth-box">
+        <div class="auth-option">
+          <button
+            class="oauth-btn primary"
+            (click)="onOpenTokenPage()"
+            title="Open GitHub token creation page"
+            [disabled]="oauthLoading || authLoading"
+          >
+            <i class="ti ti-key"></i> Create Personal Access Token
+          </button>
+          <p class="auth-description">
+            <i class="ti ti-building"></i>
+            <strong>For personal & organization repositories</strong>
+          </p>
+          <p>Required for accessing private org repositories</p>
+          <p class="token-hint">
+            Token needs <strong>repo</strong> and
+            <strong>read:org</strong> scopes
+          </p>
+        </div>
+      </div>
     </div>
     <div class="token-input-group">
       <input
