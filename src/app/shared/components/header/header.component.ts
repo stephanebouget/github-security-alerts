@@ -26,29 +26,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   updateAvailable = false;
   isUpdating = false;
-  private updateCheckInterval?: number;
 
   constructor(private updateService: UpdateService) {}
 
   ngOnInit(): void {
-    // Start checking for updates periodically
-    this.checkUpdateStatus();
-    this.updateCheckInterval = window.setInterval(() => {
-      this.checkUpdateStatus();
-    }, 60000); // Check every minute for UI updates
+    // Update status is managed by UpdateService automatically
+    if (this.updateService.isTauri) {
+      this.updateAvailable = this.updateService.updateAvailable;
+    }
   }
 
   ngOnDestroy(): void {
-    if (this.updateCheckInterval) {
-      clearInterval(this.updateCheckInterval);
-    }
-  }
-
-  private async checkUpdateStatus(): Promise<void> {
-    if (this.updateService.isTauri) {
-      await this.updateService.checkForUpdates();
-      this.updateAvailable = this.updateService.updateAvailable;
-    }
+    // Nothing to clean up
   }
 
   async onUpdateClick(): Promise<void> {

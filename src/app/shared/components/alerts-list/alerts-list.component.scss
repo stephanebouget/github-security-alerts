@@ -162,6 +162,12 @@
       background: rgba(colors.$danger-color, 0.15);
       color: colors.$danger-color;
     }
+
+    &.disabled {
+      background: rgba(colors.$text-secondary, 0.1);
+      color: colors.$text-secondary;
+      cursor: help;
+    }
   }
 }
 

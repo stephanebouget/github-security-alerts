@@ -53,7 +53,8 @@ export class SettingsPanelComponent implements OnInit {
   async loadUpdateInfo(): Promise<void> {
     try {
       this.currentVersion = await this.updateService.getCurrentVersion();
-      this.updateAvailable = await this.updateService.checkForUpdates();
+      // Get current state from UpdateService instead of calling checkForUpdates
+      this.updateAvailable = this.updateService.updateAvailable;
     } catch (error) {
       console.error('Failed to load update info:', error);
     }

@@ -29,6 +29,7 @@ pub struct AlertsResponse {
 pub struct RepoAlerts {
     pub name: String,
     pub alerts: usize,
+    pub dependabot_enabled: bool,
 }
 
 #[derive(Debug, Serialize, Deserialize)]

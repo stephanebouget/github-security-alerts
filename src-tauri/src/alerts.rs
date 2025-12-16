@@ -43,23 +43,36 @@ pub async fn get_github_security_alerts(app: tauri::AppHandle) -> Result<AlertsR
             .await
         {
             Ok(response) => {
-                match response.json::<Vec<GitHubAlert>>().await {
-                    Ok(alerts) => {
-                        let open_alerts = alerts.iter()
-                            .filter(|a| a.state == "open")
-                            .count();
-                        total_alerts += open_alerts;
-                        repo_alerts.push(RepoAlerts {
-                            name: repo,
-                            alerts: open_alerts,
-                        });
-                    }
-                    Err(e) => {
-                        eprintln!("Failed to parse alerts for {}: {}", repo, e);
-                        repo_alerts.push(RepoAlerts {
-                            name: repo,
-                            alerts: 0,
-                        });
+                if response.status() == 422 {
+                    // 422 Unprocessable Entity usually means Dependabot is not enabled
+                    eprintln!("Dependabot not enabled for {}", repo);
+                    repo_alerts.push(RepoAlerts {
+                        name: repo,
+                        alerts: 0,
+                        dependabot_enabled: false,
+                    });
+                } else {
+                    match response.json::<Vec<GitHubAlert>>().await {
+                        Ok(alerts) => {
+                            let open_alerts = alerts.iter()
+                                .filter(|a| a.state == "open")
+                                .count();
+                            total_alerts += open_alerts;
+                            repo_alerts.push(RepoAlerts {
+                                name: repo,
+                                alerts: open_alerts,
+                                dependabot_enabled: true,
+                            });
+                        }
+                        Err(e) => {
+                            eprintln!("Failed to parse alerts for {}: {}", repo, e);
+                            // If parsing fails, assume Dependabot is not enabled
+                            repo_alerts.push(RepoAlerts {
+                                name: repo,
+                                alerts: 0,
+                                dependabot_enabled: false,
+                            });
+                        }
                     }
                 }
             }
@@ -68,6 +81,7 @@ pub async fn get_github_security_alerts(app: tauri::AppHandle) -> Result<AlertsR
                 repo_alerts.push(RepoAlerts {
                     name: repo,
                     alerts: 0,
+                    dependabot_enabled: false,
                 });
             }
         }
