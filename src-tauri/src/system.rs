@@ -1,5 +1,4 @@
 use tauri::command;
-use std::process::Command;
 
 // ============================================================================
 // System Settings
@@ -9,6 +8,8 @@ use std::process::Command;
 pub fn open_taskbar_settings() -> Result<(), String> {
     #[cfg(target_os = "windows")]
     {
+        use std::process::Command;
+        
         Command::new("cmd")
             .args(&["/C", "start", "ms-settings:taskbar"])
             .spawn()
