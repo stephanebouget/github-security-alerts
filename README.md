@@ -48,7 +48,7 @@ To ensure this application works correctly, you must enable GitHub Advanced Secu
 1. **Authenticate**
 
 <div align="center">
-   <img width="416" height="596" alt="image" src="https://github.com/user-attachments/assets/8c54de72-d39b-430f-a49d-9af2383e135d" />
+  <img width="415" height="596" alt="image" src="https://github.com/user-attachments/assets/445a80c3-c773-4fe4-a083-0aece707aab0" />
 </div>
 
 - Paste your GitHub personal access token in the login form
