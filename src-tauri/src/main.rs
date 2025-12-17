@@ -55,6 +55,8 @@ fn main() {
         .manage(AppState {
             alert_count: Mutex::new(0),
             last_shown: Mutex::new(None),
+            last_focus_lost: Mutex::new(None),
+            auto_hide_paused: Mutex::new(false),
             config: Mutex::new(config),
         })
         .setup(|app| {
@@ -173,6 +175,12 @@ fn main() {
             if let tauri::WindowEvent::Focused(focused) = event {
                 if !*focused {
                     handle_window_focus_lost(window);
+                } else {
+                    // Window regained focus - clear the focus lost timestamp
+                    if let Some(state) = window.app_handle().try_state::<AppState>() {
+                        let mut last_focus_lost = state.last_focus_lost.lock().unwrap();
+                        *last_focus_lost = None;
+                    }
                 }
             }
         })
@@ -190,6 +198,8 @@ fn main() {
             alerts::get_github_security_alerts,
             tray::update_tray_icon,
             system::open_taskbar_settings,
+            window::pause_auto_hide,
+            window::resume_auto_hide,
             updater::check_for_updates,
             updater::install_update,
             updater::get_current_version

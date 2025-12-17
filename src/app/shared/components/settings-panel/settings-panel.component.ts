@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
 import { TauriService, UpdateService } from '../../../core/services';
 
 @Component({
@@ -7,7 +7,7 @@ import { TauriService, UpdateService } from '../../../core/services';
   styleUrls: ['./settings-panel.component.scss'],
   standalone: false,
 })
-export class SettingsPanelComponent implements OnInit {
+export class SettingsPanelComponent implements OnInit, OnDestroy {
   @Input() username: string | null = null;
   @Input() refreshInterval: number = 60; // in minutes
 
@@ -38,6 +38,44 @@ export class SettingsPanelComponent implements OnInit {
     const value = parseInt((event.target as HTMLSelectElement).value, 10);
     this.refreshInterval = value;
     this.refreshIntervalChange.emit(value);
+  }
+
+  private autoHideTimeout?: number;
+
+  onSelectFocus(event: Event): void {
+    // Prevent window from closing when dropdown is opened
+    if (this.tauriService.isTauri) {
+      this.tauriService.pauseAutoHide().catch(err => 
+        console.warn('Failed to pause auto-hide:', err)
+      );
+      
+      // Clear any existing timeout
+      if (this.autoHideTimeout) {
+        clearTimeout(this.autoHideTimeout);
+      }
+      
+      // Set a safety timeout to resume auto-hide after 10 seconds
+      this.autoHideTimeout = window.setTimeout(() => {
+        this.tauriService.resumeAutoHide().catch(err => 
+          console.warn('Failed to resume auto-hide (timeout):', err)
+        );
+      }, 10000);
+    }
+  }
+
+  onSelectBlur(event: Event): void {
+    // Allow window to close normally when dropdown is closed
+    if (this.tauriService.isTauri) {
+      // Clear the safety timeout
+      if (this.autoHideTimeout) {
+        clearTimeout(this.autoHideTimeout);
+        this.autoHideTimeout = undefined;
+      }
+      
+      this.tauriService.resumeAutoHide().catch(err => 
+        console.warn('Failed to resume auto-hide:', err)
+      );
+    }
   }
 
   async openTaskbarSettings(): Promise<void> {
@@ -84,6 +122,20 @@ export class SettingsPanelComponent implements OnInit {
       console.error('Failed to install update:', error);
     } finally {
       this.isInstallingUpdate = false;
+    }
+  }
+
+  ngOnDestroy(): void {
+    // Clean up timeout on component destruction
+    if (this.autoHideTimeout) {
+      clearTimeout(this.autoHideTimeout);
+      
+      // Ensure auto-hide is resumed
+      if (this.tauriService.isTauri) {
+        this.tauriService.resumeAutoHide().catch(err => 
+          console.warn('Failed to resume auto-hide on destroy:', err)
+        );
+      }
     }
   }
 }

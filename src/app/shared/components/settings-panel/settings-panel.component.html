@@ -17,6 +17,8 @@
           class="refresh-select"
           [value]="refreshInterval"
           (change)="onRefreshIntervalChange($event)"
+          (focus)="onSelectFocus($event)"
+          (blur)="onSelectBlur($event)"
         >
           <option value="1">1 minutes</option>
           <option value="5">5 minutes</option>
