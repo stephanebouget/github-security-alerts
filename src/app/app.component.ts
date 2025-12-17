@@ -69,12 +69,15 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private saveRefreshIntervalToStorage(): void {
-    localStorage.setItem('refreshInterval', this.refreshIntervalMinutes.toString());
+    localStorage.setItem(
+      'refreshInterval',
+      this.refreshIntervalMinutes.toString()
+    );
   }
 
   async ngOnInit() {
     await this.checkAuthStatus();
-    
+
     // Start automatic update checking with the same interval as alerts refresh
     this.updateService.startAutomaticUpdateCheck(this.refreshIntervalMinutes);
   }
@@ -131,13 +134,26 @@ export class AppComponent implements OnInit, OnDestroy {
     this.oauthLoading = true;
     this.error = '';
 
+    // Timeout after 30 seconds
+    const timeoutMs = 30000;
+    const timeoutPromise = new Promise<never>((_, reject) => {
+      setTimeout(
+        () => reject(new Error('Connection timeout. Please try again.')),
+        timeoutMs
+      );
+    });
+
     try {
       // Get the OAuth URL and open it
       const oauthUrl = await this.tauriService.startOAuthFlow();
+
       await this.tauriService.openExternalLink(oauthUrl);
 
-      // Start listening for the callback
-      const accessToken = await this.tauriService.completeOAuthFlow();
+      // Start listening for the callback with timeout
+      const accessToken = await Promise.race([
+        this.tauriService.completeOAuthFlow(),
+        timeoutPromise,
+      ]);
 
       // Verify auth status
       await this.checkAuthStatus();
@@ -146,7 +162,6 @@ export class AppComponent implements OnInit, OnDestroy {
         await this.loadOwners();
         this.currentView = 'repos';
       }
-
     } catch (err) {
       console.error('OAuth error:', err);
       this.error = `OAuth authentication failed: ${err}`;
@@ -181,8 +196,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   openCreateTokenPage() {
-    const tokenUrl = 'https://github.com/settings/tokens/new?description=Github-Security-Alerts&scopes=read%3Auser%2Cnotifications%2Crepo%2Cread%3Aorg';
-    this.tauriService.openExternalLink(tokenUrl).catch(err => {
+    const tokenUrl =
+      'https://github.com/settings/tokens/new?description=Github-Security-Alerts&scopes=read%3Auser%2Cnotifications%2Crepo%2Cread%3Aorg';
+    this.tauriService.openExternalLink(tokenUrl).catch((err) => {
       console.error('Failed to open URL:', err);
       this.error = 'Failed to open GitHub token page';
     });
@@ -250,19 +266,19 @@ export class AppComponent implements OnInit, OnDestroy {
 
   async toggleRepo(repo: RepoInfo) {
     repo.selected = !repo.selected;
-    
+
     // Update in-memory tracking
     if (repo.selected) {
       this.selectedReposFullNames.add(repo.full_name);
     } else {
       this.selectedReposFullNames.delete(repo.full_name);
     }
-    
+
     await this.saveSelectedRepos();
   }
 
   async saveSelectedRepos() {
-    // Use the in-memory set of selected repos, which includes repos from 
+    // Use the in-memory set of selected repos, which includes repos from
     // accordions that haven't been loaded yet
     const selectedRepos = Array.from(this.selectedReposFullNames);
 
@@ -316,12 +332,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
   startAutoRefresh() {
     this.stopAutoRefresh();
-    
+
     // If interval is 0, don't start auto-refresh
     if (this.refreshIntervalMinutes === 0) {
       return;
     }
-    
+
     const intervalMs = this.refreshIntervalMinutes * 60 * 1000;
     this.refreshInterval = setInterval(() => {
       this.fetchAlerts();
@@ -332,7 +348,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.refreshIntervalMinutes = minutes;
     this.saveRefreshIntervalToStorage();
     this.startAutoRefresh();
-    
+
     // Also update the update service interval
     this.updateService.updateRefreshInterval(minutes);
   }
