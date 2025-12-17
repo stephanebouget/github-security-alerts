@@ -87,6 +87,10 @@ jobs:
       # ----------------------------
       #        BUILD TAURI
       # ----------------------------
+      # Note: Windows and Linux builds use different updater configurations
+      # - Windows: updaterJsonPreferNsis=true (for .exe/.msi installers)
+      # - Linux: updaterJsonPreferNsis=false (for .AppImage/.deb packages)
+      # This fixes "invalid updater binary format" errors on Linux
       - name: Build Tauri app (macOS Universal)
         if: matrix.platform == 'macos-latest'
         uses: tauri-apps/tauri-action@v0
@@ -127,8 +131,8 @@ jobs:
             find src-tauri/target -type d -name "bundle" 2>/dev/null | head -5
           fi
 
-      - name: Build Tauri app (non-macOS)
-        if: matrix.platform != 'macos-latest'
+      - name: Build Tauri app (Windows)
+        if: matrix.platform == 'windows-latest'
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -146,3 +150,23 @@ jobs:
           includeDebug: false
           includeUpdaterJson: true
           updaterJsonPreferNsis: true
+
+      - name: Build Tauri app (Linux)
+        if: matrix.platform == 'ubuntu-22.04'
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: "Release ${{ github.ref_name }}"
+          releaseBody: "New release"
+          releaseDraft: false
+          prerelease: false
+          includeRelease: true
+          includeDebug: false
+          includeUpdaterJson: true
+          updaterJsonPreferNsis: false

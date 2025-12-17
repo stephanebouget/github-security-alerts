@@ -51,6 +51,18 @@ export class UpdateService {
       return updateAvailable;
     } catch (error) {
       console.error('Failed to check for updates:', error);
+
+      // Log platform-specific issues
+      const errorString = String(error);
+      if (
+        errorString.includes('invalid updater binary format') ||
+        errorString.includes('binary format')
+      ) {
+        console.warn(
+          'Update check failed due to binary format issues. This may indicate a problem with the GitHub release assets for your platform.'
+        );
+      }
+
       this._updateAvailable = false;
       return false;
     }
@@ -67,7 +79,23 @@ export class UpdateService {
       console.log('Update installation started');
     } catch (error) {
       console.error('Failed to install update:', error);
-      throw error;
+
+      // Provide user-friendly error messages for common issues
+      const errorString = String(error);
+      if (
+        errorString.includes('invalid updater binary format') ||
+        errorString.includes('binary format')
+      ) {
+        throw new Error(
+          'Update failed: Binary format incompatible with your operating system. Please download manually from GitHub.'
+        );
+      } else if (errorString.includes('signature')) {
+        throw new Error(
+          'Update failed: Security signature verification failed. Please download manually from GitHub.'
+        );
+      } else {
+        throw error;
+      }
     }
   }
 
@@ -93,7 +121,9 @@ export class UpdateService {
       this.performSilentUpdateCheck();
     }, intervalMs);
 
-    console.log(`Automatic update checking started (every ${this._refreshIntervalMinutes} minutes)`);
+    console.log(
+      `Automatic update checking started (every ${this._refreshIntervalMinutes} minutes)`
+    );
   }
 
   stopAutomaticUpdateCheck(): void {
