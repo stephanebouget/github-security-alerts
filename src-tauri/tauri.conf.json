@@ -1,6 +1,6 @@
 {
   "productName": "GitHub Security Alerts",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "identifier": "com.github.security.alerts",
   "build": {
     "frontendDist": "../dist/browser",

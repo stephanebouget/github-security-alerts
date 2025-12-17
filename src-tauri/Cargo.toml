@@ -1,6 +1,6 @@
 [package]
 name = "GithubSecurityAlerts"
-version = "1.2.3"
+version = "1.2.4"
 description = "Github Security Alerts"
 authors = ["you"]
 license = ""
