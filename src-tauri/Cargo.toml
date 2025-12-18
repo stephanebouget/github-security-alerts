@@ -21,13 +21,13 @@ tauri-plugin-updater = "2.0"
 tauri-plugin-notification = "2.0"
 serde = { version = "1.0.215", features = ["derive"] }
 serde_json = "1.0.132"
-reqwest = { version = "0.11", features = ["json"] }
+reqwest = { version = "0.12.26", features = ["json"] }
 tokio = { version = "1", features = ["full"] }
-image = "0.24"
+image = "0.25.9"
 open = "5"
 tiny_http = "0.12"
 url = "2"
-dirs = "5"
+dirs = "6"
 dotenv = "0.15"
 tauri-plugin-single-instance = "2.0"
 tauri-plugin-autostart = "2.0"
