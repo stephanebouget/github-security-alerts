@@ -10,7 +10,7 @@ A modern desktop application that monitors security vulnerabilities across your 
 
 When installing this application, you may encounter security warnings from your operating system.
 
-Why this happens: **This application is not code-signed** with a commercial certificate, which is a costly process for open-source projects.
+Why ? **This application is not code-signed** with a commercial certificate, which is a costly process for open-source projects.
 
 ## 📋 Features
 
@@ -81,15 +81,21 @@ To ensure this application works correctly, you must enable GitHub Advanced Secu
 
 - **OTA Updates**: Automatic over-the-air updates with signature verification for security
 
+<div align="center">
   <img width="397" height="225" alt="image" src="https://github.com/user-attachments/assets/3a9e60af-c479-48fc-8ddd-c7c311d567ac" />
+</div>
 
 - **API Rate Limits Usage**: Real-time monitoring of GitHub API rate limits and usage statistics
 
+<div align="center">
   <img width="394" height="252" alt="image" src="https://github.com/user-attachments/assets/8359f933-5517-411e-b549-d50ef4a42318" />
+</div>
 
 - **Auto-refresh Interval Customizable**: Configure refresh intervals from 1 minute to 4 hours based on your needs
 
+<div align="center">
   <img width="404" height="97" alt="image" src="https://github.com/user-attachments/assets/9ce75e85-e589-4013-addf-355acc09bd10" />
+</div>
 
 ## 📝 License
 
