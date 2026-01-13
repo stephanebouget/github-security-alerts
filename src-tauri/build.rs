@@ -6,5 +6,13 @@ fn main() {
     let _ = dotenv::from_filename("../.env");
   }
   
+  // Pass environment variables to the build
+  if let Ok(client_id) = std::env::var("CLIENT_ID") {
+    println!("cargo:rustc-env=CLIENT_ID={}", client_id);
+  }
+  if let Ok(client_secret) = std::env::var("CLIENT_SECRET") {
+    println!("cargo:rustc-env=CLIENT_SECRET={}", client_secret);
+  }
+  
   tauri_build::build()
 }
