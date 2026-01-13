@@ -76,7 +76,7 @@ jobs:
             libwebkit2gtk-4.1-dev
 
       - name: Install Node dependencies
-        run: npm install
+        run: npm install --force
 
       - name: Run unit tests (Linux only)
         if: matrix.platform == 'ubuntu-22.04'
