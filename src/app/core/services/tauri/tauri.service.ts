@@ -132,4 +132,13 @@ export class TauriService {
   async resumeAutoHide(): Promise<void> {
     return invoke('resume_auto_hide');
   }
+
+  // Config Management
+  async getRefreshInterval(): Promise<number> {
+    return invoke<number>('get_refresh_interval');
+  }
+
+  async setRefreshInterval(minutes: number): Promise<void> {
+    return invoke('set_refresh_interval', { minutes });
+  }
 }

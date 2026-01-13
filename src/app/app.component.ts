@@ -59,24 +59,27 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {
     translate.setFallbackLang('en');
     console.log('APP_CONFIG', APP_CONFIG);
-    this.loadRefreshIntervalFromStorage();
   }
 
-  private loadRefreshIntervalFromStorage(): void {
-    const stored = localStorage.getItem('refreshInterval');
-    if (stored) {
-      this.refreshIntervalMinutes = parseInt(stored, 10);
+  private async loadRefreshIntervalFromConfig(): Promise<void> {
+    try {
+      this.refreshIntervalMinutes = await this.tauriService.getRefreshInterval();
+    } catch (error) {
+      console.warn('Failed to load refresh interval from config, using default:', error);
+      this.refreshIntervalMinutes = 60; // Default to 1 hour
     }
   }
 
-  private saveRefreshIntervalToStorage(): void {
-    localStorage.setItem(
-      'refreshInterval',
-      this.refreshIntervalMinutes.toString()
-    );
+  private async saveRefreshIntervalToConfig(): Promise<void> {
+    try {
+      await this.tauriService.setRefreshInterval(this.refreshIntervalMinutes);
+    } catch (error) {
+      console.error('Failed to save refresh interval to config:', error);
+    }
   }
 
   async ngOnInit() {
+    await this.loadRefreshIntervalFromConfig();
     await this.checkAuthStatus();
 
     // Start automatic update checking with the same interval as alerts refresh
@@ -362,7 +365,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onRefreshIntervalChange(minutes: number): void {
     this.refreshIntervalMinutes = minutes;
-    this.saveRefreshIntervalToStorage();
+    this.saveRefreshIntervalToConfig();
     this.startAutoRefresh();
 
     // Also update the update service interval

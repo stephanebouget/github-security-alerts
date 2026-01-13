@@ -202,7 +202,9 @@ fn main() {
             window::resume_auto_hide,
             updater::check_for_updates,
             updater::install_update,
-            updater::get_current_version
+            updater::get_current_version,
+            config::get_refresh_interval,
+            config::set_refresh_interval
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

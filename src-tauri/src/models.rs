@@ -8,6 +8,12 @@ use serde::{Deserialize, Serialize};
 pub struct AppConfig {
     pub access_token: Option<String>,
     pub selected_repos: Vec<String>,
+    #[serde(default = "default_refresh_interval")]
+    pub refresh_interval_minutes: u32,
+}
+
+fn default_refresh_interval() -> u32 {
+    60 // Default to 1 hour
 }
 
 impl Default for AppConfig {
@@ -15,6 +21,7 @@ impl Default for AppConfig {
         Self {
             access_token: None,
             selected_repos: vec![],
+            refresh_interval_minutes: 60, // Default to 1 hour
         }
     }
 }
