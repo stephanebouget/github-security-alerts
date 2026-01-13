@@ -32,6 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
   username: string | null = null;
   authLoading = false;
   oauthLoading = false;
+  existingToken: string | null = null;
 
   // Owners & Repos state
   owners: OwnerAccordion[] = [];
@@ -88,12 +89,27 @@ export class AppComponent implements OnInit, OnDestroy {
       this.authenticated = status.authenticated;
       this.username = status.username;
 
+      // Always get the token to display it masked when not authenticated
+      try {
+        this.existingToken = await this.tauriService.getToken();
+      } catch (err) {
+        console.error('Error getting token:', err);
+        this.existingToken = null;
+      }
+
       if (this.authenticated) {
         await this.fetchAlerts();
         this.startAutoRefresh();
       }
     } catch (err) {
       console.error('Error checking auth status:', err);
+      // Try to get the token even if auth status check failed
+      try {
+        this.existingToken = await this.tauriService.getToken();
+      } catch (tokenErr) {
+        console.error('Error getting token:', tokenErr);
+        this.existingToken = null;
+      }
     }
   }
 

@@ -60,12 +60,14 @@
         [(ngModel)]="tokenInput"
         placeholder="ghp_xxxxxxxxxxxx"
         (keyup.enter)="onLogin()"
+        (focus)="onTokenFocus()"
+        (input)="onTokenInput()"
         [disabled]="authLoading"
       />
       <button
         class="primary-btn"
         (click)="onLogin()"
-        [disabled]="authLoading || !tokenInput.trim()"
+        [disabled]="authLoading || (!tokenInput.trim() && !showingMaskedToken)"
       >
         <span *ngIf="!authLoading">Connect</span>
         <span *ngIf="authLoading"

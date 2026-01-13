@@ -105,13 +105,30 @@ pub async fn get_auth_status(app: tauri::AppHandle) -> Result<AuthStatus, String
                         username: Some(user.login),
                     })
                 }
-                _ => {
-                    // Token is invalid, clear it
+                Ok(resp) if resp.status() == 401 || resp.status() == 403 => {
+                    // Only clear token if explicitly unauthorized (401) or forbidden (403)
+                    // This indicates the token is actually invalid, not just a network issue
                     if let Some(state) = app.try_state::<AppState>() {
                         let mut config = state.config.lock().unwrap();
                         config.access_token = None;
                         let _ = save_config(&config);
                     }
+                    Ok(AuthStatus {
+                        authenticated: false,
+                        username: None,
+                    })
+                }
+                Ok(_) => {
+                    // Other HTTP error (5xx, etc.) - server issue, don't clear token
+                    Ok(AuthStatus {
+                        authenticated: false,
+                        username: None,
+                    })
+                }
+                Err(_) => {
+                    // Network error (no internet, timeout, DNS failure, etc.)
+                    // NEVER clear the token for network errors!
+                    // The token is still valid, we just can't verify it right now
                     Ok(AuthStatus {
                         authenticated: false,
                         username: None,

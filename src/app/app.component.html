@@ -14,6 +14,7 @@
     [authLoading]="authLoading"
     [oauthLoading]="oauthLoading"
     [error]="error"
+    [existingToken]="existingToken"
     (login)="onLogin($event)"
     (openTokenPage)="openCreateTokenPage()"
     (startOAuth)="onStartOAuth()"
@@ -52,8 +53,5 @@
   ></app-alerts-list>
 
   <!-- Footer -->
-  <app-footer
-    [alerts]="alerts"
-    [authenticated]="authenticated"
-  ></app-footer>
+  <app-footer [alerts]="alerts" [authenticated]="authenticated"></app-footer>
 </div>
