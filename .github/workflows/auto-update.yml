@@ -24,16 +24,13 @@ jobs:
           node-version: 22
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Update dependencies
         run: |
           npm install -g npm-check-updates
-
           # Update to latest minor+patch (non-breaking)
           ncu -u --target minor
-
-
           # Actually upgrade all resolutions in package-lock.json
           npm install
 
