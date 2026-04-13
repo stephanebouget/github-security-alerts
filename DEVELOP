@@ -1,0 +1,117 @@
+# Development Guide
+
+## ⚡ Quick Start
+
+git clone https://github.com/stephanebouget/github-security-alerts.git
+cd github-security-alerts
+npm install
+npm start
+
+The application should open automatically via Tauri.
+
+---
+
+## 🧰 Requirements
+
+Make sure you have the following installed:
+
+- Node.js >= 22
+- npm >= 10
+- Rust (stable)
+
+Tauri prerequisites:
+https://v2.tauri.app/start/prerequisites
+
+Check versions:
+
+node -v
+npm -v
+rustc -v
+
+---
+
+## 🧑‍💻 Development Mode
+
+### Run full app (Tauri)
+
+npm start
+
+- Launches the desktop app via Tauri
+- Includes backend (Rust) + frontend (Angular)
+
+---
+
+### Run frontend only (faster)
+
+npm run web:serve
+
+- Runs Angular in browser
+- Hot reload enabled
+- Recommended for UI development
+
+---
+
+## 🧪 Tests
+
+Run tests:
+
+npm test
+
+⚠️ Note: Test coverage is currently limited. Contributions are welcome.
+
+---
+
+## 🐛 Debugging
+
+- Frontend logs → Browser devtools
+- Backend logs → Terminal running the app
+
+Enable verbose logs:
+
+RUST_LOG=debug npm start
+
+---
+
+## 📦 Build
+
+### Web build
+
+npm run web:prod
+
+Output:
+/dist
+
+---
+
+### Desktop app (Tauri)
+
+npm run tauri:bundle
+
+Output:
+src-tauri/target/release/bundle/
+
+---
+
+## 📁 Project Structure
+
+| Folder    | Description                         |
+| --------- | ----------------------------------- |
+| src       | Angular frontend (renderer process) |
+| src-tauri | Tauri backend (Rust main process)   |
+
+---
+
+## 🔄 Development Workflow
+
+1. Create a branch from `main`
+2. Make your changes
+3. Run the app locally
+4. Ensure everything builds correctly
+5. Submit a Pull Request
+
+---
+
+## ℹ️ Notes
+
+- Only the `/dist` folder is included in the final bundle
+- Prefer `web:serve` for frontend work to improve speed

@@ -1,0 +1,73 @@
+# Contributing
+
+Thanks for your interest in contributing 🙌
+
+---
+
+## 🚀 How to Contribute
+
+1. Fork the repository
+2. Create a feature branch from `main`
+
+git checkout -b feature/my-feature
+
+3. Make your changes
+4. Commit your work
+
+git commit -m "feat: add new feature"
+
+5. Push your branch
+
+git push origin feature/my-feature
+
+6. Open a Pull Request
+
+---
+
+## ✅ Guidelines
+
+- Keep code simple and readable
+- Follow existing project structure
+- Reuse existing patterns when possible
+- Avoid unnecessary dependencies
+
+---
+
+## 🧪 Before Submitting
+
+- App builds successfully
+- No obvious regressions
+- Tests pass (if applicable)
+
+---
+
+## 🐛 Issues
+
+Feel free to open an issue for:
+
+- Bugs
+- Feature requests
+- Questions
+
+---
+
+## 💡 Tips
+
+- Prefer small, focused Pull Requests
+- Add context in your PR description
+- Screenshots are welcome for UI changes
+
+---
+
+## 📜 Commit Convention (optional but recommended)
+
+Examples:
+
+- feat: add new feature
+- fix: resolve issue with login
+- chore: update dependencies
+- docs: improve README
+
+---
+
+Thanks again for contributing 🚀
