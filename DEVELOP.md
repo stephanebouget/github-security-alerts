@@ -2,14 +2,19 @@
 
 ## ⚡ Quick Start
 
+```bash
 git clone https://github.com/stephanebouget/github-security-alerts.git
+```
+
+```bash
 cd github-security-alerts
-npm install
-npm start
+```
+
+```bash
+npm install && npm start
+```
 
 The application should open automatically via Tauri.
-
----
 
 ## 🧰 Requirements
 
@@ -24,40 +29,51 @@ https://v2.tauri.app/start/prerequisites
 
 Check versions:
 
+```bash
 node -v
-npm -v
-rustc -v
+```
 
----
+```bash
+npm -v
+```
+
+```bash
+rustc -V
+```
+
 
 ## 🧑‍💻 Development Mode
 
 ### Run full app (Tauri)
 
+```bash
 npm start
+```
 
 - Launches the desktop app via Tauri
 - Includes backend (Rust) + frontend (Angular)
 
----
-
 ### Run frontend only (faster)
 
+```bash
 npm run web:serve
+```
 
 - Runs Angular in browser
 - Hot reload enabled
 - Recommended for UI development
 
----
 
 ## 🧪 Tests
 
 Run tests:
 
+```bash
 npm test
+```
 
-⚠️ Note: Test coverage is currently limited. Contributions are welcome.
+> [!NOTE]
+> Test coverage is currently limited. Contributions are welcome.
 
 ---
 
@@ -68,15 +84,17 @@ npm test
 
 Enable verbose logs:
 
+```bash
 RUST_LOG=debug npm start
-
----
+```
 
 ## 📦 Build
 
 ### Web build
 
+```bash
 npm run web:prod
+```
 
 Output:
 /dist
@@ -85,12 +103,12 @@ Output:
 
 ### Desktop app (Tauri)
 
+```bash
 npm run tauri:bundle
+```
 
 Output:
 src-tauri/target/release/bundle/
-
----
 
 ## 📁 Project Structure
 
@@ -99,7 +117,6 @@ src-tauri/target/release/bundle/
 | src       | Angular frontend (renderer process) |
 | src-tauri | Tauri backend (Rust main process)   |
 
----
 
 ## 🔄 Development Workflow
 
@@ -108,8 +125,6 @@ src-tauri/target/release/bundle/
 3. Run the app locally
 4. Ensure everything builds correctly
 5. Submit a Pull Request
-
----
 
 ## ℹ️ Notes
 
