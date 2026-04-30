@@ -1,3 +1,15 @@
+Disclaimer
+==========
+
+( ˶°ㅁ°) !! **This is a fork of [stephanebouget/github-security-alerts](https://github.com/stephanebouget/github-security-alerts)**
+
+The aim of this project is to submit evolutions.
+This is not the official repository of the app.
+You should not submit bug reports, issues or pull requests to this fork.
+
+Last constributions from here:
+- Improve DEVELOP file with Markdown rendering, and fix Rust version command ([#25](https://github.com/stephanebouget/github-security-alerts/issues/25), [#26](https://github.com/stephanebouget/github-security-alerts/pull/26))
+
 # GitHub Security Alerts
 
 👉 **Developers**: See [DEVELOP](./DEVELOP) | [CONTRIBUTING](./CONTRIBUTING)
