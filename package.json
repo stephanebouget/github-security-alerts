@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run tauri:serve",
-    "web:serve": "ng serve -o",
+    "web:serve": "ng serve",
     "web:build": "ng build --base-href ./",
     "web:dev": "npm run web:build",
     "web:prod": "npm run web:build -- -c production",

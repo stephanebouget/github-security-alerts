@@ -24,7 +24,8 @@
         "visible": false,
         "skipTaskbar": true,
         "center": false,
-        "devtools": true
+        "devtools": true,
+        "visibleOnAllWorkspaces": true
       }
     ],
     "security": {

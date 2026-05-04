@@ -37,7 +37,7 @@ mod updater;
 use config::load_config;
 use state::AppState;
 use tray::generate_tray_icon;
-use window::{position_window_near_tray, handle_window_focus_lost, handle_window_show};
+use window::{position_window_near_tray, set_macos_window_level};
 
 fn main() {
     // Load environment variables from .env file
@@ -65,12 +65,14 @@ fn main() {
         ))
         .manage(AppState {
             alert_count: Mutex::new(0),
-            last_shown: Mutex::new(None),
-            last_focus_lost: Mutex::new(None),
-            auto_hide_paused: Mutex::new(false),
             config: Mutex::new(config),
         })
         .setup(|app| {
+            // On macOS, use Accessory policy so the window floats over all Spaces
+            // and is not bound to a single Space like a regular app window.
+            #[cfg(target_os = "macos")]
+            app.set_activation_policy(tauri::ActivationPolicy::Accessory);
+
             // Enable autostart on first run
             use tauri_plugin_autostart::ManagerExt;
             let autostart_manager = app.autolaunch();
@@ -96,26 +98,13 @@ fn main() {
             let icon_data = generate_tray_icon(None, has_repos);
             let icon = Image::from_bytes(&icon_data)?;
 
-            // Check if user is authenticated
-            let is_authenticated = {
-                let state = app.state::<AppState>();
-                let config = state.config.lock().unwrap();
-                config.access_token.as_ref()
-                    .map(|t| !t.trim().is_empty())
-                    .unwrap_or(false)
-            };
-
-            // Show window if not authenticated, hide if already logged in
+            // Always show the window on startup — Angular handles the correct
+            // view (login vs alerts) based on auth status via checkAuthStatus()
             if let Some(window) = app.get_webview_window("main") {
-                if is_authenticated {
-                    let _ = window.hide();
-                } else {
-                    // First time - show window for login
-                    handle_window_show(app.handle());
-                    position_window_near_tray(&window);
-                    let _ = window.show();
-                    let _ = window.set_focus();
-                }
+                set_macos_window_level(&window);
+                position_window_near_tray(&window);
+                let _ = window.show();
+                let _ = window.set_focus();
             }
 
 
@@ -165,7 +154,7 @@ fn main() {
                             if window.is_visible().unwrap_or(false) {
                                 let _ = window.hide();
                             } else {
-                                handle_window_show(&app);
+                                set_macos_window_level(&window);
                                 position_window_near_tray(&window);
                                 let _ = window.show();
                                 let _ = window.set_focus();
@@ -179,20 +168,10 @@ fn main() {
             Ok(())
         })
         .on_window_event(|window, event| {
+            // Intercept close — hide instead of quit (tray app)
             if let tauri::WindowEvent::CloseRequested { api, .. } = event {
                 let _ = window.hide();
                 api.prevent_close();
-            }
-            if let tauri::WindowEvent::Focused(focused) = event {
-                if !*focused {
-                    handle_window_focus_lost(window);
-                } else {
-                    // Window regained focus - clear the focus lost timestamp
-                    if let Some(state) = window.app_handle().try_state::<AppState>() {
-                        let mut last_focus_lost = state.last_focus_lost.lock().unwrap();
-                        *last_focus_lost = None;
-                    }
-                }
             }
         })
         .invoke_handler(tauri::generate_handler![
@@ -209,8 +188,6 @@ fn main() {
             alerts::get_github_security_alerts,
             tray::update_tray_icon,
             system::open_taskbar_settings,
-            window::pause_auto_hide,
-            window::resume_auto_hide,
             updater::check_for_updates,
             updater::install_update,
             updater::get_current_version,

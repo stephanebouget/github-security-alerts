@@ -33,6 +33,9 @@ tauri-plugin-single-instance = "^2.0"
 tauri-plugin-autostart = "^2.0"
 urlencoding = "^2.1"
 
+[target.'cfg(target_os = "macos")'.dependencies]
+objc2-app-kit = "0.3.2"
+
 [features]
 # by default Tauri runs in production mode
 # when `tauri dev` runs it is executed with `cargo run --no-default-features` if `devPath` is an URL
