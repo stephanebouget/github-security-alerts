@@ -41,7 +41,6 @@ npm -v
 rustc -V
 ```
 
-
 ## 🧑‍💻 Development Mode
 
 ### Run full app (Tauri)
@@ -52,17 +51,6 @@ npm start
 
 - Launches the desktop app via Tauri
 - Includes backend (Rust) + frontend (Angular)
-
-### Run frontend only (faster)
-
-```bash
-npm run web:serve
-```
-
-- Runs Angular in browser
-- Hot reload enabled
-- Recommended for UI development
-
 
 ## 🧪 Tests
 
@@ -116,7 +104,6 @@ src-tauri/target/release/bundle/
 | --------- | ----------------------------------- |
 | src       | Angular frontend (renderer process) |
 | src-tauri | Tauri backend (Rust main process)   |
-
 
 ## 🔄 Development Workflow
 
