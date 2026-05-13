@@ -21,7 +21,10 @@
   </div>
 
   <!-- No repos selected -->
-  <div class="empty-state" *ngIf="!alertsLoading && (!alerts || alerts.repos.length === 0)">
+  <div
+    class="empty-state"
+    *ngIf="!alertsLoading && (!alerts || alerts.repos.length === 0)"
+  >
     <i class="ti ti-package empty-icon"></i>
     <p>No repositories selected</p>
     <button class="primary-btn" (click)="onShowRepos()">
@@ -40,9 +43,18 @@
     <span class="summary-text" *ngIf="alerts.total_alerts === 0"
       >All repositories are secure</span
     >
-    <span class="summary-text" *ngIf="alerts.total_alerts > 0"
-      >{{ alerts.total_alerts }} security alert(s) found</span
-    >
+    <div>
+      <span class="summary-text" *ngIf="alerts.total_alerts > 0"
+        >{{ alerts.total_alerts }} security alert(s) found</span
+      >
+      <span
+        class="summary-subtext summary-subtext--danger"
+        *ngIf="totalProdAlerts() > 0"
+      >
+        <!-- <i class="ti ti-alert-triangle"></i> -->
+        {{ totalProdAlerts() }} in production dependencies</span
+      >
+    </div>
   </div>
 
   <!-- Repository List -->
@@ -61,21 +73,34 @@
       <div class="repo-badges">
         <div
           class="repo-badge"
-          [class.safe]="(repo.alerts - repo.dev_alerts) === 0 && repo.dependabot_enabled && !repo.error"
-          [class.danger]="(repo.alerts - repo.dev_alerts) > 0"
+          [class.safe]="
+            prodAlerts(repo) === 0 && repo.dependabot_enabled && !repo.error
+          "
+          [class.danger]="prodAlerts(repo) > 0"
           [class.disabled]="!repo.dependabot_enabled && !repo.error"
           [class.error]="!!repo.error"
-          [attr.title]="repo.error ? repo.error : (!repo.dependabot_enabled ? 'Dependabot not enabled' : null)"
+          [attr.title]="prodBadgeTitle(repo)"
         >
-          <i *ngIf="(repo.alerts - repo.dev_alerts) === 0 && repo.dependabot_enabled && !repo.error" class="ti ti-check"></i>
-          <i *ngIf="!repo.dependabot_enabled && !repo.error" class="ti ti-minus" style="color: #64748b"></i>
           <i *ngIf="repo.error" class="ti ti-alert-circle"></i>
-          <span *ngIf="(repo.alerts - repo.dev_alerts) > 0">{{ repo.alerts - repo.dev_alerts }}</span>
+          <i
+            *ngIf="!repo.dependabot_enabled && !repo.error"
+            class="ti ti-minus"
+            style="color: #64748b"
+          ></i>
+          <i
+            *ngIf="
+              prodAlerts(repo) === 0 && repo.dependabot_enabled && !repo.error
+            "
+            class="ti ti-check"
+          ></i>
+          <span *ngIf="prodAlerts(repo) > 0">{{ prodAlerts(repo) }}</span>
         </div>
         <div
           class="repo-badge repo-badge--dev"
           *ngIf="repo.dev_alerts > 0"
-          title="{{ repo.dev_alerts }} alert(s) from devDependencies — low production risk"
+          title="{{
+            repo.dev_alerts
+          }} alert(s) from devDependencies — low production risk"
         >
           <span>{{ repo.dev_alerts }}</span>
         </div>

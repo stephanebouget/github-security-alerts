@@ -99,6 +99,21 @@
   .summary-text {
     font-weight: 500;
   }
+
+  .summary-subtext {
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 2px;
+    i {
+      font-size: 12px;
+    }
+
+    &--danger {
+      color: colors.$danger-color;
+    }
+  }
 }
 
 .repo-list {
