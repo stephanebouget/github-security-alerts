@@ -35,17 +35,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @Output() refresh = new EventEmitter<void>();
   @Output() viewChange = new EventEmitter<ViewMode>();
 
-  updateAvailable = false;
   isUpdating = false;
+
+  get updateAvailable(): boolean {
+    return this.updateService.updateAvailable;
+  }
 
   constructor(private updateService: UpdateService) {}
 
-  ngOnInit(): void {
-    // Update status is managed by UpdateService automatically
-    if (this.updateService.isTauri) {
-      this.updateAvailable = this.updateService.updateAvailable;
-    }
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     // Nothing to clean up
