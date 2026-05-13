@@ -67,7 +67,7 @@ pub async fn get_github_security_alerts(app: tauri::AppHandle) -> Result<AlertsR
                         break 'pagination;
                     } else if !status.is_success() {
                         let body = response.text().await.unwrap_or_default();
-                        let msg = format!("HTTP {} — {}", status.as_u16(), body);
+                        let msg = extract_error_message(status.as_u16(), &body);
                         eprintln!("[{}] GitHub API error: {}", repo, msg);
                         fetch_error = Some(msg);
                         break 'pagination;
@@ -168,4 +168,16 @@ fn parse_next_link(link_header: &str) -> Option<String> {
         }
         if is_next { url } else { None }
     })
+}
+
+/// Extract a human-readable error message from a GitHub API error response.
+/// Tries to parse the body as JSON and return the `message` field.
+/// Falls back to `HTTP {status}` if parsing fails or the field is absent.
+fn extract_error_message(status: u16, body: &str) -> String {
+    if let Ok(json) = serde_json::from_str::<serde_json::Value>(body) {
+        if let Some(msg) = json.get("message").and_then(|v| v.as_str()) {
+            return msg.to_string();
+        }
+    }
+    format!("HTTP {status}")
 }
