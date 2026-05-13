@@ -58,18 +58,27 @@
         <span class="repo-name">{{ repo.name.split("/")[1] }}</span>
         <span class="repo-org">{{ repo.name.split("/")[0] }}</span>
       </div>
-      <div
-        class="repo-badge"
-        [class.safe]="repo.alerts === 0 && repo.dependabot_enabled && !repo.error"
-        [class.danger]="repo.alerts > 0"
-        [class.disabled]="!repo.dependabot_enabled && !repo.error"
-        [class.error]="!!repo.error"
-        [attr.title]="repo.error ? repo.error : (!repo.dependabot_enabled ? 'Dependabot not enabled' : null)"
-      >
-        <i *ngIf="repo.alerts === 0 && repo.dependabot_enabled && !repo.error" class="ti ti-check"></i>
-        <i *ngIf="!repo.dependabot_enabled && !repo.error" class="ti ti-minus" style="color: #64748b"></i>
-        <i *ngIf="repo.error" class="ti ti-alert-circle"></i>
-        <span *ngIf="repo.alerts > 0">{{ repo.alerts }}</span>
+      <div class="repo-badges">
+        <div
+          class="repo-badge"
+          [class.safe]="(repo.alerts - repo.dev_alerts) === 0 && repo.dependabot_enabled && !repo.error"
+          [class.danger]="(repo.alerts - repo.dev_alerts) > 0"
+          [class.disabled]="!repo.dependabot_enabled && !repo.error"
+          [class.error]="!!repo.error"
+          [attr.title]="repo.error ? repo.error : (!repo.dependabot_enabled ? 'Dependabot not enabled' : null)"
+        >
+          <i *ngIf="(repo.alerts - repo.dev_alerts) === 0 && repo.dependabot_enabled && !repo.error" class="ti ti-check"></i>
+          <i *ngIf="!repo.dependabot_enabled && !repo.error" class="ti ti-minus" style="color: #64748b"></i>
+          <i *ngIf="repo.error" class="ti ti-alert-circle"></i>
+          <span *ngIf="(repo.alerts - repo.dev_alerts) > 0">{{ repo.alerts - repo.dev_alerts }}</span>
+        </div>
+        <div
+          class="repo-badge repo-badge--dev"
+          *ngIf="repo.dev_alerts > 0"
+          title="{{ repo.dev_alerts }} alert(s) from devDependencies — low production risk"
+        >
+          <span>{{ repo.dev_alerts }}</span>
+        </div>
       </div>
     </div>
   </div>

@@ -47,13 +47,20 @@ pub struct AlertsResponse {
 pub struct RepoAlerts {
     pub name: String,
     pub alerts: usize,
+    pub dev_alerts: usize,
     pub dependabot_enabled: bool,
     pub error: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+pub struct GitHubAlertDependency {
+    pub scope: Option<String>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
 pub struct GitHubAlert {
     pub state: String,
+    pub dependency: GitHubAlertDependency,
 }
 
 #[derive(Debug, Serialize, Deserialize)]

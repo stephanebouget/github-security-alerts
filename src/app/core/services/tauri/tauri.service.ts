@@ -15,6 +15,7 @@ import { invoke } from '@tauri-apps/api/core';
 export interface RepoAlerts {
   name: string;
   alerts: number;
+  dev_alerts: number;
   dependabot_enabled: boolean;
   error?: string;
 }
