@@ -74,7 +74,10 @@
         <div
           class="repo-badge"
           [class.safe]="
-            prodAlerts(repo) === 0 && repo.dependabot_enabled && !repo.error
+            prodAlerts(repo) === 0 &&
+            repo.dev_alerts === 0 &&
+            repo.dependabot_enabled &&
+            !repo.error
           "
           [class.danger]="prodAlerts(repo) > 0"
           [class.disabled]="!repo.dependabot_enabled && !repo.error"
@@ -89,7 +92,10 @@
           ></i>
           <i
             *ngIf="
-              prodAlerts(repo) === 0 && repo.dependabot_enabled && !repo.error
+              prodAlerts(repo) === 0 &&
+              repo.dev_alerts === 0 &&
+              repo.dependabot_enabled &&
+              !repo.error
             "
             class="ti ti-check"
           ></i>
