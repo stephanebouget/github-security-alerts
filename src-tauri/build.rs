@@ -22,7 +22,7 @@ fn main() {
     println!("cargo:rustc-env=CLIENT_ID={}", client_id);
   }
   if let Ok(client_secret) = std::env::var("CLIENT_SECRET") {
-    println!("cargo:rustc-env=CLIENT_SECRET={}");
+    std::env::set_var("CLIENT_SECRET", client_secret);
   }
   
   tauri_build::build()
