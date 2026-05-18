@@ -102,11 +102,11 @@
           <span *ngIf="prodAlerts(repo) > 0">{{ prodAlerts(repo) }}</span>
         </div>
         <div
-          class="repo-badge repo-badge--dev"
+          class="repo-badge repo-badge--dev"  
           *ngIf="repo.dev_alerts > 0"
           title="{{
             repo.dev_alerts
-          }} alert(s) from devDependencies"
+          }} alert(s) from development dependencies"
         >
           <span>{{ repo.dev_alerts }}</span>
         </div>

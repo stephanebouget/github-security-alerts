@@ -64,7 +64,7 @@ export class AlertsListComponent {
     if (!repo.dependabot_enabled) return 'Dependabot not enabled';
     const prod = this.prodAlerts(repo);
     if (prod > 0)
-      return `${prod} alert(s) from dependencies — high runtime risk`;
+      return `${prod} alert(s) from runtime dependencies`;
     return null;
   }
 }
